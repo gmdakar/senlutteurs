@@ -1,0 +1,94 @@
+uuid: 4c02c36e-13ba-4729-9c72-944dec7b2c43
+langcode: fr
+status: true
+dependencies: {  }
+id: eca_bpmn_io_process_vpeyauh
+data: |
+  <?xml version="1.0" encoding="UTF-8"?>
+  <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:qa="http://some-company/schema/bpmn/qa" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:process id="Process_vPEyAuH" name="" isExecutable="true" camunda:versionTag="">
+      <bpmn2:documentation />
+      <bpmn2:extensionElements>
+        <camunda:properties>
+          <camunda:property name="Template" value="false" />
+          <camunda:property name="Storage" value="" />
+          <camunda:property name="Tags" value="" />
+          <camunda:property name="Changelog" value="" />
+        </camunda:properties>
+      </bpmn2:extensionElements>
+      <bpmn2:startEvent id="eca_base__eca_custom_1" name="Signalement combat" camunda:modelerTemplate="org.drupal.event.eca_base:eca_custom">
+        <bpmn2:extensionElements>
+          <camunda:field name="event_id">
+            <camunda:string>sl_signalements.signalement</camunda:string>
+          </camunda:field>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_base:eca_custom" />
+          </camunda:properties>
+        </bpmn2:extensionElements>
+        <bpmn2:outgoing>Flow_1hwd4e1</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:exclusiveGateway id="Gateway_1h0vhh3" name="Filtrage signalement">
+        <bpmn2:incoming>Flow_1hwd4e1</bpmn2:incoming>
+        <bpmn2:outgoing>eca_scalar_171mtt9</bpmn2:outgoing>
+      </bpmn2:exclusiveGateway>
+      <bpmn2:sequenceFlow id="Flow_1hwd4e1" sourceRef="eca_base__eca_custom_1" targetRef="Gateway_1h0vhh3" />
+      <bpmn2:task id="Activity_008chs1">
+        <bpmn2:incoming>eca_scalar_171mtt9</bpmn2:incoming>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="eca_scalar_171mtt9" name="Compare two scalar values" camunda:modelerTemplate="org.drupal.condition.eca_scalar" sourceRef="Gateway_1h0vhh3" targetRef="Activity_008chs1">
+        <bpmn2:extensionElements>
+          <camunda:field name="left">
+            <camunda:string>key</camunda:string>
+          </camunda:field>
+          <camunda:field name="right">
+            <camunda:string>s_lutte_simple</camunda:string>
+          </camunda:field>
+          <camunda:field name="operator">
+            <camunda:string>equal</camunda:string>
+          </camunda:field>
+          <camunda:field name="type">
+            <camunda:string>value</camunda:string>
+          </camunda:field>
+          <camunda:field name="case">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+          <camunda:field name="negate">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_scalar" />
+          </camunda:properties>
+        </bpmn2:extensionElements>
+      </bpmn2:sequenceFlow>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_Process_vPEyAuH">
+      <bpmndi:BPMNPlane id="BPMNPlane_Process_vPEyAuH" bpmnElement="Process_vPEyAuH">
+        <bpmndi:BPMNShape id="Event_0w1q5r6_di" bpmnElement="eca_base__eca_custom_1">
+          <dc:Bounds x="202" y="142" width="36" height="36" />
+          <bpmndi:BPMNLabel>
+            <dc:Bounds x="189" y="185" width="63" height="27" />
+          </bpmndi:BPMNLabel>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Gateway_1h0vhh3_di" bpmnElement="Gateway_1h0vhh3" isMarkerVisible="true">
+          <dc:Bounds x="295" y="135" width="50" height="50" />
+          <bpmndi:BPMNLabel>
+            <dc:Bounds x="290" y="192" width="61" height="27" />
+          </bpmndi:BPMNLabel>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_008chs1_di" bpmnElement="Activity_008chs1">
+          <dc:Bounds x="410" y="120" width="100" height="80" />
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="Flow_1hwd4e1_di" bpmnElement="Flow_1hwd4e1">
+          <di:waypoint x="238" y="160" />
+          <di:waypoint x="295" y="160" />
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_171mtt9_di" bpmnElement="eca_scalar_171mtt9">
+          <di:waypoint x="345" y="160" />
+          <di:waypoint x="410" y="160" />
+          <bpmndi:BPMNLabel>
+            <dc:Bounds x="345" y="142" width="66" height="27" />
+          </bpmndi:BPMNLabel>
+        </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+  </bpmn2:definitions>

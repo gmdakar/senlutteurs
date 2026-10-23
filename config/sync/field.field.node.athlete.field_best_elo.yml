@@ -1,0 +1,23 @@
+uuid: 813e8cf6-f585-4973-b153-5783d2dd4755
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_best_elo
+    - node.type.athlete
+id: node.athlete.field_best_elo
+field_name: field_best_elo
+entity_type: node
+bundle: athlete
+label: 'Meilleure performance (Elo)'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Oui
+  off_label: Non
+field_type: boolean

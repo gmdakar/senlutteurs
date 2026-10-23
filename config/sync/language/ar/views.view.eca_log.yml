@@ -1,0 +1,46 @@
+display:
+  default:
+    display_title: الافتراضي
+    display_options:
+      title: Journal
+      fields:
+        name:
+          label: Utilisateur
+        timestamp:
+          label: Heure
+        message:
+          label: الرسالة
+        variables:
+          label: 'رموز نصية (توكن)'
+      pager:
+        options:
+          tags:
+            first: '« Premier'
+            last: 'Dernier »'
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: تصاعدي
+          sort_desc_label: تنازلي
+      filters:
+        timestamp:
+          expose:
+            label: 'A partir de'
+        timestamp_1:
+          expose:
+            label: À
+  page_1:
+    display_title: الصفحة
+    display_options:
+      menu:
+        title: Journal
+  page_2:
+    display_options:
+      menu:
+        title: Journal

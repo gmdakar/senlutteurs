@@ -1,0 +1,38 @@
+uuid: 7887d960-2555-4d08-9123-a0a7393dca0a
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_illustration
+    - node.type.athlete
+  module:
+    - image
+id: node.athlete.field_illustration
+field_name: field_illustration
+entity_type: node
+bundle: athlete
+label: Illustration
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg webp'
+  max_filesize: ''
+  max_resolution: 400x400
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: false
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: 9a386cd4-6574-4f43-b932-82bd3e772220
+    alt: "image illustrative d'un lutteur sans visage"
+    title: ''
+    width: 441
+    height: 515
+field_type: image

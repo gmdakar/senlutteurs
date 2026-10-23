@@ -1,0 +1,7 @@
+request_ai.settings:
+  path: '/admin/config/services/request_ai'
+  defaults:
+    _form: '\Drupal\request_ai\Form\RequestAiSettingsForm'
+    _title: 'Request AI Settings'
+  requirements:
+    _permission: 'administer site configuration'

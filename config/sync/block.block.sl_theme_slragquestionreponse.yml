@@ -1,0 +1,26 @@
+uuid: 8599310a-795c-43e2-a996-10eb84a209be
+langcode: en
+status: true
+dependencies:
+  module:
+    - sl_rag
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_slragquestionreponse
+theme: sl_theme
+region: content
+weight: 0
+provider: null
+plugin: sl_rag_ask_block
+settings:
+  id: sl_rag_ask_block
+  label: ' Vous avez une question sur les lutteurs ?'
+  label_display: visible
+  provider: sl_rag
+  block_title_override: 'Exemple : «Qui a le meilleur palmarès entre Ndiol Walo et Domou Dangou ?»'
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/lutteurs\r\n/lutteurs/*\r\n/combats\r\n/combats/*"

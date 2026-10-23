@@ -1,0 +1,4 @@
+services:
+  confrontations_recentes.combat_service:
+    class: Drupal\confrontations_recentes\Service\CombatService
+    parent: shared_lib.base_wrestling_service 

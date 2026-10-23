@@ -1,0 +1,11 @@
+uuid: 92b7d338-60f2-4174-8c6a-9c3054f1bf39
+langcode: fr
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+id: voir_tous_les_combats_clone
+title: 'Voir tous les lutteurs'
+content:
+  value: '<p><a href="/lutteurs">Voir tous les lutteurs</a></p>'
+  format: basic_html

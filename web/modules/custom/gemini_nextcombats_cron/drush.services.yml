@@ -1,0 +1,15 @@
+services:
+  update_videos_combats_next.commands:
+    class: Drupal\gemini_nextcombats_cron\Commands\UpdateVideosCombatsNextCommands
+    tags:
+      - { name: drush.command }
+    arguments:
+      - '@gemini_nextcombats_cron.combat_service'
+      - '@entity_type.manager'
+  import_combats_next.commands:
+    class: Drupal\gemini_nextcombats_cron\Commands\ImportCombatsNextCommands
+    tags:
+      - { name: drush.command }
+    arguments:
+      - '@gemini_nextcombats_cron.combat_service'
+      - '@entity_type.manager'

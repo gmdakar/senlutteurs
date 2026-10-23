@@ -1,0 +1,10 @@
+name: 'SL RAG'
+type: module
+description: 'RAG lutteurs : export textuel, question/réponse Gemini, recherche vectorielle (Pinecone) optionnelle.'
+core_version_requirement: ^10 || ^11
+package: Custom
+configure: sl_rag.settings
+dependencies:
+  - drupal:node
+  - shared_lib:shared_lib
+  - sl_live_search:sl_live_search

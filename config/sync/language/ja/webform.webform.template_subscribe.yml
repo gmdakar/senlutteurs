@@ -1,0 +1,6 @@
+title: 配信登録
+settings:
+  confirmation_message: 'Merci de votre inscription.'
+handlers:
+  email_notification:
+    label: メール通知

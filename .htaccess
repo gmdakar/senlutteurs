@@ -1,0 +1,36 @@
+# ----------------------------------------------------------------------
+# LSCache Global Flags
+# ----------------------------------------------------------------------
+<IfModule LiteSpeed>
+  CacheLookup public on
+  php_flag output_buffering off
+</IfModule>
+
+RewriteEngine On
+
+# --- 1. BLOCAGES PRIORITAIRES (Root Level) ---
+
+# A. Blocage des flux RSS 
+RewriteRule rss\.xml - [L,R=404]
+
+# B. Blocage des paginations agressives >= 100
+RewriteCond %{REQUEST_URI} !^/admin
+RewriteCond %{REQUEST_URI} !^/web/admin
+RewriteCond %{REQUEST_URI} !^/views/ajax
+RewriteCond %{QUERY_STRING} \bpage=([0-9]{3,})\b
+RewriteRule ^ - [L,R=404]
+
+
+# --- 2. SEO : CORRECTION DU /WEB/ (Redirection Explicite 301) ---
+# Si l'utilisateur ou Googlebot tape explicitement "/web/" dans l'URL,
+# on le redirige proprement vers l'URL propre sans le "/web/".
+# %{THE_REQUEST} permet de vérifier ce que le client a VRAIMENT tapé, 
+# évitant ainsi la boucle infinie avec la règle suivante.
+RewriteCond %{THE_REQUEST} \s/web/(\S*) [NC]
+RewriteRule ^web/(.*)$ /%1 [R=301,L]
+
+
+# --- 3. ROUTING INTERNE (Redirection Invisible) ---
+# On pousse discrètement la requête vers le dossier Drupal sans changer l'URL dans le navigateur.
+RewriteCond %{REQUEST_URI} !^/web/
+RewriteRule ^(.*)$ /web/$1 [L,QSA]

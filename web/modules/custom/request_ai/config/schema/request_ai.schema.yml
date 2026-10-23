@@ -1,0 +1,66 @@
+request_ai.settings:
+  type: config_object
+  label: 'Paramètres Request AI'
+  mapping:
+    engine:
+      type: string
+      label: 'Selected AI Engine'
+    prompt_test:
+      type: text
+      label: 'Default Prompt for Drush test'
+
+    # Configuration YouTube
+    api_key_ytb:
+      type: string
+      label: 'YouTube API Key'
+    api_url_ytb:
+      type: string
+      label: 'YouTube API URL'
+    excluded_channels_ytb:
+      type: string
+      label: 'Excluded YouTube channels (pipe-separated)'
+
+    # Configuration xAI Grok
+    api_key_grok:
+      type: string
+      label: 'xAI Grok API Key'
+    model_grok:
+      type: string
+      label: 'Grok Model Name'
+
+    # Configuration Google Gemini
+    api_key_gemini:
+      type: string
+      label: 'Gemini API Key'
+    model_gemini:
+      type: string
+      label: 'Gemini Model Name'
+
+    # Configuration OpenRouter
+    api_key_openrouter:
+      type: string
+      label: 'OpenRouter API Key'
+    model_openrouter:
+      type: string
+      label: 'OpenRouter Model Name'
+
+    # Indexation Google
+    google_indexing_api_key:
+      type: string
+      label: 'Google Indexing JSON Key'
+
+    # Indexation Bing (via IndexNow)
+    bing_indexnow_api_key:
+      type: string
+      label: 'Bing IndexNow API Key'
+    bing_indexnow_api_url:
+      type: string
+      label: 'Bing IndexNow API URL'
+
+    # Indexation Baidu
+    baidu_api_token:
+      type: string
+      label: 'Baidu API Token'
+    baidu_api_url:
+      type: string
+      label: 'Baidu API URL'

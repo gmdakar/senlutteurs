@@ -1,0 +1,53 @@
+_core:
+  default_config_hash: bBsKNU9uuzzS7zaKZhHpof7W8sOAuKBZJDF5Eh76BTs
+langcode: fr
+name: 'SenLutteurs AI'
+short_name: 'SenLutteurs AI'
+app_id: /
+description: ''
+start_url: /
+scope: /
+lang: ''
+dir: auto
+orientation: any
+categories:
+  - ''
+theme_color: '#ffffff'
+background_color: '#ffffff'
+display: standalone
+cross_origin: false
+image_fid: 69
+image_small_fid: 70
+image_very_small_fid: 71
+manifest_path_mode: all_except_listed
+manifest_paths: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*"
+screenshots:
+  -
+    src: /sites/default/files/pwa/screenshot-desktop.png
+    sizes: 1280x720
+    type: image/png
+    form_factor: wide
+    label: 'SenLutteurs AI Desktop'
+  -
+    src: /sites/default/files/pwa/screenshot-mobile.png
+    sizes: 320x640
+    type: image/png
+    form_factor: narrow
+    label: 'SenLutteurs AI Mobile'
+manifest:
+  icons:
+    -
+      src: /sites/default/files/pwa/icon-512.png
+      sizes: 512x512
+      type: image/png
+      purpose: any
+    -
+      src: /sites/default/files/pwa/icon-192.png
+      sizes: 192x192
+      type: image/png
+      purpose: any
+    -
+      src: /sites/default/files/pwa/icon-144.png
+      sizes: 144x144
+      type: image/png
+      purpose: any

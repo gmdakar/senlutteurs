@@ -1,0 +1,25 @@
+label: Wrestlers
+display:
+  default:
+    display_options:
+      title: Wrestlers
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+      filters:
+        title:
+          expose:
+            label: 'Filter by name'
+      empty:
+        area:
+          content:
+            value: 'No results'
+            format: plain_text
+      use_more_text: 'See more'
+  block_1:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset

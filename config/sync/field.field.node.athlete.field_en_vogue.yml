@@ -1,0 +1,25 @@
+uuid: 92a7956d-7057-495a-b878-26e2746f4e8b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_en_vogue
+    - node.type.athlete
+id: node.athlete.field_en_vogue
+field_name: field_en_vogue
+entity_type: node
+bundle: athlete
+label: 'En vogue'
+description: 'Plus la valeur est grande plus il sort en premier dans une liste'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

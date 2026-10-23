@@ -1,0 +1,19 @@
+uuid: 674a7a70-82f4-4557-923f-7b10fe55460a
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_signalements
+    - node.type.confrontation
+id: node.confrontation.field_signalements
+field_name: field_signalements
+entity_type: node
+bundle: confrontation
+label: Signalements
+description: "Champ technique : stocke tous les types de signalements et leurs occurence pour le node concerné.\r\nNB : Saisir exceptionnellement la valeur __skip__ pour ignorer toute action automatique suite à des signalements sur le site."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

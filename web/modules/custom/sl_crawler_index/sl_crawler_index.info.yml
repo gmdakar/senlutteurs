@@ -1,0 +1,9 @@
+name: 'SL Crawler Index'
+type: module
+description: 'GoogleIndexer - Multi-moteur moderne (Google API v3, IndexNow, Baidu v2).'
+package: Custom
+core_version_requirement: ^11
+dependencies:
+  - drupal:serialization
+  - key:key
+  - request_ai:request_ai

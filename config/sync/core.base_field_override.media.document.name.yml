@@ -1,0 +1,20 @@
+uuid: 91630cf3-7235-4f54-ae71-482277d649b0
+langcode: fr
+status: true
+dependencies:
+  config:
+    - media.type.document
+id: media.document.name
+field_name: name
+entity_type: media
+bundle: document
+label: Nom
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: ''
+settings: {  }
+field_type: string

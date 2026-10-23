@@ -1,0 +1,22 @@
+uuid: 2729f214-bd05-49c1-9cc6-6bc87109a0c8
+langcode: fr
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - sl_theme
+_core:
+  default_config_hash: BZ5tpW7H8X4PVGRm3MImTIHd2tN0eF7zOtp4SpRYUA0
+id: sl_theme_messages
+theme: sl_theme
+region: highlighted
+weight: -5
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Messages de statut'
+  label_display: '0'
+  provider: system
+visibility: {  }

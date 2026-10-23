@@ -1,0 +1,23 @@
+uuid: 33040b9e-f83c-4af1-86e0-385bd17d9f58
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.a_venir
+  module:
+    - node
+id: a_venir
+label: 'A venir'
+type: 'canonical_entities:node'
+pattern: '/a_venir/[node:field_date:date:html_date]/[node:title]'
+selection_criteria:
+  c9382c6c-e485-419d-825d-b442fb2e49d9:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      a_venir: a_venir
+selection_logic: and
+weight: -5
+relationships: {  }

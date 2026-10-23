@@ -1,0 +1,329 @@
+uuid: 9287260f-65fb-4647-8464-6de11168500a
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.elo_rating
+    - field.storage.node.field_athlete_1
+    - field.storage.node.field_athlete_2
+    - field.storage.node.field_best_elo
+    - field.storage.node.field_confrontation_date
+    - field.storage.node.field_ecurie
+    - field.storage.node.field_en_vogue
+    - field.storage.node.field_is_lutte_simple
+    - field.storage.node.field_king
+    - field.storage.node.field_tendance
+    - search_api.server.default_server
+  module:
+    - node
+    - user
+_core:
+  default_config_hash: 3aiqici40Ky7H7_FK6JBlEawsJtrD7MGX3dQh3xgqoc
+id: default_index
+name: 'Index de contenu par défaut'
+description: 'Index de contenu par défaut créé par le module Database Search Defaults'
+read_only: false
+field_settings:
+  author:
+    label: 'Author name'
+    datasource_id: 'entity:node'
+    property_path: 'uid:entity:name'
+    type: string
+    dependencies:
+      module:
+        - node
+        - user
+  changed:
+    label: Changed
+    datasource_id: 'entity:node'
+    property_path: changed
+    type: date
+    dependencies:
+      module:
+        - node
+  created:
+    label: 'Authored on'
+    datasource_id: 'entity:node'
+    property_path: created
+    type: date
+    dependencies:
+      module:
+        - node
+  elo_rating:
+    label: 'Elo Rating'
+    datasource_id: 'entity:node'
+    property_path: elo_rating
+    type: decimal
+    dependencies:
+      config:
+        - field.storage.node.elo_rating
+  field_athlete_1:
+    label: 'Athlète 1'
+    datasource_id: 'entity:node'
+    property_path: field_athlete_1
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_athlete_1
+  field_athlete_2:
+    label: 'Athlète 2'
+    datasource_id: 'entity:node'
+    property_path: field_athlete_2
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_athlete_2
+  field_best_elo:
+    label: 'Meilleure performance (Elo)'
+    datasource_id: 'entity:node'
+    property_path: field_best_elo
+    type: boolean
+    dependencies:
+      config:
+        - field.storage.node.field_best_elo
+  field_confrontation_date:
+    label: Date
+    datasource_id: 'entity:node'
+    property_path: field_confrontation_date
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_confrontation_date
+  field_ecurie:
+    label: Écurie
+    datasource_id: 'entity:node'
+    property_path: field_ecurie
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_ecurie
+  field_en_vogue:
+    label: 'En vogue'
+    datasource_id: 'entity:node'
+    property_path: field_en_vogue
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_en_vogue
+  field_is_lutte_simple:
+    label: 'Lutte simple : '
+    datasource_id: 'entity:node'
+    property_path: field_is_lutte_simple
+    type: boolean
+    dependencies:
+      config:
+        - field.storage.node.field_is_lutte_simple
+  field_king:
+    label: 'Roi des arènes'
+    datasource_id: 'entity:node'
+    property_path: field_king
+    type: boolean
+    dependencies:
+      config:
+        - field.storage.node.field_king
+  field_tendance:
+    label: Tendance
+    datasource_id: 'entity:node'
+    property_path: field_tendance
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_tendance
+  node_grants:
+    label: 'Node access information'
+    property_path: search_api_node_grants
+    type: string
+    indexed_locked: true
+    type_locked: true
+    hidden: true
+  rendered_item:
+    label: 'Rendered item'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        - anonymous
+      view_mode:
+        'entity:node':
+          ':default': default
+          athlete: ':default'
+          confrontation: ':default'
+          ecurie: ':default'
+          promoteur: ':default'
+  status:
+    label: 'Publishing status'
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+    indexed_locked: true
+    type_locked: true
+    dependencies:
+      module:
+        - node
+  sticky:
+    label: 'Sticky at top of lists'
+    datasource_id: 'entity:node'
+    property_path: sticky
+    type: boolean
+    dependencies:
+      module:
+        - node
+  title:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: text
+    boost: 8.0
+    dependencies:
+      module:
+        - node
+  type:
+    label: 'Content type'
+    datasource_id: 'entity:node'
+    property_path: type
+    type: string
+    dependencies:
+      module:
+        - node
+  uid:
+    label: 'Author ID'
+    datasource_id: 'entity:node'
+    property_path: uid
+    type: integer
+    indexed_locked: true
+    type_locked: true
+    dependencies:
+      module:
+        - node
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - a_venir
+        - athlete
+        - confrontation
+        - ecurie
+        - promoteur
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url:
+    weights:
+      preprocess_index: -30
+  aggregated_field:
+    weights:
+      add_properties: 20
+  content_access:
+    weights:
+      preprocess_index: -6
+      preprocess_query: -4
+  custom_value: {  }
+  entity_status:
+    weights:
+      preprocess_index: -10
+  entity_type: {  }
+  html_filter:
+    weights:
+      preprocess_index: -3
+      preprocess_query: -6
+    all_fields: false
+    fields:
+      - rendered_item
+    title: true
+    alt: true
+    tags:
+      b: 2.0
+      h1: 5.0
+      h2: 3.0
+      h3: 2.0
+      string: 2.0
+  ignorecase:
+    weights:
+      preprocess_index: -5
+      preprocess_query: -8
+    all_fields: false
+    fields:
+      - rendered_item
+      - title
+  language_with_fallback:
+    weights:
+      preprocess_query: -15
+  rendered_item:
+    weights:
+      add_properties: 0
+      pre_index_save: -10
+  stopwords:
+    weights:
+      preprocess_index: -5
+      preprocess_query: -10
+    all_fields: false
+    fields:
+      - rendered_item
+      - title
+    stopwords:
+      - a
+      - an
+      - and
+      - are
+      - as
+      - at
+      - be
+      - but
+      - by
+      - for
+      - if
+      - in
+      - into
+      - is
+      - it
+      - 'no'
+      - not
+      - of
+      - 'on'
+      - or
+      - s
+      - such
+      - t
+      - that
+      - the
+      - their
+      - then
+      - there
+      - these
+      - they
+      - this
+      - to
+      - was
+      - will
+      - with
+  tokenizer:
+    weights:
+      preprocess_index: -2
+      preprocess_query: -5
+    all_fields: false
+    fields:
+      - rendered_item
+      - title
+    spaces: ''
+    ignored: ._-
+    overlap_cjk: 1
+    minimum_word_size: '2'
+  transliteration:
+    weights:
+      preprocess_index: -4
+      preprocess_query: -7
+    all_fields: false
+    fields:
+      - rendered_item
+      - title
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  delete_on_fail: true
+  index_directly: true
+  track_changes_in_references: true
+server: default_server

@@ -1,0 +1,21 @@
+uuid: 2434ece7-d53b-4955-abd8-a72763aadf3f
+langcode: fr
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: Fw65a4nmr1PFe2Hk7BiGpZn27YPYMupEhpnmwJp_5pk
+id: node.field_athlete
+field_name: field_athlete
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

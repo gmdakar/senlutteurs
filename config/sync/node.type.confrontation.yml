@@ -1,0 +1,18 @@
+uuid: 3f62084d-8b33-4a8c-92a0-061a92b17254
+langcode: fr
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Combat
+type: confrontation
+description: null
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

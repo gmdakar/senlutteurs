@@ -1,0 +1,60 @@
+# ==========================================
+# SENLUTTEURS — CUSTOM CRAWL RULES
+# (Appended via Composer Scaffold)
+# ==========================================
+
+# --- 1. CONFIGURATION DES LANGUES (Pare-feu linguistique) ---
+# Autorise explicitement et en priorité le français
+Allow: /fr/
+Allow: /fr
+
+# Bloque toute autre langue de 2 lettres (ex: /en/, /wo/, /es/)
+Disallow: /??/
+Disallow: /??
+Disallow: /web/??/
+Disallow: /web/??
+
+# Bloque l'accès aux nodes bruts (chemins système non traduits)
+Disallow: /node/
+Disallow: /web/node/
+
+
+# --- 2. SÉCURITÉ ET INTEGRITÉ (Flux RSS & Pagination) ---
+# Flux RSS (Bloque tout ce qui contient rss.xml pour couper le scraping)
+Disallow: /rss.xml
+Disallow: */rss.xml
+Disallow: /web/*/rss.xml
+
+# Paginations des Views (Évite l'indexation de listes infinies par les bots)
+Disallow: /*?page=*
+Disallow: /*&page=*
+Disallow: /web/*?page=*
+
+
+# --- 3. REWRITING DIRECTORIES ---
+# Note : Les lignes historiques "Disallow: /web/" et "Disallow: /web" ont été retirées.
+# Cela permet à Google de crawler et d'exécuter la redirection 301 configurée dans le .htaccess.
+
+# --- 4. EXCLUSION LÉGALE POUR L'IA (Directive Européenne TDM) ---
+# Déclaration officielle d'opposition à la fouille de textes et de données
+# en vertu de l'article L. 122-5-3 du Code de la propriété intellectuelle (France)
+# et de l'article 4 de la directive européenne 2019/790 (Droit d'auteur).
+
+# Directive globale TDM (prise en compte par les scrapers d'IA éthiques)
+User-agent: *
+X-TDM-Reservation: 1
+
+# Blocage strict et ciblé des agents d'entraînement et de navigation IA
+# (Ces lignes protègent vos données sans jamais bloquer le Googlebot classique)
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: Google-Extended
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: PerplexityBot
+User-agent: Anthropic-AI
+User-agent: Applebot-Extended
+Disallow: /
+
+# ==========================================
+Sitemap: https://www.senlutteurs.com/sitemap.xml

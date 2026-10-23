@@ -1,0 +1,25 @@
+uuid: 75056568-d726-4c24-a9e1-80ac10b121d4
+langcode: fr
+status: true
+dependencies:
+  module:
+    - combat_propositions
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_toppropositionscombats
+theme: sl_theme
+region: side_right
+weight: -15
+provider: null
+plugin: top_combat_propositions_block
+settings:
+  id: top_combat_propositions_block
+  label: 'Top propositions combats'
+  label_display: visible
+  provider: combat_propositions
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

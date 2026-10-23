@@ -1,0 +1,23 @@
+uuid: 5dcbc40f-295b-4338-b9a5-b88c33c05883
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.elo_rating
+    - node.type.athlete
+id: node.athlete.elo_rating
+field_name: elo_rating
+entity_type: node
+bundle: athlete
+label: 'Rating (points)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

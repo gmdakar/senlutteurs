@@ -1,0 +1,20 @@
+uuid: fb1dec6b-0b32-48f5-88c0-dea73463f031
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.ecurie
+id: node.ecurie.uid
+field_name: uid
+entity_type: node
+bundle: ecurie
+label: 'Écrit par'
+description: 'The username of the content author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

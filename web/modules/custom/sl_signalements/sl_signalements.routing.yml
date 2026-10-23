@@ -1,0 +1,38 @@
+sl_signalements.api:
+  path: '/api/signal/{id}/{type}/{token}'
+  defaults:
+    _controller: 'Drupal\sl_signalements\Controller\SignalementApiController::receive'
+  requirements:
+    _permission: 'access content'
+    id: '\d+'
+    type: '[a-z_0-9]+'
+    token: '[A-Za-z0-9\-_]+'
+  options:
+    _csrf_token: 'FALSE'
+    no_cache: TRUE
+sl_signalements.variants_api:
+  path: '/api/sl/variants/{nid}'
+  defaults:
+    _controller: '\Drupal\sl_signalements\Controller\VariantsApiController::variants'
+    _title: 'Athlete variants'
+  requirements:
+    _access: 'TRUE'
+    nid: '\d+'
+  methods: [GET]
+sl_signalements.settings:
+  path: '/admin/config/content/sl-signalements'
+  defaults:
+    _form: '\Drupal\sl_signalements\Form\SlSignalementsSettingsForm'
+    _title: 'Paramètres - SL Signalements'
+  requirements:
+    _permission: 'administer site configuration'
+
+sl_signalements.flood_reset:
+  path: '/admin/sl-signalements/flood-reset'
+  defaults:
+    _controller: '\Drupal\sl_signalements\Controller\FloodResetController::reset'
+    _title: 'Réinitialiser le flood des signalements'
+  requirements:
+    _permission: 'administer sl_signalements flood'
+  options:
+    no_cache: TRUE

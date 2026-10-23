@@ -1,0 +1,9 @@
+name: Combat Propositions
+type: module
+description: 'Module permettant de proposer et voter des combats de lutteurs.'
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - drupal:node
+  - shared_lib:shared_lib
+  - misc_divers:misc_divers

@@ -1,0 +1,19 @@
+uuid: 761f0ca3-4aef-4293-b300-defe0c3ea746
+langcode: fr
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_avenir_face2face
+field_name: field_avenir_face2face
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 4
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

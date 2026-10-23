@@ -1,0 +1,23 @@
+uuid: 956a31af-85a5-4f6e-af76-bdabf42f6e74
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_face_2_face
+    - node.type.confrontation
+  module:
+    - link
+id: node.confrontation.field_face_2_face
+field_name: field_face_2_face
+entity_type: node
+bundle: confrontation
+label: 'Face à face'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link

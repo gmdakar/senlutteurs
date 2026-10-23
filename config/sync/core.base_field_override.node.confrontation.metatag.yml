@@ -1,0 +1,20 @@
+uuid: 13f561e7-a27f-4667-ba88-1ed3815868cf
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.confrontation
+  module:
+    - metatag
+id: node.confrontation.metatag
+field_name: metatag
+entity_type: node
+bundle: confrontation
+label: 'Balises meta (champ caché pour la prise en charge du JSON)'
+description: 'The computed meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag_computed

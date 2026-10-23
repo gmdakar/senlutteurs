@@ -1,0 +1,6 @@
+title: اشتراك
+settings:
+  confirmation_message: 'Merci de votre inscription.'
+handlers:
+  email_notification:
+    label: 'Notification par courriel'

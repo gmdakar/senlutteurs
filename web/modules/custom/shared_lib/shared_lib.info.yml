@@ -1,0 +1,10 @@
+name: Shared Library
+type: module
+description: Base shared library for custom modules.
+package: Custom
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:node
+  - sl_live_search:sl_live_search
+  - drupal:language
+  - drupal:content_translation

@@ -1,0 +1,26 @@
+services:
+  logger.channel.sl_rag:
+    parent: logger.channel_base
+    arguments: ['sl_rag']
+
+  sl_rag.entity_textualizer:
+    class: Drupal\sl_rag\Service\RagEntityTextualizerService
+    arguments:
+      - '@entity_type.manager'
+      - '@logger.channel.sl_rag'
+
+  sl_rag.vector_search_client:
+    class: Drupal\sl_rag\Service\VectorSearchClient
+    arguments:
+      - '@config.factory'
+      - '@http_client_factory'
+      - '@logger.channel.sl_rag'
+
+  sl_rag.ask_service:
+    class: Drupal\sl_rag\Service\RagAskService
+    arguments:
+      - '@sl_rag.entity_textualizer'
+      - '@entity_type.manager'
+      - '@logger.channel.sl_rag'
+      - '@sl_live_search.live_search_service'
+      - '@sl_rag.vector_search_client'

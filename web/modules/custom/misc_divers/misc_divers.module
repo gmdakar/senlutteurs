@@ -1,0 +1,845 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Misc / Divers module.
+ */
+
+use Drupal\views\ViewExecutable;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Symfony\Component\HttpFoundation\Request;
+use Drupal\search_api\Entity\Index;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\node\NodeInterface;
+use Drupal\shared_lib\Tools\SomeTools;
+use Drupal\search_api\Plugin\views\query\SearchApiQuery;
+use Drupal\Core\Entity\ContentEntityInterface;
+
+function misc_divers_critical_css_file_paths_suggestion_alter(array &$file_paths, ?ContentEntityInterface $entity) {
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
+    // Prendre le premier chemin comme modèle pour construire le répertoire
+    // ex: "themes/custom/sl_theme/critical-css/path-node.css"
+    $first = reset($file_paths);
+    $dir = dirname($first);
+    array_unshift($file_paths, $dir . '/front.css');
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for node entities.
+ */
+function misc_divers_node_presave(Drupal\node\NodeInterface $node) {
+
+  // === CONFRONTATION ===
+  if ($node->getType() === 'confrontation') {
+
+    if (!empty($node->_skip_other_only_update_videos)) {
+      return;
+    }
+
+    // -------------------------------------------------------------------------
+    // FORCER PATHAUTO : Toujours forcer la génération automatique de l'alias
+    // Cela recochera la case si elle était décochée et mettra à jour l'URL.
+    // -------------------------------------------------------------------------
+    if ($node->hasField('path')) {
+      $node->path->pathauto = 1;
+    }
+    // -------------------------------------------------------------------------
+
+    if ($node->get('field_id_text')->isEmpty()) return;
+
+    $value = $node->get('field_id_text')->value;
+
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'confrontation')
+      ->condition('field_id_text', $value)
+      ->accessCheck(FALSE);
+
+    if (!$node->isNew()) {
+      $query->condition('nid', $node->id(), '!=');
+    }
+
+    $results = $query->execute();
+    if (!empty($results)) {
+      $existing_nid = reset($results);
+      \Drupal::logger('misc_divers')->debug("field_id_text '$value' déjà utilisé par le nœud $existing_nid — save annulé.");
+    }
+  }
+
+  // === ATHLETE ===
+  if ($node->getType() === 'athlete') {
+
+    // -------------------------------------------------------------------------
+    // FORCE SEARCH : si field_search_combats est coché, on bypasse tout
+    // et on force l'ajout en queue, puis on décoche automatiquement.
+    // Ce bloc doit être AVANT le guard _skip_other_only_update_videos.
+    // -------------------------------------------------------------------------
+    if (
+      !$node->isNew()
+      && $node->hasField('field_search_combats')
+      && (bool) $node->get('field_search_combats')->value === TRUE
+    ) {
+      $queue = \Drupal::queue('add_confrontations_athlete_queue');
+      $queue->createItem([
+        'nid'   => $node->id(),
+        'cpt'   => PHP_INT_MAX, // valeur sentinelle : bypasse le seuil dans le worker
+        'force' => TRUE,        // flag explicite pour le worker
+      ]);
+
+      // Décochage automatique avant la sauvegarde effective.
+      $node->set('field_search_combats', FALSE);
+
+      \Drupal::logger('misc_divers')->notice(
+        'field_search_combats : Lutteur "@title" (NID @nid) forcé en queue add_confrontations_athlete_queue.',
+        ['@title' => $node->getTitle(), '@nid' => $node->id()]
+      );
+
+      // On ne retourne pas : le reste du presave (unicité nom technique, etc.)
+      // doit continuer à s'exécuter normalement.
+    }
+    // -------------------------------------------------------------------------
+
+    if (!empty($node->_skip_other_only_update_videos)) {
+      return;
+    }
+
+    // -------------------------------------------------------------------------
+    // FORCER PATHAUTO : Toujours forcer la génération automatique de l'alias
+    // -------------------------------------------------------------------------
+    if ($node->hasField('path')) {
+      $node->path->pathauto = 1;
+    }
+    // -------------------------------------------------------------------------
+
+    if ($node->get('field_athlete_nom_technique')->isEmpty()) return;
+
+    $value = $node->get('field_athlete_nom_technique')->value;
+
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'athlete')
+      ->condition('field_athlete_nom_technique', $value)
+      ->accessCheck(FALSE);
+
+    if (!$node->isNew()) {
+      $query->condition('nid', $node->id(), '!=');
+    }
+
+    $results = $query->execute();
+    if (!empty($results)) {
+      $existing_nid = reset($results);
+      \Drupal::logger('misc_divers')->debug("field_athlete_nom_technique '$value' déjà utilisé par le nœud $existing_nid — save annulé.");
+    }
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ * Sécurise l'affichage des opérations Search API sur la vue confrontations.
+ */
+function misc_divers_views_pre_render(ViewExecutable $view) {
+  if ($view->id() == 'confrontations' && ($view->current_display == 'block_3' || $view->current_display == 'page_1' || $view->current_display == 'page_2')) {
+    $current_user = \Drupal::currentUser();
+    $is_admin = in_array('administrator', $current_user->getRoles());
+
+    if (!$is_admin) {
+      unset($view->field['search_api_operations']);
+    }
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function misc_divers_cron() {
+  $nb_days = 0;
+  $site_tz = new \DateTimeZone(date_default_timezone_get());
+  $now = new \Drupal\Core\Datetime\DrupalDateTime('now', $site_tz);
+
+  $query = \Drupal::entityTypeManager()->getStorage('node')->getQuery();
+
+  $group = $query->orConditionGroup()
+    ->condition('field_no_index', 0)
+    ->notExists('field_no_index');
+
+  $nids = $query
+    ->condition('type', 'a_venir')
+    ->condition($group)
+    ->accessCheck(FALSE)
+    ->condition('status', 1)
+    ->execute();
+
+  \Drupal::logger('misc_divers')->debug('Les nids à venir expirés et non noindex: @vr', ['@vr' => print_r($nids, TRUE)]);
+
+  if (!empty($nids)) {
+    $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
+    foreach ($nodes as $node) {
+      if ($node->hasField('field_date') && !$node->get('field_date')->isEmpty()) {
+        $event_date = new \Drupal\Core\Datetime\DrupalDateTime($node->get('field_date')->value, $site_tz);
+        $diff_seconds = $event_date->getTimestamp() - $now->getTimestamp();
+        $nb_seconds = $nb_days * 24 * 60 * 60;
+
+        if ($diff_seconds <= $nb_seconds) {
+          if ($node->hasField('field_no_index') && !$node->get('field_no_index')->value) {
+            $node->set('field_no_index', TRUE);
+          }
+          $node->setChangedTime(time());
+          $node->save();
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function misc_divers_page_attachments(array &$attachments) {
+  $route_match = \Drupal::routeMatch();
+
+  if ($route_match->getRouteName() !== 'entity.node.canonical') {
+    return;
+  }
+
+  $node = $route_match->getParameter('node');
+  if (!$node instanceof \Drupal\node\NodeInterface) {
+    return;
+  }
+
+  if ($node->bundle() !== 'a_venir') {
+    return;
+  }
+
+  if (!$node->hasField('field_no_index') || !$node->get('field_no_index')->value) {
+    return;
+  }
+
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#tag' => 'meta',
+      '#attributes' => [
+        'name' => 'robots',
+        'content' => 'noindex',
+      ],
+    ],
+    'misc_divers_noindex',
+  ];
+}
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function misc_divers_views_query_alter(\Drupal\views\ViewExecutable $view, \Drupal\views\Plugin\views\query\QueryPluginBase $query) {
+  if ($view->id() == 'a_venir') {
+    if ($view->current_display !== 'block_2')
+      return;
+
+    // Récupérer le node courant via la route.
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if (!$node instanceof NodeInterface || $node->bundle() !== 'athlete') {
+      return;
+    }
+
+    $lutteur_nid = $node->id();
+
+    /** @var \Drupal\views\Plugin\views\query\Sql $query */
+    $condition = $query->getConnection()->condition('OR');
+    $condition->condition('node__field_lutteur_1.field_lutteur_1_target_id', $lutteur_nid);
+    $condition->condition('node__field_lutteur_2.field_lutteur_2_target_id', $lutteur_nid);
+
+    // S'assurer que les tables sont jointes.
+    $query->ensureTable('node__field_lutteur_1');
+    $query->ensureTable('node__field_lutteur_2');
+
+    $query->addWhere(0, $condition);
+  }
+  
+  if ($view->id() !== 'confrontations' || $view->current_display !== 'block_3') {
+    return;
+  }
+
+  if (!$query instanceof SearchApiQuery) {
+    return;
+  }
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+
+  if (!$node instanceof NodeInterface) {
+    $node = _misc_divers_node_from_referer();
+  }
+
+  if (!$node instanceof NodeInterface) {
+    $node = _misc_divers_node_from_view_path();
+  }
+
+  if (!$node instanceof NodeInterface) {
+    return;
+  }
+
+  $nid = $node->id();
+  $search_query = $query->getSearchApiQuery();
+  $or_group = $search_query->createConditionGroup('OR');
+  $or_group->addCondition('field_athlete_1', $nid);
+  $or_group->addCondition('field_athlete_2', $nid);
+  $search_query->addConditionGroup($or_group);
+}
+
+/**
+ * Tente de résoudre le node depuis le header HTTP Referer.
+ */
+function _misc_divers_node_from_referer(): ?NodeInterface {
+  $referer = \Drupal::request()->headers->get('referer');
+  if (!$referer) {
+    return NULL;
+  }
+
+  $parsed = parse_url($referer);
+  $path   = $parsed['path'] ?? '';
+
+  $base = rtrim(base_path(), '/');
+  if ($base !== '' && str_starts_with($path, $base)) {
+    $path = substr($path, strlen($base));
+  }
+
+  return _misc_divers_node_from_path($path);
+}
+
+/**
+ * Tente de résoudre le node depuis le paramètre POST view_path.
+ */
+function _misc_divers_node_from_view_path(): ?NodeInterface {
+  $path = \Drupal::request()->request->get('view_path');
+  return $path ? _misc_divers_node_from_path($path) : NULL;
+}
+
+/**
+ * Résout un node depuis un chemin interne Drupal.
+ */
+function _misc_divers_node_from_path(string $path): ?NodeInterface {
+  if (empty($path)) {
+    return NULL;
+  }
+  try {
+    $url    = \Drupal\Core\Url::fromUserInput($path);
+    $params = $url->getRouteParameters();
+    if (!empty($params['node'])) {
+      return \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->load($params['node']);
+    }
+  }
+  catch (\Exception $e) {
+    // Chemin non résolvable, on laisse passer.
+  }
+  return NULL;
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function misc_divers_entity_view_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display) {
+
+  // WARMING GUARD — approche Drupal State (warming.sh / permanent_warming.sh).
+  //
+  // Les scripts de chauffe activent "warming_in_progress" via drush state:set
+  // AVANT de lancer leurs curls, et le suppriment après (trap EXIT).
+  // LSCache reçoit des requêtes curl normales → il met en cache → HIT ✓.
+  //
+  // Ici on court-circuite TOUT le bloc LESS + queue pour les requêtes de chauffe :
+  //   • $state->set(cpt_lutteur_…)          → pas d'incrément artificiel
+  //   • queue add_confrontations_athlete_queue → pas d'enqueue
+  //   • logger LESS                            → pas de faux positifs
+  //
+  // Sans ce guard, chaque page athlete visitée par le warming enfilerait un item
+  // → le worker sauvegarde des nodes → hook_entity_update → invalidation Search API
+  // → queue Purge explose (> 100 000 items).
+  //
+  // Timeout de sécurité : si le script est tué brutalement et que le flag reste
+  // à 1, on le considère périmé après 2 h pour ne pas bloquer les vrais humains.
+  $warming_started = \Drupal::state()->get('warming_started_at', 0);
+  $warming_active  = \Drupal::state()->get('warming_in_progress');
+
+  if ($warming_active) {
+    if ((time() - $warming_started) < 7200) {
+      // Warming en cours et dans les temps → on court-circuite.
+      return;
+    }
+    // Timeout dépassé : flag périmé, on nettoie et on laisse passer.
+    \Drupal::state()->delete('warming_in_progress');
+    \Drupal::state()->delete('warming_started_at');
+    \Drupal::logger('misc_divers')->warning(
+      'WARMING GUARD : flag warming_in_progress périmé (> 2h), nettoyage automatique.'
+    );
+  }
+
+  $node =  \Drupal::routeMatch()->getParameter('node');
+  $config = \Drupal::config('misc_divers.settings');
+  $seuil_max_number_fights = (int) ($config->get('seuil_max_number_fights') ?? 5);
+  $seuil_cpt_to_complet_combats = (int) ($config->get('seuil_cpt_to_complet_combats') ?? 5);
+
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'athlete') {
+
+    if ($node instanceof \Drupal\node\NodeInterface && $node->bundle() === 'athlete') {
+
+      $route_name = \Drupal::routeMatch()->getRouteName();
+      if ($route_name !== 'entity.node.canonical') {
+        return;
+      }
+
+      $request_path = \Drupal::request()->getPathInfo();
+      if (preg_match('#^/node/\d+/(edit|revisions|delete|layout)#', $request_path)) {
+        return;
+      }
+
+      $athlete_nid = $node->id();
+      $current_user = \Drupal::currentUser();
+      $request = \Drupal::request();
+
+      $query = \Drupal::entityQuery('node')
+        ->condition('type', 'confrontation')
+        ->condition('status', 1)
+        ->condition(\Drupal::entityQuery('node')->orConditionGroup()
+          ->condition('field_athlete_1', $athlete_nid)
+          ->condition('field_athlete_2', $athlete_nid)
+        )
+        ->accessCheck(FALSE)
+        ->count();
+
+      $get_number_fights = $query->execute();
+
+      $is_already_checked = !$node->get('field_not_check')->isEmpty() && $node->get('field_not_check')->value;
+      if ($is_already_checked) {
+        /*\Drupal::logger('misc_divers')->warning('LESS field_not_check est déjà à TRUE pour le lutteur : @title (NID: @nid)', [
+          '@title' => $node->getTitle(),
+          '@nid'   => $node->id(),
+        ]);*/
+      }
+
+      // BLOC ADMIN
+      if ($current_user->hasPermission('administer nodes') || in_array('administrator', $current_user->getRoles())) {
+        $build['confrontations_count'] = [
+          '#markup' => '<div class="athlete-stats-admin mb-5 text-secondary">' .
+                       '<strong>[ADMIN]</strong> Nombre de combats trouvés : ' . $get_number_fights .
+                       ($is_already_checked ? ' <span class="badge badge-success">(Vérifié)</span>' : '') .
+                       '</div>',
+          '#weight' => -10,
+          '#cache' => [
+            'contexts' => ['user.roles', 'url.query_args:_tocheck'],
+            'tags' => $node->getCacheTags(),
+          ],
+        ];
+      }
+      // BLOC LOGS : uniquement pour les anonymes
+      elseif ($current_user->isAnonymous()) {
+        $is_tocheck_url = \Drupal::request()->query->get('_tocheck');
+
+        if ($get_number_fights < $seuil_max_number_fights && !$is_already_checked && $is_tocheck_url != 1) {
+
+          $node_url = \Drupal\Core\Url::fromRoute('entity.node.canonical',
+            ['node' => $athlete_nid],
+            ['absolute' => TRUE, 'query' => ['_tocheck' => 1]]
+          )->toString();
+
+          $queue = \Drupal::queue('add_confrontations_athlete_queue');
+          $state = \Drupal::state();
+          $athlete_node = \Drupal\node\Entity\Node::load($athlete_nid);
+
+          $cpt_state_key = "cpt_lutteur_" . $athlete_nid;
+          $current_cpt = $state->get($cpt_state_key, 0) + 1;
+
+          $state->set($cpt_state_key, $current_cpt);
+
+          $queue = \Drupal::queue('add_confrontations_athlete_queue');
+          if ($current_cpt === $seuil_cpt_to_complet_combats) {
+            $queue->createItem([
+              'nid' => $athlete_nid,
+              'cpt' => $current_cpt,
+            ]);
+          }
+
+          if ($build['#view_mode'] === 'full') {
+            $build['#attached']['library'][] = 'misc_divers/misc_divers_assets';
+            $build['#attached']['drupalSettings']['athlete_cpt_counter']['nid'] = $athlete_nid;
+          }
+
+          /*\Drupal::logger('misc_divers')->warning('LESS : Lutteur @title (@count combats) : <a href="@url">Inspecter le NID @nid</a>', [
+            '@count' => $get_number_fights,
+            '@url'   => $node_url,
+            '@nid'   => $athlete_nid,
+            '@title' => $node->getTitle(),
+          ]);*/
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implémentation de hook_entity_insert().
+ */
+function misc_divers_entity_insert(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'node') {
+    _misc_divers_force_indexation($entity); //indexation search api
+
+    if($_ENV['ENVIRONMENT'] == 'prod')
+      _misc_divers_google_index_new_node($entity); //indexation google crawler
+
+    _misc_divers_alert_surveiller_confrontation($entity, 'add');
+  }
+}
+
+/**
+ * Implements hook_entity_predelete().
+ */
+function misc_divers_entity_predelete(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() !== 'node') {
+    return;
+  }
+
+  // Alerte surveiller : on logue ici car après delete le node n'est plus chargeable.
+  // Un effet de bord (log/mail) ne doit jamais bloquer la suppression.
+  if ($entity->bundle() === 'confrontation') {
+    try {
+      _misc_divers_alert_surveiller_confrontation($entity, 'delete');
+    }
+    catch (\Throwable $e) {
+      \Drupal::logger('misc_divers')->warning('Alerte surveiller (predelete) ignorée pour NID @nid : @msg', [
+        '@nid' => $entity->id(),
+        '@msg' => $e->getMessage(),
+      ]);
+    }
+  }
+
+  if (!in_array($entity->bundle(), ['athlete', 'confrontation'], TRUE)) {
+    return;
+  }
+  if (!$entity instanceof \Drupal\node\NodeInterface) {
+    return;
+  }
+  if (!(isset($_ENV['ENVIRONMENT']) && $_ENV['ENVIRONMENT'] === 'prod')) {
+    return;
+  }
+
+  try {
+    $base_url = rtrim($GLOBALS['base_url'] ?? '', '/');
+    if (empty($base_url) || str_starts_with($base_url, 'http://default')) {
+      $base_url = 'https://www.senlutteurs.com';
+    }
+    $alias = $entity->toUrl('canonical')->toString();
+    $path  = parse_url($alias, PHP_URL_PATH);
+    $path  = str_replace('/web/', '/', $path);
+    $url   = $base_url . $path;
+
+    \Drupal::state()->set('misc_divers_pending_delete_url_' . $entity->id(), $url);
+
+  } catch (\Exception $e) {
+    \Drupal::logger('misc_divers')->warning(
+      'Google Indexing (predelete) : impossible de résoudre l\'URL pour NID @nid : @msg',
+      ['@nid' => $entity->id(), '@msg' => $e->getMessage()]
+    );
+  }
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function misc_divers_entity_delete(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() !== 'node') {
+    return;
+  }
+
+  // Purge LSCache + désindexation Search API : ne doivent jamais bloquer la
+  // suppression du node (toutes ses traductions sont supprimées avec lui).
+  try {
+    _misc_divers_purge_lscache($entity);
+
+    $index = \Drupal\search_api\Entity\Index::load('default_index');
+    if ($index && $index->status()) {
+      // IDs d'items Search API = "nid:langcode" (une entrée par traduction).
+      $index->trackItemsDeleted('entity:node', _misc_divers_search_api_item_ids($entity));
+    }
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('misc_divers')->warning('Nettoyage post-suppression ignoré pour NID @nid : @msg', [
+      '@nid' => $entity->id(),
+      '@msg' => $e->getMessage(),
+    ]);
+  }
+
+  // Notification Google Indexing API (prod uniquement).
+  if (
+    isset($_ENV['ENVIRONMENT']) && $_ENV['ENVIRONMENT'] === 'prod'
+    && in_array($entity->bundle(), ['athlete', 'confrontation'], TRUE)
+    && $entity instanceof \Drupal\node\NodeInterface
+  ) {
+    $state_key = 'misc_divers_pending_delete_url_' . $entity->id();
+    $url = \Drupal::state()->get($state_key);
+    \Drupal::state()->delete($state_key);
+
+    if (!$url) {
+      \Drupal::logger('misc_divers')->warning(
+        'Google Indexing (delete) : URL inconnue pour NID @nid (predelete non exécuté ?).',
+        ['@nid' => $entity->id()]
+      );
+      return;
+    }
+
+    try {
+      /** @var \Drupal\sl_crawler_index\Service\GoogleIndexer $indexer */
+      $indexer = \Drupal::service('sl_crawler_index.google_indexer');
+      $indexer->notifyUrl($url, 'URL_DELETED');
+
+      \Drupal::logger('misc_divers')->notice(
+        'Google Indexing (delete) : URL @url (NID @nid) soumise avec succès.',
+        ['@url' => $url, '@nid' => $entity->id()]
+      );
+
+    } catch (\Drupal\sl_crawler_index\Exception\QuotaExceededException $e) {
+      \Drupal::logger('misc_divers')->warning(
+        'Google Indexing (delete) : quota dépassé pour @url (NID @nid).',
+        ['@url' => $url, '@nid' => $entity->id()]
+      );
+    } catch (\Exception $e) {
+      \Drupal::logger('misc_divers')->warning(
+        'Google Indexing (delete) : échec pour @url (NID @nid) : @msg',
+        ['@url' => $url, '@nid' => $entity->id(), '@msg' => $e->getMessage()]
+      );
+    }
+  }
+}
+
+/**
+ * S'assure que misc_divers_entity_insert tourne après Pathauto.
+ */
+function misc_divers_module_implements_alter(&$implementations, $hook) {
+  if (in_array($hook, ['entity_insert', 'entity_delete', 'entity_predelete'], TRUE)) {
+    $group = $implementations['misc_divers'];
+    unset($implementations['misc_divers']);
+    $implementations['misc_divers'] = $group;
+  }
+}
+
+/**
+ * Soumet l'URL d'un nouveau node athlete ou confrontation à Google Indexing API.
+ */
+/**
+ * Soumet l'URL d'un nouveau node athlete ou confrontation à Google Indexing API.
+ */
+function _misc_divers_google_index_new_node(EntityInterface $entity) {
+  if (!$entity instanceof \Drupal\node\NodeInterface) {
+    return;
+  }
+
+  $allowed_types = ['athlete', 'confrontation'];
+  if (!in_array($entity->bundle(), $allowed_types, TRUE)) {
+    return;
+  }
+
+  if (!$entity->isPublished()) {
+    return;
+  }
+
+  $url = NULL;
+
+  try {
+    $base_url = rtrim($GLOBALS['base_url'] ?? '', '/');
+
+    if (empty($base_url) || str_starts_with($base_url, 'http://default')) {
+      $base_url = 'https://www.senlutteurs.com';
+    }
+
+    // Alias généré par Pathauto au moment du save, langue incluse
+    $alias = $entity->toUrl('canonical')->toString();
+
+    // Extrait le path et strip le préfixe /web/ parasite (document root)
+    $path = parse_url($alias, PHP_URL_PATH);
+    $path = str_replace('/web/', '/', $path, $count);
+
+    $url = $base_url . $path;
+
+    /** @var \Drupal\sl_crawler_index\Service\GoogleIndexer $indexer */
+    $indexer = \Drupal::service('sl_crawler_index.google_indexer');
+    $indexer->notifyUrl($url, 'URL_UPDATED');
+
+  } catch (\Drupal\sl_crawler_index\Exception\QuotaExceededException $e) {
+    \Drupal::logger('misc_divers')->warning('Google Indexing : quota dépassé pour @url.', [
+      '@url' => $url ?? '/node/' . $entity->id(),
+    ]);
+  } catch (\Exception $e) {
+    \Drupal::logger('misc_divers')->warning('Google Indexing : échec pour @url : @msg', [
+      '@url' => $url ?? '/node/' . $entity->id(),
+      '@msg' => $e->getMessage(),
+    ]);
+  }
+}
+
+/**
+ * Implémentation de hook_entity_update().
+ */
+function misc_divers_entity_update(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'node') {
+    _misc_divers_force_indexation($entity); //indexation search api
+    _misc_divers_purge_lscache($entity);
+  }
+}
+
+function _misc_divers_purge_lscache(EntityInterface $entity) {
+  $tag = 'a6ef' . 'node:' . $entity->id();
+  
+  // LiteSpeed intercepte ce header dans la réponse HTTP
+  header('X-LiteSpeed-Purge: ' . $tag);
+  
+  \Drupal::logger('misc_divers')->info('LSCache purge header sent for @tag', [
+    '@tag' => $tag,
+  ]);
+}
+
+/**
+ * Purge LSCache pour un node modifié.
+ */
+function _2misc_divers_purge_lscache(EntityInterface $entity) {
+  $tag = 'a6efnode:' . $entity->id();
+
+  $ch = curl_init();
+  curl_setopt_array($ch, [
+    CURLOPT_URL => 'http://127.0.0.1/',
+    CURLOPT_CUSTOMREQUEST => 'PURGE',
+    CURLOPT_HTTPHEADER => [
+      'Host: www.senlutteurs.com',
+      'X-LiteSpeed-Tag: ' . $tag,
+    ],
+    CURLOPT_RETURNTRANSFER => TRUE,
+    CURLOPT_TIMEOUT => 4,
+  ]);
+  $result = curl_exec($ch);
+  curl_close($ch);
+
+  \Drupal::logger('misc_divers')->info('LSCache purge @tag: @result', [
+    '@tag' => $tag,
+    '@result' => $result,
+  ]);
+}
+
+/**
+ * Retourne les IDs d'items Search API ("nid:langcode") de toutes les
+ * traductions d'une entité.
+ */
+function _misc_divers_search_api_item_ids(EntityInterface $entity): array {
+  $langcodes = $entity instanceof \Drupal\Core\TypedData\TranslatableInterface
+    ? array_keys($entity->getTranslationLanguages())
+    : [$entity->language()->getId()];
+
+  $ids = [];
+  foreach ($langcodes as $langcode) {
+    $ids[] = $entity->id() . ':' . $langcode;
+  }
+  return $ids;
+}
+
+/**
+ * Force la réindexation immédiate d'un node dans Search API.
+ */
+function _misc_divers_force_indexation(EntityInterface $entity) {
+  $index = Index::load('default_index');
+
+  if (!$index || !$index->status()) {
+    \Drupal::logger('misc_divers')->warning('Index "default_index" non trouvé ou inactif.');
+    return;
+  }
+
+  // IDs d'items Search API = "nid:langcode" : toutes les traductions du node.
+  $index->trackItemsUpdated('entity:node', _misc_divers_search_api_item_ids($entity));
+  $index->indexItems(['entity:node' => [$entity->id()]]);
+
+  \Drupal::logger('misc_divers')->notice('Node @nid réindexé immédiatement dans default_index.', [
+    '@nid' => $entity->id(),
+  ]);
+}
+
+/**
+ * Vérifie si une confrontation concerne un athlete avec field_a_surveiller = TRUE
+ * et logue une alerte warning si c'est le cas.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   Le node confrontation concerné.
+ * @param string $action
+ *   'add' ou 'delete'.
+ */
+function _misc_divers_alert_surveiller_confrontation(EntityInterface $entity, string $action): void {
+  if (!$entity instanceof \Drupal\node\NodeInterface) {
+    return;
+  }
+  if ($entity->bundle() !== 'confrontation') {
+    return;
+  }
+
+  $athlete_fields = ['field_athlete_1', 'field_athlete_2'];
+
+  foreach ($athlete_fields as $field_name) {
+    if (!$entity->hasField($field_name) || $entity->get($field_name)->isEmpty()) {
+      continue;
+    }
+
+    /** @var \Drupal\node\NodeInterface|null $athlete */
+    $athlete = $entity->get($field_name)->entity;
+
+    if (!$athlete instanceof \Drupal\node\NodeInterface) {
+      continue;
+    }
+
+    if (
+      $athlete->hasField('field_a_surveiller')
+      && (bool) $athlete->get('field_a_surveiller')->value === TRUE
+    ) {
+      $context = [
+        '@action'        => $action,
+        '@nid'           => $entity->id(),
+        '@title'         => $entity->getTitle(),
+        '@athlete_title' => $athlete->getTitle(),
+        '@athlete_nid'   => $athlete->id(),
+        '@field'         => $field_name,
+      ];
+
+      if ($action === 'add') {
+        try {
+          $confrontation_url = \Drupal\Core\Url::fromRoute(
+            'entity.node.canonical',
+            ['node' => $entity->id()],
+            ['absolute' => TRUE]
+          )->toString();
+          $context['@url'] = $confrontation_url;
+          $message = 'Alert action @action contenu confrontation: <a href="@url">@nid/@title</a> (athlete surveillé : @athlete_title, NID @athlete_nid, champ @field)';
+        }
+        catch (\Exception $e) {
+          $message = 'Alert action @action contenu confrontation: @nid/@title (athlete surveillé : @athlete_title, NID @athlete_nid, champ @field)';
+        }
+      }
+      else {
+        $message = 'Alert action @action contenu confrontation: @nid/@title (athlete surveillé : @athlete_title, NID @athlete_nid, champ @field)';
+      }
+
+      \Drupal::logger('misc_divers')->error($message, $context); //error et pas warning just pour recevoir un mail... via la config monolog
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function misc_divers_preprocess_field(array &$variables) {
+  $allowed_fields = ['field_date', 'field_confrontation_date'];
+
+  if (in_array($variables['element']['#field_name'], $allowed_fields, TRUE)) {
+
+    $field_name = $variables['element']['#field_name'];
+    $node = $variables['element']['#object'];
+
+    if ($node->hasField($field_name) && !$node->get($field_name)->isEmpty()) {
+      $variables['raw_date'] = $node->get($field_name)->value;
+    }
+
+    $variables['current_lang'] = \Drupal::languageManager()
+      ->getCurrentLanguage()
+      ->getId();
+  }
+}

@@ -1,0 +1,8 @@
+label: 'جميع ملوك الحلبة'
+display:
+  default:
+    display_options:
+      title: 'جميع ملوك الحلبة'
+  block_1:
+    display_options:
+      title: 'جميع ملوك الحلبة'

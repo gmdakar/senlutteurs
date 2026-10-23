@@ -1,0 +1,23 @@
+uuid: ed4d2d2d-a1af-471a-a490-b47e7ac2f14b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_debut
+    - node.type.roi_des_arenes
+  module:
+    - datetime
+_core:
+  default_config_hash: pmJXbhwsz2pPBnG3rsaz2GXTwTViniqzUoLq-lokRJw
+id: node.roi_des_arenes.field_date_debut
+field_name: field_date_debut
+entity_type: node
+bundle: roi_des_arenes
+label: 'Date de début de règne'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

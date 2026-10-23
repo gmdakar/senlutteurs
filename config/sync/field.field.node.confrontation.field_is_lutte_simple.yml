@@ -1,0 +1,23 @@
+uuid: 6f042be7-9056-44f3-b83b-4e532d05c98b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_is_lutte_simple
+    - node.type.confrontation
+id: node.confrontation.field_is_lutte_simple
+field_name: field_is_lutte_simple
+entity_type: node
+bundle: confrontation
+label: 'Lutte simple : '
+description: 'Si ce combat est un combat de lutte simple (sans frapp) ou pas (avec frappe)'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Oui
+  off_label: Non
+field_type: boolean

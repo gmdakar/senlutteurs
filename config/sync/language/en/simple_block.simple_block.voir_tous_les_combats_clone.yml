@@ -1,0 +1,4 @@
+title: 'View all wrestlers'
+content:
+  value: '<p><a href="/en/lutteurs">View all wrestlers</a></p>'
+  format: basic_html

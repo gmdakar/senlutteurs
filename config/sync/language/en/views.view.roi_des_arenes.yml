@@ -1,0 +1,8 @@
+label: 'All kings of the arena'
+display:
+  default:
+    display_options:
+      title: 'All kings of the arena'
+  block_1:
+    display_options:
+      title: 'All kings of the arena'

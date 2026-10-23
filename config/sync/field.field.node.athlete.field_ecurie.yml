@@ -1,0 +1,25 @@
+uuid: 7a48d772-8cfa-47c3-b305-e2afcedb43a3
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ecurie
+    - node.type.athlete
+id: node.athlete.field_ecurie
+field_name: field_ecurie
+entity_type: node
+bundle: athlete
+label: Écurie
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: liste_des_ecuries_stattus_publiees
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

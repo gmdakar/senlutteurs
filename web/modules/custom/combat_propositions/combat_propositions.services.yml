@@ -1,0 +1,9 @@
+services:
+  combat_propositions.ajax_form_controller:
+    class: Drupal\combat_propositions\Controller\AjaxFormController
+    tags:
+      - { name: controller.service_arguments }
+  combat_propositions.vote_controller:
+    class: Drupal\combat_propositions\Controller\VoteController
+    tags:
+      - { name: controller.service_arguments }

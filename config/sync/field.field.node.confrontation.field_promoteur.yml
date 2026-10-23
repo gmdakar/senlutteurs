@@ -1,0 +1,29 @@
+uuid: e5ff81f7-379f-4139-9d77-46f30a49bc1a
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_promoteur
+    - node.type.confrontation
+    - node.type.promoteur
+id: node.confrontation.field_promoteur
+field_name: field_promoteur
+entity_type: node
+bundle: confrontation
+label: Promoteur
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      promoteur: promoteur
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,18 @@
+uuid: fe5a36cb-575a-476f-977a-78e581923d94
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.a_venir
+id: node.a_venir.created
+field_name: created
+entity_type: node
+bundle: a_venir
+label: 'Écrit le'
+description: "La date et l'heure auxquelles le contenu a été créé."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

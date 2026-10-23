@@ -1,0 +1,23 @@
+# Light pour la prod (dblog commenté si besoin)
+parameters:
+  monolog.channel_handlers:
+    default: ['rotating_file', 'email_config', 'dblog']
+
+services:
+  # Handler Drupal logs (base de données)
+  monolog.handler.dblog:
+    class: Drupal\monolog\Logger\Handler\DrupalHandler
+    arguments: ['@logger.dblog']
+
+  # Rotation de logs quotidienne
+  monolog.handler.rotating_file:
+    class: Monolog\Handler\RotatingFileHandler
+    arguments:
+      - '%app.root%/../private/logs/prod.log'
+      - 30
+      - 'INFO'
+  #email handler errors
+  monolog.handler.email_config:
+    class: Monolog\Handler\NativeMailerHandler
+    factory: ['Drupal\misc_divers\Logger\MailHandlerFactory', 'create']
+    arguments: ['@config.factory']

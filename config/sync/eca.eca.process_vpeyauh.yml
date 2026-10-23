@@ -1,0 +1,44 @@
+uuid: 0e35623f-93cc-46a2-a92e-3053c80159cc
+langcode: fr
+status: true
+dependencies:
+  module:
+    - eca_base
+    - modeler_api
+third_party_settings:
+  modeler_api:
+    modeler_id: bpmn_io
+    data: 'hash:328cf69c4ea45dc69846b513a3121114'
+id: process_vpeyauh
+weight: 0
+template: false
+events:
+  eca_base__eca_custom_1:
+    plugin: 'eca_base:eca_custom'
+    label: 'Signalement combat'
+    configuration:
+      event_id: sl_signalements.signalement
+    successors:
+      -
+        id: Gateway_1h0vhh3
+        condition: ''
+conditions:
+  eca_scalar_171mtt9:
+    plugin: eca_scalar
+    label: 'Compare two scalar values'
+    configuration:
+      negate: false
+      left: key
+      right: s_lutte_simple
+      operator: equal
+      type: value
+      case: false
+gateways:
+  Gateway_1h0vhh3:
+    label: Gateway_1h0vhh3
+    type: 0
+    successors:
+      -
+        id: Activity_008chs1
+        condition: eca_scalar_171mtt9
+actions: {  }

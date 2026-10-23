@@ -1,0 +1,11 @@
+services:
+  sl_warming.commands:
+    class: Drupal\sl_warming\Drush\Commands\SlWarmingCommands
+    arguments:
+      - '@http_kernel'
+      - '@http_client'
+      - '@state'
+      - '@queue'
+      - '@router.request_context'
+    tags:
+      - { name: drush.command }

@@ -1,0 +1,8 @@
+content:
+  field_is_lutte_simple:
+    settings:
+      format_custom_true: 类型：无击打摔跤
+  field_confrontation_date:
+    settings:
+      timezone_override: Africa/Dakar
+      date_format: Y年n月j日

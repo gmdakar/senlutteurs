@@ -1,0 +1,27 @@
+uuid: a3d19b88-a4c1-48ae-ac12-b320163cb496
+langcode: fr
+status: true
+dependencies:
+  config:
+    - simple_block.simple_block.bloc_pub_2
+  module:
+    - simple_block
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_blocpub2
+theme: sl_theme
+region: content
+weight: -15
+provider: null
+plugin: 'simple_block:bloc_pub_2'
+settings:
+  id: 'simple_block:bloc_pub_2'
+  label: 'Bloc pub 2'
+  label_display: '0'
+  provider: simple_block
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/lutteurs/*'

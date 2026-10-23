@@ -1,0 +1,20 @@
+uuid: f1186899-d7f7-484d-9968-c38f614c46d4
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.promoteur
+id: node.promoteur.uid
+field_name: uid
+entity_type: node
+bundle: promoteur
+label: 'Écrit par'
+description: 'The username of the content author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

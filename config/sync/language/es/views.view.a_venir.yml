@@ -1,0 +1,22 @@
+label: Próximos
+display:
+  default:
+    display_options:
+      title: Próximos
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Reiniciar
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+  block_2:
+    display_options:
+      title: 'Próxima pelea del atleta'
+      header:
+        area:
+          content:
+            value: 'Su próxima pelea'
+            format: basic_html

@@ -1,0 +1,4 @@
+services:
+  fb_publisher.facebook_service:
+    class: Drupal\fb_publisher\Service\FacebookService
+    arguments: ['@config.factory']

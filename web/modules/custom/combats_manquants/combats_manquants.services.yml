@@ -1,0 +1,5 @@
+services:
+  combats_manquants.autocomplete_controller:
+    class: Drupal\combats_manquants\Controller\AutocompleteController
+    tags:
+      - { name: controller.service_arguments }

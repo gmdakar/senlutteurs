@@ -1,0 +1,21 @@
+_core:
+  default_config_hash: uEePITI9tV6WqzmsTb7MfPCi5yPWXSxAN1xeLcYFQbM
+session:
+  parameter: language
+url:
+  source: path_prefix
+  prefixes:
+    en: en
+    fr: fr
+    ar: ar
+    ja: ja
+    es: es
+    zh-hans: zh-hans
+  domains:
+    en: ''
+    fr: ''
+    ar: ''
+    ja: ''
+    es: ''
+    zh-hans: ''
+selected_langcode: site_default

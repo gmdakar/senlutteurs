@@ -1,0 +1,6 @@
+combats_manquants.settings:
+  title: 'Combats manquants'
+  description: 'Paramètres du formulaire public de proposition de combats manquants.'
+  parent: system.admin_config_services
+  route_name: combats_manquants.settings
+  weight: 0

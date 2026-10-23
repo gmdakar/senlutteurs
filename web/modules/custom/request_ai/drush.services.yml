@@ -1,0 +1,9 @@
+services:
+  request_ai.drush_commands:
+    class: Drupal\request_ai\Commands\requestAiTestCommands
+    arguments:
+      - '@sl_live_search.live_search_service'
+      - '@logger.factory'
+      - '@config.factory'
+    tags:
+      - { name: drush.command }

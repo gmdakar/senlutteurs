@@ -1,0 +1,154 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the SASS Starterkit subtheme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_preprocess_node().
+ *
+ * Les nœuds "a_venir" n'existent qu'en français (une seule traduction). Dans
+ * ce cas, le cœur de Drupal ne met AUCUN contexte de langue dans le cache de
+ * rendu du nœud (cf. EntityViewBuilder::getBuildDefaults() et
+ * EntityRepository::getTranslationFromContext()), et le formateur datetime
+ * n'ajoute que le contexte "timezone". Résultat : la date formatée dans la
+ * première langue rendue (pattern core.date_format.a_venir_block de cette
+ * langue) est resservie telle quelle aux autres langues, dont le chinois.
+ *
+ * On déclare donc que le rendu dépend de la langue d'interface. Le formatage
+ * lui-même est déjà correct : DateFormatter charge le pattern dans la langue
+ * courante (override config language/<langcode>/core.date_format.a_venir_block).
+ *
+ * Remarque : hook_entity_display_build_alter() n'est jamais appelé depuis un
+ * thème (uniquement via le ModuleHandler), l'ancienne implémentation ici était
+ * donc du code mort. hook_preprocess_HOOK() est en revanche bien supporté dans
+ * un thème, et $variables['#cache'] est remonté (bubbling) officiellement.
+ */
+function sl_theme_preprocess_node(array &$variables) {
+  $node = $variables['node'] ?? NULL;
+  if (!$node || $node->bundle() !== 'a_venir') {
+    return;
+  }
+
+  $variables['#cache']['contexts'][] = 'languages:language_interface';
+}
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ */
+function sl_theme_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+  $form['components']['navbar']['bootstrap_barrio_navbar_top_background']['#options'] = [
+    'bg-primary' => t('Primary'),
+    'bg-secondary' => t('Secondary'),
+    'bg-light' => t('Light'),
+    'bg-dark' => t('Dark'),
+    'bg-white' => t('White'),
+    'bg-transparent' => t('Transparent'),
+  ];
+  $form['components']['navbar']['bootstrap_barrio_navbar_background']['#options'] = [
+    'bg-primary' => t('Primary'),
+    'bg-secondary' => t('Secondary'),
+    'bg-light' => t('Light'),
+    'bg-dark' => t('Dark'),
+    'bg-white' => t('White'),
+    'bg-transparent' => t('Transparent'),
+  ];
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function sl_theme_page_attachments_alter(array &$attachments) {
+  $is_front = \Drupal::service('path.matcher')->isFrontPage();
+  if ($is_front) {
+    $attachments['#attached']['library'][] = 'sl_theme/front-styling';
+  }
+  else {
+    $attachments['#attached']['library'][] = 'sl_theme/interior-styling';
+  }
+
+  if (!empty($attachments['#attached']['html_head_link'])) {
+    foreach ($attachments['#attached']['html_head_link'] as $key => $element) {
+      if (isset($element[0]['rel']) && $element[0]['rel'] === 'alternate') {
+        unset($attachments['#attached']['html_head_link'][$key]);
+      }
+    }
+  }
+
+  if (!empty($attachments['#attached']['html_head'])) {
+    foreach ($attachments['#attached']['html_head'] as $key => $element) {
+      $name = $element[0]['#attributes']['name'] ?? '';
+      if ($name === 'viewport' || $name === 'robots') {
+        unset($attachments['#attached']['html_head'][$key]);
+      }
+    }
+  }
+
+  $attachments['#attached']['html_head'][] = [[
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => [
+      'name' => 'viewport',
+      'content' => 'width=device-width, initial-scale=1.0',
+    ],
+  ], 'viewport'];
+
+  $request = \Drupal::request();
+  if (!empty($request->query->all())) {
+    $attachments['#attached']['html_head'][] = [[
+      '#tag' => 'meta',
+      '#attributes' => [
+        'name' => 'robots',
+        'content' => 'noindex, nofollow',
+      ],
+    ], 'robots_noindex_query'];
+  }
+
+  $attachments['#attached']['drupalSettings']['superfish']['accordionToggle'] = [
+    'main' => t('Main navigation'),
+  ];
+}
+
+/**
+ * Implements hook_preprocess_field().
+ *
+ * - Fournit raw_date + current_lang aux templates de date custom
+ *   (confrontation + a_venir).
+ * - Fournit current_lang au template field_vainqueur (traduction Nul / Litige).
+ */
+function sl_theme_preprocess_field(array &$variables) {
+  $element = $variables['element'] ?? [];
+  $field_name = $element['#field_name'] ?? '';
+  $bundle = $element['#bundle'] ?? '';
+
+  $is_confrontation_date = ($field_name === 'field_confrontation_date' && $bundle === 'confrontation');
+  $is_a_venir_date = ($field_name === 'field_date' && $bundle === 'a_venir');
+  $is_vainqueur = ($field_name === 'field_vainqueur' && $bundle === 'confrontation');
+
+  if (!$is_confrontation_date && !$is_a_venir_date && !$is_vainqueur) {
+    return;
+  }
+
+  // Langue d'interface courante (zh-hans, fr, en, ...)
+  $variables['current_lang'] = \Drupal::languageManager()
+    ->getCurrentLanguage()
+    ->getId();
+
+  // Pour les dates uniquement
+  if ($is_confrontation_date || $is_a_venir_date) {
+    $items = $element['#items'] ?? NULL;
+    if ($items && !$items->isEmpty()) {
+      $value = $items->first()->value ?? NULL;
+      $variables['raw_date'] = $value;
+    }
+    else {
+      $variables['raw_date'] = NULL;
+    }
+  }
+
+  // Le rendu dépend de la langue
+  $variables['#cache']['contexts'][] = 'languages:language_interface';
+}

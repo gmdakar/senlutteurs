@@ -1,0 +1,11 @@
+uuid: 8d5e91f3-7d88-4420-b7ee-144ca01c9180
+langcode: fr
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+id: bloc_pub_2
+title: 'Bloc pub 2'
+content:
+  value: '<drupal-media data-entity-type="media" data-entity-uuid="22ba7190-9030-427d-9e6f-94cdf9241715" data-align="center">&nbsp;</drupal-media><p><img></p>'
+  format: full_html

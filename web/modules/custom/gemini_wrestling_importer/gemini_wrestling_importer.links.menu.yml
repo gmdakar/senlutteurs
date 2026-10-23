@@ -1,0 +1,18 @@
+gemini_wrestling_importer_cfg.settings:
+  title: 'Gemini Wrestling import Settings'
+  description: 'Configure Gemini Wrestling import API'
+  parent: system.admin_config_services 
+  route_name: gemini_wrestling_importer_cfg.settings
+  weight: 10
+gemini_wrestling_importer.form:
+  title: 'Gemini Wrestling import'
+  description: 'Gemini Wrestling import'
+  parent: system.admin_config_services 
+  route_name: gemini_wrestling_importer.form
+  weight: 11
+gemini_wrestling_importer.structured_form:
+  title: 'Wrestling import'
+  description: 'Structured Wrestling import'
+  parent: system.admin_config_services 
+  route_name: gemini_wrestling_importer.structured_form
+  weight: 8

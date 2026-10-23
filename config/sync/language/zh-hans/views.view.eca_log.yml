@@ -1,0 +1,46 @@
+display:
+  default:
+    display_title: 默认
+    display_options:
+      title: 日志
+      fields:
+        name:
+          label: 用户
+        timestamp:
+          label: 时间
+        message:
+          label: 消息
+        variables:
+          label: 置换符
+      pager:
+        options:
+          tags:
+            first: '« 首页'
+            last: '末页 »'
+          expose:
+            items_per_page_label: 每页条目数
+            items_per_page_options_all_label: '- 全部 -'
+            offset_label: 偏移量
+      exposed_form:
+        options:
+          submit_button: 应用
+          reset_button_label: 重置
+          exposed_sorts_label: 排序依据
+          sort_asc_label: 升序
+          sort_desc_label: 降序
+      filters:
+        timestamp:
+          expose:
+            label: 源自
+        timestamp_1:
+          expose:
+            label: 到
+  page_1:
+    display_title: 页面
+    display_options:
+      menu:
+        title: 日志
+  page_2:
+    display_options:
+      menu:
+        title: 日志

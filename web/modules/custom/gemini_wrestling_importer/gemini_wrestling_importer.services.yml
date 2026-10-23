@@ -1,0 +1,18 @@
+services:
+  gemini_wrestling_importer.service:
+    class: Drupal\gemini_wrestling_importer\Service\GeminiWrestlingService
+    arguments:
+      - '@http_client'
+      - '@config.factory'
+      - '@entity_type.manager'
+      - '@logger.factory'
+      - '@?sl_live_search.live_search_service' 
+
+  gemini_wrestling_importer.import_service:
+    class: Drupal\gemini_wrestling_importer\Service\ImportWrestlingService
+    arguments:
+      - '@http_client'
+      - '@config.factory'
+      - '@entity_type.manager'
+      - '@logger.factory'
+      - '@?sl_live_search.live_search_service'  

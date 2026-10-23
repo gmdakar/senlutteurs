@@ -1,0 +1,24 @@
+label: المصارعون
+display:
+  default:
+    display_options:
+      title: المصارعون
+      exposed_form:
+        options:
+          submit_button: تطبيق
+          reset_button_label: 'إعادة تعيين'
+      filters:
+        title:
+          expose:
+            label: 'تصفية حسب الاسم'
+      empty:
+        area:
+          content:
+            value: 'لا نتائج'
+            format: plain_text
+      use_more_text: 'عرض المزيد'
+  block_1:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: تطبيق

@@ -1,0 +1,4 @@
+/**
+ * @file
+ * Frontpage utilities.
+ */

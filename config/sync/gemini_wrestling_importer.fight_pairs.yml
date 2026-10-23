@@ -1,0 +1,11 @@
+pairs:
+  -
+    fighter: 'Laye Pythagore'
+    fights: .
+    import: 'Importer cette entrée'
+    remove: 'Supprimer cette entrée'
+  -
+    fighter: 'Mod Dia'
+    fights: "[\r\n  {\r\n    \"date_precise\": \"2025-12-14\",\r\n    \"source\": \"Archives de Presse / Médias Vidéo\",\r\n    \"is_lutte_simple\": 0,\r\n    \"lutteur1\": \"John Cena / Ecurie Kaay Bakh\",\r\n    \"lutteur2\": \"Bathie Séras 2 / Ecurie Niakourab\",\r\n    \"resultat\": \"\",\r\n    \"face2face\": \"\",\r\n    \"video_combat\": \"\"\r\n  },\r\n  {\r\n    \"date_precise\": \"2025-07-26\",\r\n    \"source\": \"Archives de Presse / Médias Vidéo\",\r\n    \"is_lutte_simple\": 0,\r\n    \"lutteur1\": \"Bathie Séras 2 / Ecurie Niakourab\",\r\n    \"lutteur2\": \"Ibou / Ecurie Grand Dakar\",\r\n    \"resultat\": \"\",\r\n    \"face2face\": \"\",\r\n    \"video_combat\": \"https://www.youtube.com/watch?v=87cldh23Cac\"\r\n  }\r\n]"
+    import: 'Importer cette entrée'
+    remove: 'Supprimer cette entrée'

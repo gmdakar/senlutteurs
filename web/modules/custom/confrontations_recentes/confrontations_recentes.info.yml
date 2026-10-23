@@ -1,0 +1,11 @@
+name: 'Confrontations récentes Cron'
+type: module
+description: 'Cron qui cherche les plus combats pour mettre à jour éventuellement la liste des confrontations'
+core_version_requirement: ^11
+configure: confrontations_recentes.settings
+package: Custom
+dependencies:
+  - drupal:node
+  - sl_live_search:sl_live_search
+  - shared_lib:shared_lib
+  - misc_divers:misc_divers

@@ -1,0 +1,18 @@
+uuid: ef337715-828e-4163-8ee4-9a77dc04d928
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.promoteur
+id: node.promoteur.changed
+field_name: changed
+entity_type: node
+bundle: promoteur
+label: Modifié
+description: 'La date à laquelle le nœud a été modifié pour la dernière fois.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

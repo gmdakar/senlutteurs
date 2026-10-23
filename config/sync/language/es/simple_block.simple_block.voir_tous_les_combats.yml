@@ -1,0 +1,4 @@
+title: 'Ver todas las peleas'
+content:
+  value: '<p><a href="/es/combats">Ver todas las últimas peleas</a></p>'
+  format: basic_html

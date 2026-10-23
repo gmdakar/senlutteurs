@@ -1,0 +1,1111 @@
+/**
+ * @file
+ * Subtheme global styling (style.css).
+ * Chargé sur TOUTES les pages.
+ */
+
+:root {
+  /* Couleurs principales */
+  --color-green: #008037;
+  --color-yellow: #FFD700;
+  --color-yellowlight: #ebd076;
+  --color-yellowlight2: rgb(255, 253, 214);
+  --color-red: #D72638;
+  --color-greylight: #d9d3d3;
+
+  /* Couleurs neutres */
+  --color-black: #1E1E1E;
+  --color-white: #FFFFFF;
+
+  /* Variables d'icônes communes si appelées globalement */
+  --icon-best-elo: "🏅";
+  --icon-king: "👑";
+  --icon-titre_concours: "🏆";
+  --icon-signalement: "⚠️";
+}
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+html[lang="ar"] body {
+  direction: ltr;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+body #main {
+  margin-bottom: 2rem;
+}
+
+/*** logo *** **/
+.navbar-brand img {
+  width: 80px !important;
+  height: 65px !important;
+  aspect-ratio: 80 / 65;
+  /* Optionnel mais excellent pour les navigateurs modernes */
+}
+
+/* Règle globale (à laisser telle quelle pour le reste du site) */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.field__label {
+  font-weight: 600 !important;
+}
+
+/* Laisse Superfish gérer normalement */
+#block-sl-theme-navigationprincipale {
+  min-height: 56px;
+}
+
+/* Bloque l'espace en hauteur pour éviter que le layout ne saute lors du rendu Chart.js */
+/* Empêche l'arborescence HTML globale de bouger pendant le fetch */
+/* On cible le canvas ou le conteneur parent pour forcer la boîte */
+/* 1. On sécurise le conteneur global pour bloquer le layout sur mobile et desktop */
+.elo-chart-wrapper {
+  display: block;
+  width: 100%;
+  /* Calcule un espace basé sur le ratio standard de votre graphique (366.4 / 326) */
+  aspect-ratio: 16 / 14;
+}
+
+/* 2. On s'assure que le canvas occupe proprement tout l'espace réservé */
+.elo-chart-wrapper canvas#elo-chart {
+  width: 100% !important;
+  max-width: 100%;
+  /* Évite le flash de taille avant l'initialisation de Chart.js */
+  min-height: 436px;
+}
+
+/* 3. Optionnel : un petit effet visuel pendant le chargement des données de lutte */
+.elo-chart-wrapper:not(:has(canvas.chartjs-render-monitor)) {
+  background: #fafafa;
+  position: relative;
+}
+
+/* ==========================================================================
+   EN-TÊTE & NAVIGATION
+   ========================================================================== */
+.navbar-brand img {
+  width: 90px;
+}
+
+nav#block-sl-theme-main-menu {
+  display: none;
+  margin-left: auto;
+  margin-right: 10%;
+}
+
+.nav.navbar-nav li a {
+  color: inherit;
+  text-transform: uppercase;
+  font-size: 1.22rem;
+  font-weight: 500;
+}
+
+.nav.navbar-nav li a:hover {
+  color: var(--color-red);
+}
+
+.nav-item .nav-link.active,
+.nav-item a.is-active {
+  color: var(--color-red) !important;
+}
+
+.navbar-toggler.navbar-toggler-right {
+  margin-right: 5%;
+  display: none;
+}
+
+/* --- Superfish Overrides --- */
+ul.sf-menu.sf-style-default li,
+ul.sf-menu.sf-style-default.sf-navbar,
+div.sf-accordion-toggle.sf-style-default a.sf-expanded,
+ul.sf-menu.sf-style-default.sf-accordion li.sf-expanded,
+div.sf-accordion-toggle.sf-style-default a {
+  background: transparent;
+  color: var(--color-black);
+  font-weight: normal;
+}
+
+ul.sf-menu.sf-style-default li:hover,
+ul.sf-menu.sf-style-default li.sfHover,
+ul.sf-menu.sf-style-default a.is-active,
+ul.sf-menu.sf-style-default a:focus,
+ul.sf-menu.sf-style-default a:hover,
+ul.sf-menu.sf-style-default span.nolink:hover {
+  background: transparent;
+  color: initial;
+}
+
+ul.sf-menu.sf-style-default li:hover a,
+ul.sf-menu.sf-style-default li.sfHover a,
+ul.sf-menu.sf-style-default a.is-active,
+ul.sf-menu.sf-style-default a:focus,
+ul.sf-menu.sf-style-default a:hover,
+ul.sf-menu.sf-style-default span.nolink:hover {
+  color: var(--color-red);
+}
+
+.sf-accordion-toggle.sf-style-default {
+  text-align: right;
+}
+
+#block-sl-theme-languagedropdownswitcher {
+  position: absolute;
+  right: .5rem;
+  top: .5rem;
+}
+
+/* ==========================================================================
+   ÉLÉMENTS GLOBAUX & UTILITAIRES
+   ========================================================================== */
+img,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+img.banner-hero {
+  width: 100%;
+}
+
+.site-name-slogan,
+.view-frontpage .view-empty,
+.view-frontpage .feed-icons {
+  display: none !important;
+}
+
+.view .view-header {
+  margin: 0 0 1rem 0;
+  padding: 0 .75rem;
+}
+
+.view-filters {
+  margin: 2rem auto;
+}
+
+.views-row:last-child .node--view-mode-teaser {
+  border-bottom: none;
+}
+
+/* Cibler le texte dans le bloc PWA pour assurer un bon contraste */
+#block-pwa-install-manual .pwa-a2hs,
+#block-pwa-install-manual .pwa-a2hs em,
+#block-pwa-install-manual .pwa-a2hs strong,
+#block-pwa-install-manual .pwa-a2hs u {
+  color: #212529 !important;
+  /* Un gris très foncé, presque noir */
+  background-color: transparent;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   FORMULAIRES GLOBAUX (Views Exposed Forms)
+   ========================================================================== */
+.views-exposed-form.bef-exposed-form {
+  padding: 5px 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.views-exposed-form .form-type-textfield input,
+.views-exposed-form .form-type-select select {
+  height: 38px;
+  font-size: 14px;
+}
+
+.views-exposed-form .js-form-item {
+  margin-right: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.views-exposed-form .form-actions .form-submit {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  background: var(--color-green);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 .1rem;
+}
+
+.views-exposed-form .form-actions .form-submit:hover {
+  background: var(--color-yellowlight);
+}
+
+.views-exposed-form label {
+  min-width: 3.5rem;
+  margin-left: .35rem;
+  text-align: left;
+}
+
+.views-exposed-form .js-form-item-search-api-fulltext label {
+  min-width: 8rem;
+}
+
+.views-exposed-form .form-select {
+  width: 100% !important;
+}
+
+.views-exposed-form .d-flex.flex-wrap {
+  display: block !important;
+}
+
+.chosen-container .chosen-results li {
+  text-align: left;
+}
+
+/* --- Inputs de recherche --- */
+input[data-drupal-selector="edit-title"],
+input[data-drupal-selector="edit-search-api-fulltext"] {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+input[data-drupal-selector="edit-title"]:focus,
+input[data-drupal-selector="edit-search-api-fulltext"]:focus {
+  border-color: var(--color-green);
+  box-shadow: 0 0 8px var(--color-red);
+  outline: none;
+  background-color: #f9f9ff;
+}
+
+/* ==========================================================================
+   TABLES GLOBALES
+   ========================================================================== */
+table {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+
+.table {
+  text-align: center;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  color: var(--color-black);
+  background: var(--color-white);
+  padding: .5rem;
+}
+
+.table.cols-5 th:nth-child(n+4),
+.table.cols-5 td:nth-child(n+4) {
+  min-width: 22rem;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid var(--color-greylight);
+}
+
+.table thead {
+  background-color: var(--color-green);
+  color: var(--color-white);
+}
+
+thead tr th {
+  text-align: center;
+  margin: 0 auto;
+  background-color: var(--color-green) !important;
+  color: var(--color-white) !important;
+  font-weight: 600;
+  user-select: none;
+}
+
+.table tbody td {
+  padding: 3px 3px !important;
+  vertical-align: middle !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--color-white);
+  cursor: pointer;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: var(--color-white);
+}
+
+.cols-5 th,
+.cols-5 td {
+  width: 20%;
+  max-width: 20%;
+  word-wrap: break-word;
+}
+
+table time.datetime {
+  font-style: normal;
+  color: var(--color-black);
+}
+
+.table td a {
+  display: block !important;
+  margin-bottom: 4px;
+}
+
+/* ==========================================================================
+   PAGINATION GLOBALE
+   ========================================================================== */
+.view nav {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  margin: 1rem;
+}
+
+.page-item.active .page-link {
+  background-color: var(--color-green) !important;
+  border-color: var(--color-green) !important;
+}
+
+.page-link,
+.page-link:hover {
+  color: var(--color-white);
+}
+
+.page-link:hover {
+  color: var(--color-white) !important;
+  background-color: var(--color-green) !important;
+}
+
+/* ==========================================================================
+   FOOTER & PWA
+   ========================================================================== */
+.site-footer .block {
+  border: none;
+}
+
+.site-footer__bottom .content {
+  padding: 0;
+}
+
+#block-sl-theme-copyright {
+  text-align: center;
+}
+
+#block-sl-theme-matomototalvisits .content {
+  text-align: center;
+  display: block;
+}
+
+div#block-pwa-install-manual .pwa-a2hs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  max-width: 500px;
+}
+
+div#block-pwa-install-manual .pwa-a2hs a,
+div#block-pwa-install-manual .pwa-a2hs button {
+  display: inline-block;
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border: 1px solid var(--color-red);
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+}
+
+div#block-pwa-install-manual .pwa-a2hs a:hover,
+div#block-pwa-install-manual .pwa-a2hs button:hover,
+div#block-pwa-install-manual .pwa-a2hs a:focus,
+div#block-pwa-install-manual .pwa-a2hs button:focus {
+  background-color: #b30000;
+  border-color: #b30000;
+  opacity: 0.95;
+}
+
+
+
+/* --- Boutons "Voir tous les..." --- */
+#block-sl-theme-voirtousleslutteurs,
+#block-sl-theme-voirtouslescombats {
+  text-align: center;
+  margin-left: 30%;
+  font-size: 1rem;
+}
+
+#block-sl-theme-voirtousleslutteurs a,
+#block-sl-theme-voirtouslescombats a {
+  display: inline-block;
+  color: var(--color-red);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background 0.3s;
+  font-weight: 500;
+}
+
+#block-sl-theme-voirtousleslutteurs a:before,
+#block-sl-theme-voirtouslescombats a:before {
+  content: "➜";
+  margin-right: 0.5rem;
+}
+
+#block-sl-theme-lienvoirtouslesrois,
+#block-sl-theme-lienvoirtouslesclassements {
+  float: right;
+  margin-right: 2rem;
+  margin-top: 1rem;
+}
+
+#block-sl-theme-lienvoirtouslesrois p>p:first-child,
+#block-sl-theme-lienvoirtouslesclassements p>p:first-child {
+  text-decoration: underline;
+  display: none !important;
+}
+
+#block-sl-theme-lienvoirtouslesrois a::before,
+#block-sl-theme-lienvoirtouslesclassements a::before {
+  content: var(--icon-best-elo);
+  margin-right: 8px;
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+#block-sl-theme-lienvoirtouslesrois a::before {
+  content: var(--icon-king);
+}
+
+#block-sl-theme-lienvoirtouslesrois a,
+#block-sl-theme-lienvoirtouslesclassements a {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--color-yellow), #ffb347);
+  font-weight: 600;
+  color: #222;
+  text-decoration: none;
+  transition: 0.25s ease;
+}
+
+#block-sl-theme-lienvoirtouslesrois a:hover,
+#block-sl-theme-lienvoirtouslesclassements a:hover {
+  background: linear-gradient(90deg, #ffb347, var(--color-yellow));
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+
+/*** icons ****/
+.elo-icon {
+  vertical-align: middle;
+  margin-left: 0;
+}
+
+/* Medal icon */
+.elo-best::before {
+  content: var(--icon-best-elo);
+}
+
+/* King icon */
+.elo-king::before {
+  content: var(--icon-king);
+}
+
+/* Container alignement */
+.elo-icon {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+/* Icône roi */
+.elo-king::before {
+  content: var(--icon-king);
+  font-size: 16px;
+}
+
+/* Texte Roi des arènes */
+.king-text {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   BLOCS GLOBAUX (Présents sur toutes les pages)
+   ========================================================================== */
+
+/* 1. Bloc "À venir" */
+.block-views-blocka-venir-block-1 {
+  position: relative !important;
+  padding: 1.35rem 1.85rem 1.35rem 2.85rem !important;
+  margin: .5rem 5rem 0 0 !important;
+  width: 95% !important;
+  background: #232529 !important;
+  overflow: hidden !important;
+  color: #fff !important;
+  box-shadow: 0 8px 12px rgba(82, 65, 65, 0.75) !important;
+}
+
+/* Définition du style et icône avant le bloc */
+.block-views-blocka-venir-block-1::before {
+  content: "📅 ";
+  margin-left: 25%;
+}
+
+/* Style des champs lutteurs */
+.block-views-blocka-venir-block-1 .node--type-a-venir.node--view-mode-teaser .field--name-field-lutteur-1,
+.block-views-blocka-venir-block-1 .node--type-a-venir.node--view-mode-teaser .field--name-field-lutteur-2 {
+  margin: 0 auto;
+}
+
+.node--type-a-venir.node--view-mode-teaser .field--name-field-lutteur-1.field--label-hidden,
+.node--type-a-venir.node--view-mode-teaser .field--name-field-lutteur-2.field--label-hidden {
+  display: inline-block;
+}
+
+.node--type-a-venir.node--view-mode-teaser {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Style des vidéos */
+.block-views-blocka-venir-block-1 .video,
+.block-views-blocka-venir-block-1 .video a {
+  font-size: .85rem !important;
+  color: var(--color-greylight) !important;
+}
+
+.block-views-blocka-venir-block-1 .video {
+  margin-bottom: .75rem;
+}
+
+/* Style des labels et items */
+.block-views-blocka-venir-block-1 .field__label {
+  color: var(--color-greylight);
+  font-size: .85rem;
+  font-weight: normal;
+}
+
+.block-views-blocka-venir-block-1 .field__item {
+  color: #fff;
+}
+
+/* Icône de vidéo spécifique */
+.block-views-blocka-venir-block-1 .video a::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 2px;
+  margin-left: 6px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='2' y='2' width='20' height='20' rx='3' ry='3' fill='%23FF0000'/><polygon points='9,7 17,12 9,17' fill='white'/></svg>");
+}
+
+/* Masquage du texte pour l'icône vidéo */
+.block-views-blocka-venir-block-1 .video .field__item a {
+  font-size: 0 !important;
+  color: transparent !important;
+  text-decoration: none !important;
+  position: relative !important;
+  vertical-align: middle !important;
+}
+
+/* Pagination interne au bloc */
+.block-views-blocka-venir-block-1 .pagination .page-item a {
+  display: none;
+}
+
+.block-views-blocka-venir-block-1 .pagination .page-item a[rel="prev"],
+.block-views-blocka-venir-block-1 .pagination .page-item a[rel="next"] {
+  display: inline-block !important;
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 0.875rem;
+  padding: 0.2rem 0.4rem;
+  text-decoration: underline;
+}
+
+/* Titre h2 du bloc */
+.block-views-blocka-venir-block-1 h2 {
+  display: inline-block;
+  text-align: center;
+}
+
+/* Liens dans le bloc */
+.block-views-blocka-venir-block-1 a {
+  color: var(--color-yellow) !important;
+  font-weight: 400 !important;
+}
+
+/* ==========================================================================
+   BLOC : À VENIR (Style original)
+   ========================================================================== */
+.block-views-blocka-venir-block-1 {
+  position: relative;
+  padding: 1.35rem 1.85rem 1.35rem 2.85rem;
+  margin: .5rem 5rem 0 0;
+  width: 95%;
+  background: #232529;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: 0 8px 12px rgba(82, 65, 65, 0.75);
+}
+
+.block-views-blocka-venir-block-1 h2 {
+  color: var(--color-yellow);
+  font-size: 1.5rem;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.block-views-blocka-venir-block-1 a {
+  color: var(--color-white);
+  font-size: 1.15rem;
+  font-weight: 400;
+}
+
+.block-views-blocka-venir-block-1 a:hover {
+  color: var(--color-red) !important;
+}
+
+.block-views-blocka-venir-block-1 .views-row:first-child a {
+  color: var(--color-yellow);
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+/* ==========================================================================
+   BLOC : PROPOSITIONS DE COMBAT (Style original)
+   ========================================================================== */
+.block-top-combat-propositions-block {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #f5f7fa, #e4e7eb);
+  border-radius: 10px;
+  width: 95%;
+  padding: .5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+#combat-propositions-list .list-group-item {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background: #fff !important;
+  border: 1px solid #ddd !important;
+  padding: 0.5rem !important;
+  margin-bottom: 5px !important;
+}
+
+#combat-propositions-list .list-group-item a.use-ajax {
+  background: var(--color-green) !important;
+  color: white !important;
+  padding: 0.35rem 0.25rem !important;
+  border-radius: 6px !important;
+  text-decoration: none !important;
+  font-size: 0.85rem !important;
+  transition: background 0.2s ease-in-out !important;
+}
+
+#combat-propositions-list .list-group-item a.use-ajax:hover {
+  background: var(--color-red) !important;
+}
+
+.block-top-combat-propositions-block::before {
+  content: "⚡";
+}
+
+.block-top-combat-propositions-block>h2 {
+  display: inline-block;
+  text-align: center;
+}
+
+.block-top-combat-propositions-block a {
+  color: var(--color-red);
+}
+
+.block-top-combat-propositions-block [id^="combat-vote-message-"] a {
+  color: var(--color-red);
+  background-color: unset;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.block-top-combat-propositions-block [id^="combat-vote-message-"] {
+  font-size: .8rem;
+}
+
+/** frontpage confrontations **/
+.view-confrontations .node--type-confrontation {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.view-confrontations .node--type-confrontation:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.75rem 1.5rem rgb(0 0 0 / 0.15);
+}
+
+.path-node.node--type-a-venir #block-sl-theme-content .field--name-field-avenir-face2face a::before,
+.path-node.node--type-a-venir #block-sl-theme-content .field--name-field-avenir-video-du-combat a::before,
+.path-node.node--type-confrontation #block-sl-theme-content .field--name-field-face-2-face a::before,
+.path-node.node--type-confrontation #block-sl-theme-content .field--name-field-video-du-combat a::before,
+.field--name-field-face-2-face a::before,
+.field--name-field-video-du-combat a::before {
+  margin: .25rem;
+  height: 3rem;
+  width: 3rem;
+}
+
+/*liens youtube*/
+
+/* Bouton Play avec carré vert centré */
+.path-node.node--type-a-venir #block-sl-theme-content .field--name-field-avenir-face2face a,
+.path-node.node--type-a-venir #block-sl-theme-content .field--name-field-avenir-video-du-combat a,
+.path-node.node--type-confrontation #block-sl-theme-content .field--name-field-face-2-face a,
+.path-node.node--type-confrontation #block-sl-theme-content .field--name-field-video-du-combat a,
+.field--name-field-face-2-face a,
+.field--name-field-video-du-combat a,
+td.views-field-field-video-du-combat a,
+td.views-field-field-face-2-face a {
+  font-size: 0.1rem !important;
+  color: transparent !important;
+  text-decoration: none !important;
+  position: relative !important;
+  vertical-align: middle !important;
+  display: inline-block !important;
+  margin: 1rem 0;
+}
+
+.path-node.node--type-a-venir #block-sl-theme-content .field--name-field-avenir-face2face a,
+.path-node.node--type-a-venir #block-sl-theme-content .field--name-field-avenir-video-du-combat a,
+.path-node.node--type-confrontation #block-sl-theme-content .field--name-field-face-2-face a,
+.path-node.node--type-confrontation #block-sl-theme-content .field--name-field-video-du-combat a,
+.field--name-field-face-2-face a,
+.field--name-field-video-du-combat a {
+  /*padding : 1.5rem;*/
+  display: block;
+  vertical-align: initial !important;
+}
+
+.field--name-field-face-2-face a,
+.field--name-field-video-du-combat a,
+td.views-field-field-video-du-combat a,
+td.views-field-field-face-2-face a {
+  display: inline-block;
+  padding: .3rem;
+  min-width: 48px;
+  /*min-height: 48px;*/
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  padding: 12px;
+  width: auto;
+}
+
+.field--name-field-face-2-face a,
+.field--name-field-video-du-combat a,
+td.views-field-field-video-du-combat a,
+td.views-field-field-face-2-face a {
+  margin-right: 15px;
+  /* Sépare les liens entre eux */
+}
+
+.field--name-field-face-2-face a::before,
+.field--name-field-video-du-combat a::before,
+td.views-field-field-video-du-combat a::before,
+td.views-field-field-face-2-face a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3rem;
+  height: 3rem;
+  transform: translateY(-50%);
+  background-image: url("data:image/svg+xml;utf8,\<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>\<rect x='2' y='2' width='20' height='20' rx='3' ry='3' fill='%23FF0000'/>\<polygon points='9,7 17,12 9,17' fill='white'/>\</svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+
+/* 3. Liens "Voir tous" (Lutteurs, Combats, Rois, Classements) */
+#block-sl-theme-voirtousleslutteurs,
+#block-sl-theme-voirtouslescombats {
+  text-align: center;
+  margin-left: 30%;
+  font-size: 1rem;
+}
+
+#block-sl-theme-voirtousleslutteurs a,
+#block-sl-theme-voirtouslescombats a,
+.view-confrontations .more-link a,
+[id^="block-sl-theme-views-block-lutteurs-block-1"] .more-link a {
+  display: inline-block;
+  color: var(--color-red);
+  /*background-color: var(--color-black); */
+  /* Choisis ta couleur */
+  /*color: var(--color-yellowlight)*/
+  ;
+  /* Couleur du texte */
+  padding: 0.5rem 1rem;
+  /* Espacement interne */
+  border-radius: 0.5rem;
+  /* Coins arrondis */
+  text-decoration: none;
+  /* Supprimer le soulignement */
+  transition: background 0.3s;
+  /* Animation au survol */
+  font-weight: 500;
+}
+
+#block-sl-theme-voirtousleslutteurs a:before,
+#block-sl-theme-voirtouslescombats a:before,
+.view-confrontations .more-link a::before,
+[id^="block-sl-theme-views-block-lutteurs-block-1"] .more-link a::before {
+  content: "➜";
+  /* Flèche droite */
+  margin-right: 0.5rem;
+}
+
+.view-confrontations .more-link,
+[id^="block-sl-theme-views-block-lutteurs-indexed-block-"] .more-link a,
+[id^="block-sl-theme-views-block-lutteurs-block-1"] .more-link {
+  text-align: right;
+  margin: 0 2rem;
+  font-size: 1.15rem;
+  display: block;
+}
+
+/* 4. États au survol (Exemple pour les rois/classements) */
+#block-sl-theme-lienvoirtouslesrois a:hover,
+#block-sl-theme-lienvoirtouslesclassements a:hover {
+  background: linear-gradient(90deg, #ffb347, var(--color-yellow));
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+/* Read more button */
+.view-confrontations .inline__links {
+  display: none;
+}
+
+.view-id-lutteurs_indexed .field--name-field-ecurie a {
+  color: var(--color-red);
+  text-decoration: none;
+}
+
+
+#views-bootstrap-confrontations-block-2 h2 a {
+  text-decoration: none;
+}
+
+#views-bootstrap-confrontations-block-2 a,
+.view-id-lutteurs_indexed a {
+  color: var(--color-red);
+  font-weight: 500;
+}
+
+.icon-vs::before {
+  content: "🔥";
+  /* symbole visible pour l’utilisateur */
+  display: block;
+  margin: 0 0.25em;
+  text-decoration: none !important;
+}
+
+.icon-vs {
+  border: none !important;
+}
+
+/* ==========================================================================
+   MEDIA QUERIES GLOBAUX
+   ========================================================================== */
+@media (max-width: 575.98px) {
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .table thead th {
+    font-size: 12px;
+  }
+
+  .table tbody td {
+    font-size: 12px;
+  }
+
+  ul#superfish-main {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  nav#block-sl-theme-main-menu {
+    display: block;
+  }
+
+  .block-superfish {
+    display: none;
+  }
+}
+
+/* Cache le formulaire s'il ne contient aucun élément de saisie visible */
+.views-exposed-form:not(:has(.js-form-item)) {
+  display: none !important;
+}
+
+@media (min-width: 992px) {
+
+  /***** user-login-form  ****/
+  .user-login-form {
+    margin-left: 20px;
+  }
+
+  .user-login-form .form-control {
+    max-width: 20%;
+  }
+
+  #elo-chart {
+    min-height: 340px;
+    /* Hauteur ajustée pour les tablettes et ordinateurs */
+  }
+
+  nav#block-sl-theme-main-menu {
+    display: block;
+  }
+
+  .block-superfish {
+    display: none;
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .navbar-brand img {
+    position: relative;
+    left: 100px;
+    margin: 1rem 0 1.5rem 0rem;
+  }
+
+  #block-sl-theme-views-block-confrontations-block-3 {
+    float: right;
+    display: block;
+    max-width: 70%;
+    z-index: 999;
+  }
+}
+
+@media (min-width: 1200px) {
+  nav#block-sl-theme-main-menu {
+    display: block;
+  }
+
+  .block-superfish {
+    display: none;
+  }
+
+  .views-exposed-form .d-flex.flex-wrap {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  nav#block-sl-theme-main-menu {
+    display: block;
+  }
+
+  .block-superfish {
+    display: none;
+  }
+
+  ul.pagination.js-pager__items {
+    margin: 1rem auto;
+  }
+
+  .path-node.node--type-a-venir #block-sl-theme-content .field--name-field-avenir-face2face a,
+  .path-node.node--type-confrontation #block-sl-theme-content .field--name-field-face-2-face a,
+  .path-node.node--type-confrontation #block-sl-theme-content .field--name-field-video-du-combat a,
+  .field--name-field-face-2-face a,
+  .field--name-field-video-du-combat a,
+  td.views-field-field-video-du-combat a,
+  td.views-field-field-face-2-face a {
+    position: relative;
+    padding-left: 26px;
+    display: inline-block;
+    margin-bottom: .5rem;
+    word-break: break-word;
+    font-size: inherit !important;
+    color: #0071b3 !important;
+    text-decoration: inherit !important;
+    vertical-align: inherit !important;
+    font-weight: normal;
+  }
+
+  .path-node.node--type-a-venir #block-sl-theme-content .field--name-field-avenir-face2face a::before,
+  .path-node.node--type-confrontation #block-sl-theme-content .field--name-field-face-2-face a::before,
+  .path-node.node--type-confrontation #block-sl-theme-content .field--name-field-video-du-combat a::before,
+  .field--name-field-face-2-face a::before,
+  .field--name-field-video-du-combat a::before,
+  td.views-field-field-video-du-combat a::before,
+  td.views-field-field-face-2-face a::before {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .path-node.node--type-a-venir #block-sl-theme-content .field--name-field-avenir-face2face a::before,
+  .path-node.node--type-confrontation #block-sl-theme-content .field--name-field-face-2-face a::before,
+  .path-node.node--type-confrontation #block-sl-theme-content .field--name-field-video-du-combat a::before {
+    margin: 0 auto;
+  }
+
+}
+
+/* --- TEMPO --- */
+.field.field--name-field-actif.field--type-boolean.field--label-inline {
+  display: none;
+}

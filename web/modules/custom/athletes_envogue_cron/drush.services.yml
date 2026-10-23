@@ -1,0 +1,8 @@
+services:
+  import_athletes_en_vogue.commands:
+    class: Drupal\athletes_envogue_cron\Commands\ImportAthletesEnVogueCommands
+    tags:
+      - { name: drush.command }
+    arguments:
+      - '@athletes_envogue_cron.athletes_service'
+      - '@entity_type.manager'

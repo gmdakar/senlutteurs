@@ -1,0 +1,27 @@
+uuid: 59a60b24-f3c7-453e-a91a-947d56d5db19
+langcode: fr
+status: true
+dependencies:
+  config:
+    - simple_block.simple_block.voir_tous_les_combats_clone
+  module:
+    - simple_block
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_voirtousleslutteurs
+theme: sl_theme
+region: content
+weight: -11
+provider: null
+plugin: 'simple_block:voir_tous_les_combats_clone'
+settings:
+  id: 'simple_block:voir_tous_les_combats_clone'
+  label: 'Voir tous les lutteurs'
+  label_display: '0'
+  provider: simple_block
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/lutteurs/*'

@@ -1,0 +1,24 @@
+_core:
+  default_config_hash: zDwqaWPY76K_8TgX6aS789W7nZIEg7lU9MJsoh61bAU
+langcode: fr
+minimum_single: 15
+minimum_multiple: 2
+disable_search_threshold: 1
+minimum_width: 0
+max_shown_results: null
+use_relative_width: false
+jquery_selector: 'select:not(.lang-dropdown-select-element)'
+search_contains: false
+disable_search: false
+allow_single_deselect: false
+allow_mobile: true
+add_helper_buttons: false
+disabled_themes:
+  olivero: olivero
+  bootstrap_barrio: bootstrap_barrio
+  claro: '0'
+  sl_theme: '0'
+chosen_include: 2
+placeholder_text_multiple: 'Choose some options'
+placeholder_text_single: 'Choose an option'
+no_results_text: 'No results match'

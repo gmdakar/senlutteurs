@@ -1,0 +1,2 @@
+label: 'Fecha corta'
+pattern: 'd/m/Y - H:i'

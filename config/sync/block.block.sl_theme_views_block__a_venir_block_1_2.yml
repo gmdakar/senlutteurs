@@ -1,0 +1,29 @@
+uuid: 5c8a33fd-5316-4a43-a238-d84a54a9c28b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - views.view.a_venir
+  module:
+    - system
+    - views
+  theme:
+    - sl_theme
+id: sl_theme_views_block__a_venir_block_1_2
+theme: sl_theme
+region: content
+weight: -6
+provider: null
+plugin: 'views_block:a_venir-block_1'
+settings:
+  id: 'views_block:a_venir-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/lutteurs/*'

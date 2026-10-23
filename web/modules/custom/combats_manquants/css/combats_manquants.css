@@ -1,0 +1,48 @@
+#combat-manquant-form-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Grand écran : formulaire centré, limité à 40% de la largeur disponible,
+ * champ "Année" volontairement plus étroit qu'un champ pleine largeur. */
+@media (min-width: 1024px) {
+  #combat-manquant-form-wrapper {
+    max-width: 40%;
+  }
+
+  form#combat-manquant-form #edit-annee {
+    width: auto;
+    min-width: 8em;
+    display: inline-block;
+  }
+}
+
+/* box-sizing sur le form et tous ses enfants : sans ça, les champs
+ * gardent leur largeur/padding par défaut et débordent du conteneur
+ * restreint. */
+form#combat-manquant-form,
+form#combat-manquant-form * {
+  box-sizing: border-box;
+}
+
+form#combat-manquant-form .form-item,
+form#combat-manquant-form select,
+form#combat-manquant-form input[type="text"] {
+  max-width: 100%;
+  width: 100%;
+}
+
+#combat-manquant-form-wrapper .form-item {
+  margin-bottom: 1em;
+}
+
+#combat-manquant-form-wrapper .combat-manquant-success {
+  padding: 1em;
+  text-align: center;
+}
+
+#combat-manquant-form-wrapper [data-drupal-messages],
+#combat-manquant-form-wrapper .messages,
+#combat-manquant-form-wrapper .alert {
+  margin-bottom: 1em;
+}

@@ -1,0 +1,8 @@
+title: 'Nous contacter'
+settings:
+  confirmation_message: メッセージは送信されました
+handlers:
+  email_confirmation:
+    label: メール確認
+  email_notification:
+    label: 'E メール通知'

@@ -1,0 +1,52 @@
+{#
+/**
+ * @file
+ * Template for the Matomo Top N countries block (collapsible).
+ *
+ * Available variables:
+ * - items: array of countries (code, name, visits, percent, flag_url)
+ * - total: total number of visits used for percentage calculation
+ */
+#}
+<div class="matomo-top-countries">
+  <details class="matomo-top-countries__details">
+    <summary class="matomo-top-countries__title">
+      {# Icône carte du monde (globe) à gauche #}
+      <svg class="matomo-top-countries__globe" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M2 12h20"></path>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+      </svg>
+      <span class="matomo-top-countries__title-text">{{ 'Top visitor countries'|t }}</span>
+      <span class="matomo-top-countries__chevron" aria-hidden="true"></span>
+    </summary>
+
+    <div class="matomo-top-countries__body">
+      <ul class="matomo-top-countries__list">
+        {% for item in items %}
+          <li class="matomo-top-countries__item">
+            <div class="matomo-top-countries__flag-wrap"
+                 data-country="{{ item.name }}"
+                 title="{{ item.name }}">
+              <img class="matomo-top-countries__flag"
+                   src="{{ item.flag_url }}"
+                   alt="{{ item.name }}"
+                   width="28"
+                   height="20"
+                   loading="lazy" />
+            </div>
+
+            <div class="matomo-top-countries__info">
+              <div class="matomo-top-countries__name">{{ item.name }}</div>
+              <div class="matomo-top-countries__bar-wrap">
+                <div class="matomo-top-countries__bar" style="width: {{ item.percent }}%"></div>
+              </div>
+            </div>
+
+            <div class="matomo-top-countries__percent">{{ item.percent }}%</div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </details>
+</div>

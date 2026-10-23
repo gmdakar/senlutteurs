@@ -1,0 +1,5 @@
+vector_enabled: false
+vector_api_url: 'http://host.docker.internal:8080'
+vector_api_secret: ''
+vector_top_k: 10
+vector_timeout: 30

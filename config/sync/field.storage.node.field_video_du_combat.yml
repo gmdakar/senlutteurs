@@ -1,0 +1,19 @@
+uuid: 923bf59a-6295-4b29-b7ee-c5b61f2df67a
+langcode: fr
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_video_du_combat
+field_name: field_video_du_combat
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

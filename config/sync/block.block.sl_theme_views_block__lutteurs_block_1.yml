@@ -1,0 +1,29 @@
+uuid: 24873c1f-d0b8-47b4-9a60-a34e9de05864
+langcode: fr
+status: true
+dependencies:
+  config:
+    - views.view.lutteurs
+  module:
+    - system
+    - views_block_with_lazy_builder
+  theme:
+    - sl_theme
+id: sl_theme_views_block__lutteurs_block_1
+theme: sl_theme
+region: side_left
+weight: -19
+provider: null
+plugin: 'views_bloc_with_lazy_builder_example:lutteurs-block_1'
+settings:
+  id: 'views_bloc_with_lazy_builder_example:lutteurs-block_1'
+  label: Lutteurs
+  label_display: visible
+  provider: views_block_with_lazy_builder
+  views_label: Lutteurs
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

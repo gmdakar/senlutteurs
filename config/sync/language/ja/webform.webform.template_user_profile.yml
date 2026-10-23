@@ -1,0 +1,4 @@
+title: 'Profil utilisateur'
+handlers:
+  email_notification:
+    label: メール通知

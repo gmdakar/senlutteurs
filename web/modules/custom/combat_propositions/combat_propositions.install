@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Install file for Combat Propositions module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function combat_propositions_schema() {
+  $schema['combat_propositions'] = [
+    'description' => 'Stocke les propositions de combats entre lutteurs.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Identifiant unique.',
+      ],
+      'lutteur_1' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Nom du premier lutteur.',
+      ],
+      'lutteur_2' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Nom du second lutteur.',
+      ],
+      'proposals' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Nombre de propositions.',
+      ],
+      'votes' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Nombre de votes.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp Unix de création de la proposition.',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+  return $schema;
+}
+
+/**
+ * Ajoute le champ 'created' (timestamp) à la table combat_propositions,
+ * absent du schéma initial et requis par la purge combat_propositions:purge
+ * (règle "votes < 10 depuis au moins 1 mois").
+ *
+ * Les lignes déjà existantes sont initialisées à la date du jour plutôt
+ * qu'à 0, afin d'éviter qu'elles soient purgées immédiatement au premier
+ * passage de la commande (0 serait interprété comme "créé en 1970", donc
+ * "vieux de plus d'un mois").
+ */
+function combat_propositions_update_10001() {
+  $schema = \Drupal::database()->schema();
+
+  if (!$schema->fieldExists('combat_propositions', 'created')) {
+    $schema->addField('combat_propositions', 'created', [
+      'type' => 'int',
+      'not null' => TRUE,
+      'default' => 0,
+      'description' => 'Timestamp Unix de création de la proposition.',
+    ]);
+
+    \Drupal::database()->update('combat_propositions')
+      ->fields(['created' => \Drupal::time()->getRequestTime()])
+      ->execute();
+  }
+}

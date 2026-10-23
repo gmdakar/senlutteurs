@@ -1,0 +1,21 @@
+gemini_nextcombats_cron.settings:
+  path: '/admin/config/gemini-nextcombats-cron'
+  defaults:
+    _form: '\Drupal\gemini_nextcombats_cron\Form\GeminiCombatCronSettingsForm'
+    _title: 'Gemini Next Combats Cron Settings'
+  requirements:
+    _permission: 'administer site configuration'
+gemini_nextcombats_cron.import_combats:
+  path: '/combats_next/imports'
+  defaults:
+    _controller: '\Drupal\gemini_nextcombats_cron\Controller\NextCombatsController::runImport'
+    _title: 'Import Next Combats'
+  requirements:
+    _access: 'TRUE'
+gemini_nextcombats_cron.update_videos:
+  path: '/combats_next/update_videos'
+  defaults:
+    _controller: '\Drupal\gemini_nextcombats_cron\Controller\UpdateVideosNextCombatsController::updateVideos'
+    _title: 'update videos Next Combats'
+  requirements:
+    _access: 'TRUE'

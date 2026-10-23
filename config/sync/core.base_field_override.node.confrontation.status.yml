@@ -1,0 +1,22 @@
+uuid: 45841423-a542-4ae6-be20-272f4b6ad46c
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.confrontation
+id: node.confrontation.status
+field_name: status
+entity_type: node
+bundle: confrontation
+label: Publié
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

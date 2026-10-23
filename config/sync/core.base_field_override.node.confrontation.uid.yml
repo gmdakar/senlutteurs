@@ -1,0 +1,20 @@
+uuid: a07d3e99-b64f-4eb6-b160-9c06c0c3a11b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.confrontation
+id: node.confrontation.uid
+field_name: uid
+entity_type: node
+bundle: confrontation
+label: 'Écrit par'
+description: 'The username of the content author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

@@ -1,0 +1,20 @@
+uuid: a6c81d35-f7e9-4feb-a9f3-e97d25ebbc90
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.athlete
+  module:
+    - path
+id: node.athlete.path
+field_name: path
+entity_type: node
+bundle: athlete
+label: "Alias d'URL"
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

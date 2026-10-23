@@ -1,0 +1,4 @@
+title: 'ملف المستخدم'
+handlers:
+  email_notification:
+    label: 'Notification par courriel'

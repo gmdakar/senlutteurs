@@ -1,0 +1,127 @@
+<?php
+
+use Drupal\node\Entity\Node;
+use Drupal\node\Entity\NodeType;
+
+/**
+ * Implements hook_install().
+ */
+function rois_des_arenes_install() {
+  $data = [
+    ['nom' => 'Manga 2',          'date_intronisation' => '1984-01-01', 'date_debut' => '1984-01-01', 'date_fin' => '1999-07-03'],
+    ['nom' => 'Mohamed Ndao Tyson','date_intronisation' => '1999-07-04', 'date_debut' => '1999-07-04', 'date_fin' => '2002-12-24'],
+    ['nom' => 'Bombardier',       'date_intronisation' => '2002-12-25', 'date_debut' => '2002-12-25', 'date_fin' => '2004-03-27'],
+    ['nom' => 'Yékini',           'date_intronisation' => '2004-03-28', 'date_debut' => '2004-03-28', 'date_fin' => '2012-04-21'],
+    ['nom' => 'Balla Gaye 2',     'date_intronisation' => '2012-04-22', 'date_debut' => '2012-04-22', 'date_fin' => '2014-06-07'],
+    ['nom' => 'Bombardier',       'date_intronisation' => '2014-06-08', 'date_debut' => '2014-06-08', 'date_fin' => '2018-07-27'],
+    ['nom' => 'Eumeu Sène',       'date_intronisation' => '2018-07-28', 'date_debut' => '2018-07-28', 'date_fin' => '2019-07-27'],
+    ['nom' => 'Modou Lô',         'date_intronisation' => '2019-07-28', 'date_debut' => '2019-07-28', 'date_fin' => NULL],
+  ];
+
+  foreach ($data as $index => $item) {
+    $roi_number = $index + 1;
+    $title = "Roi n° $roi_number";
+
+    // Vérifier si ce nœud existe déjà (par titre + type)
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'roi_des_arenes')
+      ->condition('title', $title)
+      ->accessCheck(FALSE)
+      ->range(0, 1);
+
+    $existing_nids = $query->execute();
+
+    if (!empty($existing_nids)) {
+      // Optionnel : logger ou continuer sans rien faire
+      \Drupal::logger('rois_des_arenes')->notice("Nœud '$title' existe déjà, ignoré.");
+      continue;
+    }
+
+    $athlete_nid = NULL;
+
+    // Normalisation du nom
+    $normalized_nom = trim(mb_strtolower($item['nom']));
+    $normalized_nom = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $normalized_nom) ?: $normalized_nom;
+    $normalized_nom = preg_replace('/[^a-z0-9]/', '', $normalized_nom);
+
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'athlete')
+      ->condition('field_athlete_nom_technique.value', $normalized_nom)
+      ->accessCheck(FALSE)
+      ->range(0, 1);
+
+    $nids = $query->execute();
+
+    if (!empty($nids)) {
+      $athlete_nid = reset($nids);
+    }
+
+    // Création uniquement si inexistant
+    $node = Node::create([
+      'type'                     => 'roi_des_arenes',
+      'title'                    => $title,
+      'status'                   => 1,
+      'field_date_intronisation' => $item['date_intronisation'],
+      'field_date_debut'         => $item['date_debut'],
+    ]);
+
+    if (!empty($item['date_fin'])) {
+      $node->set('field_date_fin', $item['date_fin']);
+    }
+
+    if ($athlete_nid) {
+      // Sécurité supplémentaire : ne pas réassigner si déjà présent
+      $current_values = $node->get('field_athlete')->getValue();
+      $already_set = FALSE;
+      foreach ($current_values as $val) {
+        if (isset($val['target_id']) && $val['target_id'] == $athlete_nid) {
+          $already_set = TRUE;
+          break;
+        }
+      }
+      if (!$already_set) {
+        $node->set('field_athlete', ['target_id' => $athlete_nid]);
+      }
+    }
+
+    if ($athlete_nid) {
+      // Sécurité supplémentaire : ne pas réassigner si déjà présent
+      $current_values = $node->get('field_athlete')->getValue();
+      $already_set = FALSE;
+      foreach ($current_values as $val) {
+        if (isset($val['target_id']) && $val['target_id'] == $athlete_nid) {
+          $already_set = TRUE;
+          break;
+        }
+      }
+      if (!$already_set) {
+        $node->set('field_athlete', ['target_id' => $athlete_nid]);
+      }
+    }
+
+    $node->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function rois_des_arenes_uninstall() {
+  // 1. Suppression des nœuds
+  $nids = \Drupal::entityQuery('node')
+    ->condition('type', 'roi_des_arenes')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  if (!empty($nids)) {
+    $nodes = Node::loadMultiple($nids);
+    \Drupal::entityTypeManager()->getStorage('node')->delete($nodes);
+    // echo "Tous les nœuds 'Roi des arènes' ont été supprimés.\n"; // Commenté car echo ne s'affiche pas dans drush
+  }
+
+  // 2. Suppression du bundle
+  $bundle = NodeType::load('roi_des_arenes');
+  if ($bundle) {
+    $bundle->delete();
+  }
+}

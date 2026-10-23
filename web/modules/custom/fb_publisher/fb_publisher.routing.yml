@@ -1,0 +1,15 @@
+fb_publisher.config_form:
+  path: '/admin/config/services/facebook'
+  defaults:
+    _form: '\Drupal\fb_publisher\Form\FacebookConfigForm'
+    _title: 'Facebook Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
+fb_publisher.test_form:
+  path: '/admin/config/services/facebook/test'
+  defaults:
+    _form: '\Drupal\fb_publisher\Form\FacebookTestForm'
+    _title: 'Facebook Test Publish'
+  requirements:
+    _permission: 'administer site configuration'

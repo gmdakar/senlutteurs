@@ -1,0 +1,18 @@
+uuid: 59b92688-a95e-46e7-94da-0c2f313ffeef
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.a_venir
+id: node.a_venir.title
+field_name: title
+entity_type: node
+bundle: a_venir
+label: Titre
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

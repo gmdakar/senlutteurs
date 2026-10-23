@@ -1,0 +1,54 @@
+{% if raw_date %}
+  {% set timestamp = raw_date|date('U') %}
+  {# zh-hans → zh, pt-br → pt, etc. (même logique que le template a_venir) #}
+  {% set lang = (current_lang|default('fr'))|split('-')|first %}
+
+  {# --- Jours et mois par langue --- #}
+  {% set days = {
+    'fr': ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'],
+    'en': ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+    'es': ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],
+    'de': ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
+    'it': ['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'],
+    'ja': ['日曜','月曜','火曜','水曜','木曜','金曜','土曜'],
+    'zh': ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+    'ar': ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت']
+  } %}
+
+  {% set months = {
+    'fr': ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'],
+    'en': ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    'es': ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
+    'de': ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+    'it': ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],
+    'ja': ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    'zh': ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    'ar': ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر']
+  } %}
+
+  {# --- Index --- #}
+  {% set day_index = timestamp|date('w')|number_format(0,'','') %}
+  {% set month_index = timestamp|date('n')|number_format(0,'','') - 1 %}
+
+  {% set day_name = (days[lang]|default(days['fr'])[day_index])|capitalize %}
+  {% set month_name = months[lang]|default(months['fr'])[month_index] %}
+  {% set day_number = timestamp|date('j') %}
+  {% set year = timestamp|date('Y') %}
+
+  {% set date_str = day_name ~ ' ' ~ day_number ~ ' ' ~ month_name ~ ' ' ~ year %}
+
+  {% if lang == 'ar' %}
+    {# Chiffres arabes + RTL #}
+    {% set arabic_digits = {'0':'٠','1':'١','2':'٢','3':'٣','4':'٤','5':'٥','6':'٦','7':'٧','8':'٨','9':'٩'} %}
+    {% for west, ar in arabic_digits %}
+      {% set date_str = date_str|replace({(west): ar}) %}
+    {% endfor %}
+    <span dir="rtl">{{ date_str }}</span>
+  {% else %}
+    {{ date_str }}
+  {% endif %}
+
+{% else %}
+  {# Fallback si la date est vide #}
+  <span class="date-empty">Date non disponible</span>
+{% endif %}

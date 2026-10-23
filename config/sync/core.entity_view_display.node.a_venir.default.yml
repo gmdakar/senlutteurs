@@ -1,0 +1,68 @@
+uuid: e800bc4a-4eb8-4e18-b625-a8bd76ebb4b9
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.a_venir.field_avenir_face2face
+    - field.field.node.a_venir.field_date
+    - field.field.node.a_venir.field_id_text
+    - field.field.node.a_venir.field_lutteur_1
+    - field.field.node.a_venir.field_lutteur_2
+    - field.field.node.a_venir.field_no_index
+    - node.type.a_venir
+  module:
+    - datetime
+    - link
+    - user
+id: node.a_venir.default
+targetEntityType: node
+bundle: a_venir
+mode: default
+content:
+  field_avenir_face2face:
+    type: link
+    label: inline
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: nofollow
+      target: _blank
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: long
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_lutteur_1:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_lutteur_2:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_id_text: true
+  field_no_index: true
+  langcode: true
+  search_api_excerpt: true

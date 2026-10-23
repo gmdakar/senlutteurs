@@ -1,0 +1,216 @@
+/* Matomo Top N Countries block – collapsible */
+
+.matomo-top-countries {
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, sans-serif;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .matomo-top-countries {
+    max-width: 33%;
+    margin: 0 auto;
+  }
+}
+
+/* ----- Accordion (details/summary) ----- */
+.matomo-top-countries__details {
+  border: none;
+}
+
+.matomo-top-countries__title {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centre le groupe au milieu */
+  gap: 0.45rem;            /* espace serré entre icône / texte / chevron */
+  width: 100%;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 auto;
+  padding: 0.35rem 0.5rem;
+  color: #fff;
+  outline: none;
+  text-decoration: none; /* le soulignement est sur le texte seul */
+  transition: opacity 0.15s ease;
+}
+
+.matomo-top-countries__title:hover {
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+.matomo-top-countries__title:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Cache le marker natif Chrome/Safari/Firefox */
+.matomo-top-countries__title::-webkit-details-marker {
+  display: none;
+}
+.matomo-top-countries__title::marker {
+  content: '';
+}
+
+.matomo-top-countries__title-text {
+  flex: 0 0 auto; /* ne s'étire plus */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.matomo-top-countries__globe {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  opacity: 0.95;
+}
+
+/* Chevron custom – collé au texte */
+.matomo-top-countries__chevron {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  opacity: 0.85;
+  margin-left: 0.1rem;
+}
+
+.matomo-top-countries__details[open] > .matomo-top-countries__title .matomo-top-countries__chevron {
+  transform: rotate(-135deg);
+}
+
+/* Corps dépliant */
+.matomo-top-countries__body {
+  padding-top: 0.5rem;
+  animation: matomo-tc-fade 0.2s ease;
+}
+
+@keyframes matomo-tc-fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ----- Liste ----- */
+.matomo-top-countries__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.matomo-top-countries__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  background: #f8f9fa;
+  transition: background 0.15s ease;
+}
+
+.matomo-top-countries__item:hover {
+  background: #eef1f4;
+}
+
+.matomo-top-countries__flag-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 28px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.matomo-top-countries__flag {
+  width: 28px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  display: block;
+}
+
+.matomo-top-countries__flag-wrap[title] {
+  cursor: help;
+}
+
+.matomo-top-countries__flag-wrap::after {
+  content: attr(data-country);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 10;
+}
+
+.matomo-top-countries__flag-wrap:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.matomo-top-countries__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.matomo-top-countries__name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.matomo-top-countries__bar-wrap {
+  height: 5px;
+  background: #e2e6ea;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.matomo-top-countries__bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.matomo-top-countries__percent {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2563eb;
+  min-width: 2.8rem;
+  text-align: right;
+}
+
+.matomo-top-countries__footer {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  color: #6b7280;
+}

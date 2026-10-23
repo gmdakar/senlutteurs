@@ -1,0 +1,45 @@
+display:
+  default:
+    display_options:
+      footer:
+        area:
+          content:
+            value: |-
+              <p class="elo-disclaimer">
+                  <strong>NB :</strong> Cette évaluation (<a href="https://fr.wikipedia.org/wiki/Classement_Elo" target="_blank" rel="noopener">ELO</a>) est interne et ne représente donc pas une source officielle.
+              </p>
+            format: full_html
+      title: Lutteurs
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+      filters:
+        search_api_fulltext:
+          expose:
+            label: 'Filtrer par le nom'
+        facets_field_ecurie:
+          expose:
+            label: Écurie
+      pager:
+        options:
+          tags:
+            first: '« Premier'
+            last: 'Dernier »'
+  block_3:
+    display_options:
+      header:
+        area:
+          content:
+            value: '<div class="homonymes"> Liste de suggestions :<div> '
+            format: basic_html
+  page_2:
+    display_options:
+      title: 'Classement des performances sportives (points Elo)'
+  block_2:
+    display_options:
+      use_more_text: 'Voir plus'
+  feed_1:
+    display_options:
+      use_more_text: 'Voir plus'
+label: Lutteurs

@@ -1,0 +1,23 @@
+combats_manquants.form:
+  path: '/proposer-un-combat'
+  defaults:
+    _form: '\Drupal\combats_manquants\Form\CombatManquantForm'
+    _title: 'Proposer un combat manquant'
+  requirements:
+    _access: 'TRUE'
+
+combats_manquants.autocomplete_lutteur:
+  path: '/combats-manquants/autocomplete-lutteur'
+  defaults:
+    _controller: '\Drupal\combats_manquants\Controller\AutocompleteController::handleAutocomplete'
+    _title: 'Autocomplete Lutteur'
+  requirements:
+    _access: 'TRUE'
+
+combats_manquants.settings:
+  path: '/admin/config/content/combats-manquants'
+  defaults:
+    _form: '\Drupal\combats_manquants\Form\CombatsManquantsSettingsForm'
+    _title: 'Paramètres - Combats manquants'
+  requirements:
+    _permission: 'administer site configuration'

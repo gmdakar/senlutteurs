@@ -1,0 +1,35 @@
+services:
+  misc_divers.repare_404_commands:
+    class: Drupal\misc_divers\Commands\ReparePage404Commands
+    arguments:
+      - '@database'
+      - '@entity_type.manager'
+    tags:
+      - { name: drush.command }
+
+  misc_divers.force_update_nodes_commands:
+    class: Drupal\misc_divers\Commands\ForceUpdateNodesCommands
+    arguments:
+      - '@entity_type.manager'
+    tags:
+      - { name: drush.command }
+  misc_divers.fusion_athlete_commands:
+    class: Drupal\misc_divers\Commands\FusionAthleteCommands
+    tags:
+      - { name: drush.command }
+  misc_divers.ecurie_update_commands:
+    class: Drupal\misc_divers\Commands\EcurieUpdateCommands
+    arguments:
+      - '@entity_type.manager'
+      - '@state'
+      - '@sl_live_search.live_search_service'
+    tags:
+      - { name: drush.command }
+  misc_divers.date_reelle_update_commands:
+    class: Drupal\misc_divers\Commands\DateReelleUpdateCommands
+    arguments:
+      - '@entity_type.manager'
+      - '@state'
+      - '@sl_live_search.live_search_service'
+    tags:
+      - { name: drush.command }

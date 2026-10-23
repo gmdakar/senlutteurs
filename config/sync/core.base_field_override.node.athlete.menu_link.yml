@@ -1,0 +1,20 @@
+uuid: cf7b0f3b-c675-44f9-9e25-756bb5deb8a1
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.athlete
+id: node.athlete.menu_link
+field_name: menu_link
+entity_type: node
+bundle: athlete
+label: 'Lien du menu'
+description: "Lien de menu calculé pour le nœud (disponible uniquement pendant l'enregistrement du nœud)."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

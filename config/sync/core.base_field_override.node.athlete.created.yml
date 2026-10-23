@@ -1,0 +1,18 @@
+uuid: e899230e-d7ee-47f2-bcdc-1a68e22f407f
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.athlete
+id: node.athlete.created
+field_name: created
+entity_type: node
+bundle: athlete
+label: 'Écrit le'
+description: "La date et l'heure auxquelles le contenu a été créé."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

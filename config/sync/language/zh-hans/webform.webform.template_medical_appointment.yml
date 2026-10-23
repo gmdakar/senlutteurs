@@ -1,0 +1,5 @@
+settings:
+  confirmation_title: Merci
+handlers:
+  email_notification:
+    label: 电子邮件通知

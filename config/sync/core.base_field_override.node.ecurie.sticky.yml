@@ -1,0 +1,22 @@
+uuid: 5641f3c9-a9f3-472c-a2d7-24c4918f308d
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.ecurie
+id: node.ecurie.sticky
+field_name: sticky
+entity_type: node
+bundle: ecurie
+label: 'Epinglé en haut des listes'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

@@ -1,0 +1,26 @@
+uuid: 13c85662-bee3-4460-8858-5bd82253c0f5
+langcode: fr
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - sl_theme
+_core:
+  default_config_hash: 6aOgWsNTXjqrDm98TXSAjP6qd2nCijD1xw45MrnbK-Y
+id: sl_theme_page_title
+theme: sl_theme
+region: content
+weight: -19
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Titre de la page'
+  label_display: '0'
+  provider: core
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '<front>'

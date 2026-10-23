@@ -1,0 +1,6 @@
+settings:
+  label: 'تثبيت التطبيق'
+  button_text: 'تثبيت التطبيق'
+  intro_text:
+    value: '<p><em><strong><u>للوصول المباشر:</u></strong></em><br><em>يمكنك تثبيت تطبيق <strong>SenLutteurs AI</strong> على شاشتك الرئيسية أدناه.</em></p>'
+    format: basic_html

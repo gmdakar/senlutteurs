@@ -1,0 +1,22 @@
+uuid: 144b022d-521b-4670-a8ef-c903eb818a0d
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.a_venir
+id: node.a_venir.status
+field_name: status
+entity_type: node
+bundle: a_venir
+label: Publié
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

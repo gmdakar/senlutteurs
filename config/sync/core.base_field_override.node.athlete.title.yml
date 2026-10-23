@@ -1,0 +1,18 @@
+uuid: 9c04defd-fb66-4ff6-9a71-dc8140b3e4ca
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.athlete
+id: node.athlete.title
+field_name: title
+entity_type: node
+bundle: athlete
+label: Titre
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

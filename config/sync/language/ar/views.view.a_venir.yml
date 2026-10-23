@@ -1,0 +1,22 @@
+label: القادمة
+display:
+  default:
+    display_options:
+      title: القادمة
+      exposed_form:
+        options:
+          submit_button: تطبيق
+          reset_button_label: 'إعادة ضبط'
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+  block_2:
+    display_options:
+      title: 'المباراة القادمة للرياضي'
+      header:
+        area:
+          content:
+            value: 'مباراته القادمة'
+            format: basic_html

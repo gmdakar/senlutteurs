@@ -1,0 +1,18 @@
+uuid: 567c4fb9-b980-4cfd-b32f-1af956d50126
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.ecurie
+id: node.ecurie.title
+field_name: title
+entity_type: node
+bundle: ecurie
+label: Titre
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

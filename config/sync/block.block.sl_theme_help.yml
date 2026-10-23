@@ -1,0 +1,22 @@
+uuid: 91a0de9f-9534-4a5f-9e64-a620bfa811bc
+langcode: fr
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - sl_theme
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: sl_theme_help
+theme: sl_theme
+region: highlighted
+weight: -2
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Aide
+  label_display: '0'
+  provider: help
+visibility: {  }

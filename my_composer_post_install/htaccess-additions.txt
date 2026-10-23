@@ -1,0 +1,13 @@
+# ----------------------------------------------------------------------
+# LSCache Global Flags
+# ----------------------------------------------------------------------
+<IfModule LiteSpeed>
+  CacheLookup public on
+  php_flag output_buffering off
+</IfModule>
+
+# BLOCAGE RSS (SeneLutteurs Security Backup)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule rss\.xml - [L,R=404]
+</IfModule>

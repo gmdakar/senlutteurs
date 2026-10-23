@@ -1,0 +1,17 @@
+services:
+  misc_divers.athlete_cpt_counter:
+    class: Drupal\misc_divers\Services\AthleteCounterCptService
+    arguments:
+      - '@state'
+      - '@queue'
+      - '@config.factory'
+      - '@logger.factory' # Ajouté car présent dans ton PHP
+  monolog.handler.email_config:
+    class: Monolog\Handler\NativeMailerHandler
+    factory: ['Drupal\misc_divers\Logger\MailHandlerFactory', 'create']
+    arguments: ['@config.factory']
+  misc_divers.ecurie_redirect_subscriber:
+    class: Drupal\misc_divers\EventSubscriber\EcurieRedirectSubscriber
+    arguments: ['@current_route_match']
+    tags:
+      - { name: event_subscriber }

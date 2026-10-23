@@ -1,0 +1,17 @@
+athletes_envogue_cron.settings:
+  path: '/admin/config/gemini-athlete-en-vogue-cron'
+  defaults:
+    _form: '\Drupal\athletes_envogue_cron\Form\AthletesEnVogueCronSettingsForm'
+    _title: 'Gemini athlete Cron Settings'
+  requirements:
+    _permission: 'administer site configuration'
+athletes_envogue_cron.import_athletes:
+  path: '/athletes_en_vogue/import'
+  defaults:
+    _controller: '\Drupal\athletes_envogue_cron\Controller\AthletesEnvogueController::runImport'
+    _title: 'Import Athletes'
+  methods: [GET, POST]
+  requirements:
+    _access: 'TRUE'
+
+

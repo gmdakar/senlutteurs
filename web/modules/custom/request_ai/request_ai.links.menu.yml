@@ -1,0 +1,6 @@
+request_ai.settings:
+  title: 'Request AI Settings'
+  description: 'Configure Request AI API'
+  parent: system.admin_config_services 
+  route_name: request_ai.settings
+  weight: 10

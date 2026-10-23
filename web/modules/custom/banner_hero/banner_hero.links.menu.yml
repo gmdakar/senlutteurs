@@ -1,0 +1,6 @@
+banner_hero.settings:
+  title: 'Banner Hero'
+  description: 'Configure the banner hero image.'
+  parent: system.admin_config_system
+  route_name: banner_hero.settings
+  weight: 100

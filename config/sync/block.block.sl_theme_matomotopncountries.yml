@@ -1,0 +1,24 @@
+uuid: 7a4b9ef4-12a6-458c-8196-2d99f08c902e
+langcode: fr
+status: true
+dependencies:
+  module:
+    - matomo_total_visits_block
+  theme:
+    - sl_theme
+id: sl_theme_matomotopncountries
+theme: sl_theme
+region: footer_fifth
+weight: -20
+provider: null
+plugin: matomo_top_countries_block
+settings:
+  id: matomo_top_countries_block
+  label: 'Matomo Top N countries'
+  label_display: '0'
+  provider: matomo_total_visits_block
+  matomo_site_id: 1
+  matomo_database_key: matomo
+  cache_max_age: 604800
+  top_nb_pays: 10
+visibility: {  }

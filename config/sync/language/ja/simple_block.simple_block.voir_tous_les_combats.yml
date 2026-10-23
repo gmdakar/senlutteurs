@@ -1,0 +1,4 @@
+title: すべての試合を見る
+content:
+  value: '<p><a href="/ja/combats">最近のすべての試合を見る</a></p>'
+  format: basic_html

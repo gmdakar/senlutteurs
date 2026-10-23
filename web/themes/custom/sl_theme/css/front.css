@@ -1,0 +1,639 @@
+/* ==========================================================================
+   FRONT.CSS - Réservé à la page d'accueil (Copie stricte)
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* --- Page d'accueil générique --- */
+.path-frontpage .breadcrumb {
+  display: none;
+}
+.path-frontpage #block-sl-theme-bannerheroblock {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+}
+.path-frontpage .left_right {
+    margin-left: .5rem;
+    margin-right: .5rem;
+    margin-bottom: 2rem; 
+}
+.path-frontpage .node--type-athlete.node--view-mode-fiche .field--type-image {
+    float: none;
+    background-color: var(--color-white);
+    text-align: center;
+    padding: 0;
+}
+.path-frontpage .node--type-athlete.node--view-mode-fiche .field--type-image:hover {
+    transform: scale(1.01);
+    box-shadow: 0 4px 8px rgba(82, 65, 65, 0.75);
+}
+.path-frontpage #views-bootstrap-lutteurs-block-1 .carousel-inner {
+    overflow: unset;
+}
+.path-frontpage .view-id-lutteurs.view-display-id-block_1 .carousel-control-next, 
+.path-frontpage .view-id-lutteurs.view-display-id-block_1 .carousel-control-prev {
+   /* width: 5%;*/
+}
+.path-frontpage .node--type-athlete.node--view-mode-fiche .field--type-image img{
+    padding: 0;
+    margin: 1rem auto;
+}
+.path-frontpage .node--type-athlete.node--view-mode-fiche h2 {
+    font-size: 1.25rem;
+    text-align: center;
+    margin: .4rem 1rem 0 0;
+}
+.path-frontpage .node--type-athlete.node--view-mode-fiche .field--type-image{
+    box-shadow: 0 4px 8px rgba(82, 65, 65, 0.35);
+}
+.path-frontpage .node--type-athlete.node--view-mode-fiche .field--name-field-ecurie {
+    margin: 0 0 1.2rem;
+    text-align: center;
+    padding: .25rem 1rem 0 0;
+}
+.path-frontpage .views-exposed-form label {
+  min-width: 8.5rem;
+}
+
+/* --- Bloc A Propos --- */
+div#block-sl-theme-apropos {
+    position: relative;
+    font-size: .85rem;
+}
+div#block-sl-theme-apropos h2 {
+    font-size: 1rem;
+}
+
+/* --- Tableau Roi des Arènes (block_1 Sidebar) --- */
+#block-sl-theme-views-block-roi-des-arenes-block-1 {
+  background: var(--color-white);
+  margin-top: 2.5rem;
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 h2 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-black);
+  text-transform: uppercase;
+  border-bottom: 3px solid var(--color-green);
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 h2::before {
+  content: var(--icon-king); 
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .table {
+  font-size: 0.75rem; 
+  margin-bottom: 0;
+  table-layout: fixed; 
+  width: 100%;
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .table tbody tr {
+  border-left: 3px solid var(--color-green);
+  transition: background 0.2s;
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .table tbody tr:nth-child(3n+2) { border-left-color: var(--color-yellow); }
+#block-sl-theme-views-block-roi-des-arenes-block-1 .table tbody tr:nth-child(3n+3) { border-left-color: var(--color-red); }
+#block-sl-theme-views-block-roi-des-arenes-block-1 td {
+  padding: 5px 2px;
+  vertical-align: middle;
+  border-top: 1px solid rgba(0,0,0,0.03);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .views-field-title {
+  width: 45px; 
+  font-weight: 800;
+  font-size: 0.7rem;
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .views-field-field-athlete {
+  width: 35%;
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .views-field-field-athlete a {
+  font-weight: 700;
+  color: var(--color-red);
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .views-field-nothing {
+  width: auto;
+  font-size: .7rem;
+  letter-spacing: -0.2px;
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .views-field-nothing time {
+  font-weight: 600;
+  color: var(--color-black);
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .table tbody tr:first-child {
+  background-color: var(--color-yellowlight2) !important;
+  border-left-width: 5px;
+}
+#block-sl-theme-views-block-roi-des-arenes-block-1 .pagination {
+  margin-top: 8px;
+  scale: 0.65;
+  justify-content: center;
+}
+
+/* --- Bloc : Top propositions combats --- */
+.block-top-combat-propositions-block {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #f5f7fa, #e4e7eb);
+  border-radius: 10px;
+  width: 95%;
+  padding: .5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+.block-top-combat-propositions-block::before {
+    content: "⚡";
+}
+.block-top-combat-propositions-block a {
+    color: var(--color-red);
+}
+.block-top-combat-propositions-block [id^="combat-vote-message-"] a {
+    color: var(--color-red);
+    background-color: unset;
+    font-weight: 700;
+    font-size: 1rem;
+}
+.block-top-combat-propositions-block [id^="combat-vote-message-"] {
+    font-size: .8rem;
+}
+.block-top-combat-propositions-block a#show-combat-proposal-form {
+    font-weight: 500;
+}
+.block-top-combat-propositions-block #combat-propositions-list a.use-ajax{
+    color: var(--color-white);
+}
+.block-top-combat-propositions-block button {
+    background-color: var(--color-red);
+}
+.block-top-combat-propositions-block h2 {
+  display: inline-block;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--color-black);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--color-black);
+  padding-bottom: 0.5rem;
+}
+#combat-propositions-list .list-group {
+  border: none;
+}
+#combat-propositions-list .list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin-bottom: 0.6rem;
+  padding: 0.75rem .5rem;
+  transition: all 0.2s ease-in-out;
+}
+#combat-propositions-list .list-group-item:hover {
+  background: #f0f8ff;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+#combat-propositions-list .list-group-item a.use-ajax {
+  background: var(--color-green);
+  color: white;
+  padding: 0.35rem 0.25rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: background 0.2s ease-in-out;
+}
+#show-combat-proposal-form {
+  border-radius: 6px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background 0.2s ease-in-out;
+}
+.combat-proposal-form {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  border: 1px solid #e1e4e8;
+}
+.combat-proposal-form label {
+  font-weight: 600;
+  color: #34495e;
+}
+.combat-proposal-form input[type="text"] {
+  border-radius: 6px;
+  border: 1px solid #ccd0d5;
+  padding: 0.5rem;
+}
+.combat-proposal-form button {
+  border: none;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+.combat-proposal-form button:hover {
+  background: var(--color-green) !important;
+}
+
+/* --- Bloc : À venir teaser (block_1) --- */
+.block-views-blocka-venir-block-1 {
+    position: relative;
+    padding: 1.35rem 1.85rem 1.35rem 2.85rem;
+    margin: .5rem 5rem 0 0;
+    width: 95%;
+    background: #232529; 
+    overflow: hidden;
+    color: #fff;
+    box-shadow: 0 8px 12px rgba(82, 65, 65, 0.75);
+}
+.block-views-blocka-venir-block-1::before {
+    content: "📅 ";
+    margin-left: 25%;
+}
+.block-views-blocka-venir-block-1 h2{
+    display: inline-block;
+    color: var(--color-yellow);
+    font-size: 1.5rem;
+    text-decoration: underline;
+    text-align: center;
+}
+.block-views-blocka-venir-block-1 a{
+    color: var(--color-yellow) !important;
+    font-weight: 400 !important;
+    font-size: 1.15rem;
+}
+.block-views-blocka-venir-block-1 a:hover{
+    color: var(--color-red) !important;
+}
+.block-views-blocka-venir-block-1 .views-row:first-child a{
+    color: var(--color-yellow);
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+.block-views-blocka-venir-block-1 .views-row:first-child .datetime{
+    font-size: 1rem;
+    font-weight: 500;
+}
+.block-views-blocka-venir-block-1 .views-row .datetime{
+    font-size: 1rem;
+    font-weight: 300;
+}
+.block-views-blocka-venir-block-1 .node--type-a-venir.node--view-mode-teaser .field--name-field-lutteur-1, 
+.block-views-blocka-venir-block-1 .node--type-a-venir.node--view-mode-teaser .field--name-field-lutteur-2 {
+  margin : 0 auto;
+}
+.block-views-blocka-venir-block-1 .video,
+.block-views-blocka-venir-block-1 .video a{
+ font-size: .85rem !important;
+ color : var(--color-greylight) !important;
+}
+.block-views-blocka-venir-block-1 .video {
+ margin-bottom: .75rem;
+}
+.block-views-blocka-venir-block-1 .field__label {
+  color: var(--color-greylight);
+  font-size: .85rem;
+  font-weight: normal;
+}
+.block-views-blocka-venir-block-1 .field__item {
+  color: #fff;
+}
+.block-views-blocka-venir-block-1 .video a::before {
+  content: "";
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 2px;
+    margin-left: 6px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='2' y='2' width='20' height='20' rx='3' ry='3' fill='%23FF0000'/><polygon points='9,7 17,12 9,17' fill='white'/></svg>");
+}
+.block-views-blocka-venir-block-1 .video .field__item a {
+  font-size: 0 !important ;
+  color: transparent !important;
+  text-decoration: none !important;
+  position: relative !important;
+  vertical-align: middle !important;
+}
+.block-views-blocka-venir-block-1 .pagination .page-item a{
+  display: none;
+}
+.block-views-blocka-venir-block-1 .pagination .page-item a[rel="prev"],
+.block-views-blocka-venir-block-1 .pagination .page-item a[rel="next"] {
+  display: inline-block !important;
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 0.875rem;
+  padding: 0.2rem 0.4rem;
+  text-decoration: underline;
+}
+div.block-views-blocka-venir-block-1 > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Bloc Lutteurs Carousel (block_1) --- */
+.left_right .region-side-left .block > h2 {
+    display: inline-block;
+    text-align: center;
+}
+.left_right .region-side-left .block::before {
+    content: "";
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background: linear-gradient(to left, var(--color-red) 50%, transparent 50%);
+    vertical-align: sub;
+    margin-left: -1rem;
+}
+[id^="block-sl-theme-views-block-lutteurs-block-1"] > h2 {
+    border-bottom: 2px dotted var(--color-green); 
+    font-weight:700; 
+    font-size:1.6rem;
+    max-width: 98%;
+}
+[id^="block-sl-theme-views-block-lutteurs-block-1"] .carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+    transform: scale(1.5);
+    margin-bottom: 3rem;
+}
+[id^="block-sl-theme-views-block-lutteurs-block-1"] .carousel-control-next-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: scale(1.5);
+    margin-right: 0rem;
+    margin-bottom: 3rem;
+}
+[id^="block-sl-theme-views-block-lutteurs-block-1"] a {
+   color: var(--color-red);
+   font-weight: 500;
+}
+[id^="block-sl-theme-views-block-lutteurs-block-1"] .more-link a {
+    display: inline-block;
+    color: var(--color-red);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background 0.3s;
+    font-weight: 500;
+}
+[id^="block-sl-theme-views-block-lutteurs-block-1"] .more-link a::before {
+    content: "➜";
+    margin-right: 0.5rem;
+}
+[id^="block-sl-theme-views-block-lutteurs-block-1"] .more-link a:hover::before {
+    content: "➜";
+    margin-right: 0.5rem;
+    color: var(--color-red);
+}
+[id^="block-sl-theme-views-block-lutteurs-block-1"] .more-link {
+    float: right;
+    margin: 0 2rem;
+    font-size: 1.15rem;
+}
+#views-bootstrap-lutteurs-block-1 .carousel-indicators{
+ display: none;
+}
+
+/* --- Bloc Confrontations Frontpage (block_1 & block_2) --- */
+#block-sl-theme-views-block-confrontations-block-1 {
+    display: none;
+}
+#block-sl-theme-views-block-confrontations-block-1 h2{
+    border-bottom: 2px dotted var(--color-green); 
+    font-weight:700; 
+    font-size:1.6rem;
+    margin-bottom: 1rem;
+}
+#block-sl-theme-views-block-confrontations-block-1 .views-field-field-athlete-1 a,
+#block-sl-theme-views-block-confrontations-block-1 .views-field-field-athlete-2 a{
+    color: var(--color-red);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: underline;
+}
+.block-views-blockconfrontations-block-2 {
+  margin: 2rem auto;
+  max-width: 1200px;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 0.1);
+}
+.block-views-blockconfrontations-block-2 h2 {
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+  color: #222;
+}
+.view-confrontations .more-link a {
+    display: inline-block;
+    color: var(--color-red);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background 0.3s;
+    font-weight: 500;
+}
+.view-confrontations .more-link a::before {
+    content: "➜";
+    margin-right: 0.5rem;
+}
+.view-confrontations .more-link a:hover::before {
+    content: "➜";
+    margin-right: 0.5rem;
+    color: var(--color-red);
+}
+.view-confrontations  .more-link {
+    float: right;
+    margin: 0 2rem;
+    font-size: 1.15rem;
+}
+
+/* --- Top 5 Classement ELO (block_2 Sidebar Front) --- */
+#block-sl-theme-views-block-lutteurs-indexed-block-2 {
+  margin-top: 1.75rem;
+  margin-bottom: .75rem;
+}
+#block-sl-theme-views-block-lutteurs-indexed-block-2 h2{
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-black);
+  border-bottom: 2px solid var(--color-black);
+  padding-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+#block-sl-theme-views-block-lutteurs-indexed-block-2 h2::before {
+    content: var(--icon-titre_concours);
+}
+#block-sl-theme-views-block-lutteurs-indexed-block-2 a{
+    font-size: 1rem;
+}
+#block-sl-theme-views-block-lutteurs-indexed-block-2 td a {
+  display: inline-block !important;
+}
+#block-sl-theme-views-block-lutteurs-indexed-block-2 .more-link a {
+    color: var(--color-red);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+#block-sl-theme-views-block-lutteurs-indexed-block-2  .more-link a::before {
+    content: "➜";
+    margin-right: 0.5rem;
+    color: var(--color-red);
+}
+#block-sl-theme-views-block-lutteurs-indexed-block-2 .view-footer,
+#block-sl-theme-views-block-lutteurs-indexed-block-2 .view-footer a{
+  font-size: 0.85rem;
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 .views-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    font-family: Arial, sans-serif;
+    max-width: 100%;
+    table-layout: fixed;
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 .views-table td,
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 .views-table th {
+    padding: 14px 18px;
+    font-size: 14px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 1rem !important;
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 tbody tr {
+    transition: all .25s ease;
+    border-bottom: 1px solid #f1f1f1;
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 tbody tr:hover {
+    background: #f8fafc;
+    transform: scale(1.01);
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 .views-field-title {
+    color: #1e293b;
+    width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 .views-field-elo-rating {
+    color: #0f172a;
+    text-align: right;
+    width: 30%;
+    font-weight: bold;
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 tbody tr:nth-child(even){
+    background:#fafafa;
+}
+/* === LA RÈGLE EXACTE QUE VOUS AVIEZ PERDUE EST ICI === */
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 tbody tr:first-child{
+    background-color:var(--color-red);
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 tbody tr:first-child a{
+    color:var(--color-white);
+    font-size: 1.15em;
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 tbody tr:first-child td{
+    color:white;
+    background-color:var(--color-red);
+    font-weight: 700;
+}
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 .views-table td:first-child,
+.view-lutteurs-indexed.view-id-lutteurs_indexed.view-display-id-block_2 .views-table th:first-child {
+    width: 60px;
+    text-align: center;
+}
+
+/* --- Media Queries : Frontpage --- */
+@media (max-width: 575.98px) {
+  #block-sl-theme-lienvoirtouslesrois,
+  #block-sl-theme-lienvoirtouslesclassements {
+    float:unset;
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 992px) {
+  #block-sl-theme-views-block-lutteurs-indexed-block-2 {
+    margin-top: 0rem;
+  } 
+  #block-sl-theme-views-block-confrontations-block-1 {
+      display: block;
+  }
+  #block-sl-theme-views-block-confrontations-block-2 {
+      display: none;
+  }
+  div#block-sl-theme-apropos h2 {
+      font-size: 1rem;
+  }
+  div#block-sl-theme-apropos {
+      position: relative;
+      top: -10px;
+      font-size: .85rem;
+  }
+}
+@media (min-width: 1200px) {
+  #block-sl-theme-views-block-roi-des-arenes-block-1 {
+    display: none;
+  }
+  div#block-sl-theme-apropos {
+      max-width: 40%;
+      position: relative;
+      top: -115px;
+      font-size: .85rem;
+      margin: 0 0 0 1rem;
+  }
+  .path-frontpage .left_right {
+      margin-left: .65rem;
+      margin-top: -8rem;
+      margin-bottom: 2rem;
+  }
+  #block-sl-theme-toppropositionscombats {
+      margin: 2rem 0rem 2rem .4rem;
+  }
+  .path-frontpage .views-exposed-form label {
+    min-width: 8.5rem;
+  }
+}
+@media (min-width: 1400px) {
+  #block-sl-theme-views-block-a-venir-block-1 {
+    margin-top: -1rem;
+  }
+  #block-sl-theme-voirtousleslutteurs,
+  #block-sl-theme-voirtouslescombats {
+    display: inline-block;
+    text-align: center;
+    margin-left:60%;
+    margin-top: 2rem !important;
+    font-size: 1.25rem;
+  }
+}

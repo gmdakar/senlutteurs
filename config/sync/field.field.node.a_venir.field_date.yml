@@ -1,0 +1,21 @@
+uuid: 6926b3bd-2a8d-4958-bf54-6068d8101bcd
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date
+    - node.type.a_venir
+  module:
+    - datetime
+id: node.a_venir.field_date
+field_name: field_date
+entity_type: node
+bundle: a_venir
+label: Date
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

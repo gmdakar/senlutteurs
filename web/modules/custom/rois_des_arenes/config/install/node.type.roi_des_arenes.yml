@@ -1,0 +1,19 @@
+langcode: fr
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: []
+    parent: ''
+name: 'Roi des arènes'
+type: roi_des_arenes
+description: 'Type de contenu pour les rois des arènes de la lutte sénégalaise.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false
+options:
+  promote: false
+  sticky: false

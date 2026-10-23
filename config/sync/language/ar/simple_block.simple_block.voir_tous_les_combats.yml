@@ -1,0 +1,4 @@
+title: 'عرض جميع المعارك'
+content:
+  value: '<p><a href="/ar/combats">عرض جميع المعارك الأخيرة</a></p>'
+  format: basic_html

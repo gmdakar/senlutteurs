@@ -1,0 +1,18 @@
+uuid: ec213c6e-edff-4745-bcda-72a1b80a6bdb
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.confrontation
+id: node.confrontation.created
+field_name: created
+entity_type: node
+bundle: confrontation
+label: 'Écrit le'
+description: "La date et l'heure auxquelles le contenu a été créé."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

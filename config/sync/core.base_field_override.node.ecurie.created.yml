@@ -1,0 +1,18 @@
+uuid: d28229fe-a4ec-49a0-8024-eea2975d9f4d
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.ecurie
+id: node.ecurie.created
+field_name: created
+entity_type: node
+bundle: ecurie
+label: 'Écrit le'
+description: "La date et l'heure auxquelles le contenu a été créé."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

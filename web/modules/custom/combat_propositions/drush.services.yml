@@ -1,0 +1,5 @@
+services:
+  combat_propositions_purge.commands:
+    class: Drupal\combat_propositions\Commands\CombatPropositionsPurgeCommands
+    tags:
+      - { name: drush.command }

@@ -1,0 +1,156 @@
+<?php
+
+/**
+ * @file
+ * Install/update hooks pour le module confrontations_recentes.
+ */
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+
+/**
+ * Table mémorisant les N-uplets (2 ou +) de combats suspects de doublons
+ * (même pivot, adversaire proche, dates ≤7j) déjà soumis à l'IA
+ * (ConfrontationsDoublonsAiQueue) et pour lesquels le verdict a été "tout
+ * conserver" (aucun delete=1) : voir
+ * ConfrontationDeduplicationService::isDoublonGroupVerifiedKept() /
+ * markDoublonGroupVerifiedKept(). Une fois enregistré ici, ce N-uplet
+ * n'est plus jamais re-proposé à l'IA lors des prochains
+ * "drush cdbl --task=combats".
+ */
+function confrontations_recentes_schema()
+{
+    $schema['confrontations_recentes_ai_doublons_verified'] = [
+        'description' => 'N-uplets de combats (field_id_text) déjà vérifiés par l\'IA (doublons ambigus) et tranchés "tout conserver".',
+        'fields' => [
+            'id' => [
+                'type'     => 'serial',
+                'not null' => TRUE,
+            ],
+            'group_key_hash' => [
+                'type'        => 'varchar_ascii',
+                'length'      => 64,
+                'not null'    => TRUE,
+                'description' => 'sha256 des field_id_text du groupe, triés par ordre alphabétique et concaténés par "|".',
+            ],
+            'group_key' => [
+                'type'        => 'text',
+                'size'        => 'medium',
+                'not null'    => TRUE,
+                'description' => 'Concaténation lisible (triée alpha, séparateur "|") des field_id_text du groupe, à titre de debug.',
+            ],
+            'created' => [
+                'type'        => 'int',
+                'not null'    => TRUE,
+                'description' => 'Timestamp de l\'enregistrement (verdict IA "tout conserver").',
+            ],
+        ],
+        'primary key' => ['id'],
+        'unique keys' => [
+            'group_key_hash' => ['group_key_hash'],
+        ],
+    ];
+
+    return $schema;
+}
+
+/**
+ * Crée la table confrontations_recentes_ai_doublons_verified (si absente)
+ * sur les sites déjà installés, hook_schema() seul ne s'appliquant qu'à
+ * l'installation initiale du module.
+ */
+function confrontations_recentes_update_10002()
+{
+    $table  = 'confrontations_recentes_ai_doublons_verified';
+    $schema = \Drupal::database()->schema();
+
+    if (!$schema->tableExists($table)) {
+        $spec = confrontations_recentes_schema()[$table];
+        $schema->createTable($table, $spec);
+    }
+
+    return t('Table @table créée (si absente) : mémorisation des N-uplets de combats doublons déjà vérifiés par l\'IA sans suppression.', ['@table' => $table]);
+}
+
+/**
+ * Crée le champ field_check_is_lutte_simple sur le type de contenu
+ * 'confrontation'.
+ *
+ * Booléen : TRUE = ce combat a déjà été explicitement tranché par l'IA
+ * comme n'étant PAS de la lutte simple (verdict is_lutte_simple = 0).
+ * Sert uniquement à ne plus jamais le remettre en queue pour l'IA
+ * (queueSuspectedLutteSimpleCombats()) — sans effet sur field_is_lutte_simple
+ * ni sur la propagation automatique "même jour", qui restent libres de le
+ * marquer lutte simple plus tard si le contexte le justifie.
+ */
+function confrontations_recentes_update_10001()
+{
+    $field_name  = 'field_check_is_lutte_simple';
+    $entity_type = 'node';
+    $bundle      = 'confrontation';
+
+    if (!FieldStorageConfig::loadByName($entity_type, $field_name)) {
+        FieldStorageConfig::create([
+            'field_name'  => $field_name,
+            'entity_type' => $entity_type,
+            'type'        => 'boolean',
+        ])->save();
+    }
+
+    if (!FieldConfig::loadByName($entity_type, $bundle, $field_name)) {
+        FieldConfig::create([
+            'field_name'  => $field_name,
+            'entity_type' => $entity_type,
+            'bundle'      => $bundle,
+            'label'       => 'Vérifié - pas lutte simple (IA)',
+            'description' => 'Coché automatiquement quand l\'IA a explicitement répondu que ce combat n\'est PAS de la lutte simple. Empêche sa remise en queue IA, sans bloquer la propagation automatique "même jour".',
+            'default_value' => [['value' => 0]],
+        ])->save();
+    }
+
+    return t('Champ field_check_is_lutte_simple créé sur le type confrontation (si absent).');
+}
+
+
+/**
+ * Crée le champ field_check_homonymie sur le type de contenu
+ * 'confrontation'.
+ *
+ * Booléen : TRUE = ce combat précis a déjà été soumis (et traité, quel
+ * que soit le verdict : réattribué ou confirmé pivot) à l'IA de
+ * vérification des homonymes générationnels
+ * (ConfrontationsHomonymesGenerationnelsAiQueue). Ce champ-ci porte sur
+ * le COMBAT lui-même et sert uniquement à filtrer les données réellement
+ * envoyées à l'IA : un combat déjà traité (TRUE) continue de compter
+ * dans la liste des N derniers combats suspects du pivot (donc dans la
+ * détection du trou), mais n'est plus jamais renvoyé dans le JSON du
+ * prompt IA une fois vérifié — seuls les combats à FALSE sont
+ * effectivement transmis.
+ */
+function confrontations_recentes_update_10004()
+{
+    $field_name  = 'field_check_homonymie';
+    $entity_type = 'node';
+    $bundle      = 'confrontation';
+
+    if (!FieldStorageConfig::loadByName($entity_type, $field_name)) {
+        FieldStorageConfig::create([
+            'field_name'  => $field_name,
+            'entity_type' => $entity_type,
+            'type'        => 'boolean',
+        ])->save();
+    }
+
+    if (!FieldConfig::loadByName($entity_type, $bundle, $field_name)) {
+        FieldConfig::create([
+            'field_name'  => $field_name,
+            'entity_type' => $entity_type,
+            'bundle'      => $bundle,
+            'label'       => 'Vérifié - homonymie générationnelle (IA)',
+            'description' => 'Coché automatiquement une fois ce combat traité (verdict appliqué ou pivot confirmé) par la vérification IA des homonymes générationnels. Empêche son renvoi dans les données envoyées à l\'IA lors des prochains passages, sans affecter la détection du trou de carrière.',
+            'default_value' => [['value' => 0]],
+        ])->save();
+    }
+
+    return t('Champ field_check_homonymie créé sur le type confrontation (si absent).');
+}

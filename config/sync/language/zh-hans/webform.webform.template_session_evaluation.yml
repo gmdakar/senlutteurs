@@ -1,0 +1,7 @@
+description: "Un gabarit webform de session d'évaluation."
+elements: "overall:\r\n  '#type': radios\r\n  '#title': \"Comment s'est déroulée la session dans son ensemble ?\"\r\n  '#options_display': side_by_side\r\n  '#options': likert_quality\r\n  '#required': true\r\nspeaker:\r\n  '#type': webform_likert\r\n  '#title': 'Veuillez donner une note au présentateur …'\r\n  '#questions':\r\n    mastery: 'Maîtrise du sujet'\r\n    presentation: 'Capacité de présentation'\r\n    quality: 'Qualité du support et aides visuelles'\r\n  '#answers': likert_quality\r\n  '#na_answer': true\r\n  '#required': true\r\nlearn:\r\n  '#type': radios\r\n  '#title': 'Avez-vous appris quelque chose lors de cette session que vous pourrez réutiliser en dehors ?'\r\n  '#options_display': side_by_side\r\n  '#options':\r\n    'Yes': 'Oui'\r\n    'No': 'Non'\r\n    N/A: N/A\r\n  '#required': true\r\ncomments:\r\n  '#type': textarea\r\n  '#title': Commentaires\r\n  '#description': \"Qu'est-ce qui vous a le plus plu ? Quels conseils pour le présentateur pouvez-vous donner ?\"\n"
+settings:
+  confirmation_message: 'Merci pour vos retours.'
+handlers:
+  email_notification:
+    label: 邮件提醒

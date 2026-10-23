@@ -1,0 +1,11 @@
+uuid: 512959ae-3b74-4723-8a5d-ef33049d2960
+langcode: fr
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+id: a_propos
+title: 'À propos'
+content:
+  value: '<p><strong>Senlutteurs AI</strong> est un <strong>outil de vulgarisation de la lutte sénégalaise, propulsé avec l''aide de l’intelligence artificielle pour la collecte automatisée des données sportives publiques sur la lutte sénégalaise. </strong>Ce site est <strong>autonome</strong> pour la mise à jour de ses contenus et permet de rechercher des informations sur la fiche professionnelle d''un lutteur, et consulter l’historique de ses combats : adversaires, dates, résultats, verdicts.&nbsp;</p><p><strong>Notre expertise</strong> : Ce projet innovant a été entièrement conçu et optimisé sous Drupal. Experts de ce CMS, nous mettons notre savoir-faire au service de vos projets Web (architectures complexes, automatisation, performances). <a href="/contact">Contactez-nous</a> / Discutons de votre projet!"<br>&nbsp;</p>'
+  format: full_html

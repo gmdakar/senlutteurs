@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Language-neutral path aliases for untranslated content types.
+ *
+ * Pathauto crée les alias dans la langue du nœud (FR). Sans traduction,
+ * /ja/node/123 n'a pas d'alias → URL système. On force langcode "und"
+ * pour que le même alias fonctionne avec tous les préfixes de langue.
+ */
+
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\path_alias\PathAliasInterface;
+
+/**
+ * Bundles dont les alias doivent être language-neutral.
+ *
+ * Ajoutez ici les types sans content translation.
+ */
+function _sl_path_alias_neutral_bundles(): array {
+  return [
+    'athlete',
+    'ecurie',
+    'confrontation',
+    'a_venir',
+  ];
+}
+
+/**
+ * Implements hook_pathauto_alias_alter().
+ */
+function sl_path_alias_neutral_pathauto_alias_alter(&$alias, array &$context) {
+  if (($context['module'] ?? '') !== 'node') {
+    return;
+  }
+  $node = $context['data']['node'] ?? NULL;
+  if (!$node || !method_exists($node, 'bundle')) {
+    return;
+  }
+  if (!in_array($node->bundle(), _sl_path_alias_neutral_bundles(), TRUE)) {
+    return;
+  }
+  // Alias disponible pour toutes les langues (préfixe URL géré par negotiation).
+  $context['language'] = LanguageInterface::LANGCODE_NOT_SPECIFIED;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for path_alias.
+ *
+ * Filet de sécurité si un alias athlete est créé/modifié hors Pathauto.
+ */
+function sl_path_alias_neutral_path_alias_presave(PathAliasInterface $path_alias) {
+  $path = $path_alias->getPath();
+  // /node/NID
+  if (!preg_match('#^/node/(\d+)$#', $path, $m)) {
+    return;
+  }
+  $nid = (int) $m[1];
+  $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+  if (!$node || !in_array($node->bundle(), _sl_path_alias_neutral_bundles(), TRUE)) {
+    return;
+  }
+  $path_alias->set('langcode', LanguageInterface::LANGCODE_NOT_SPECIFIED);
+}

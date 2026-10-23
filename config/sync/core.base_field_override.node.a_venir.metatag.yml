@@ -1,0 +1,20 @@
+uuid: e3923cf6-ed2e-4303-9d98-e0b5137cb945
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.a_venir
+  module:
+    - metatag
+id: node.a_venir.metatag
+field_name: metatag
+entity_type: node
+bundle: a_venir
+label: 'Balises meta (champ caché pour la prise en charge du JSON)'
+description: 'The computed meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag_computed

@@ -1,0 +1,7 @@
+settings:
+  confirmation_message: 'Merci pour vos retours.'
+handlers:
+  email_confirmation:
+    label: 'تأكيد البريد الإلكتروني'
+  email_notification:
+    label: 'إشعارات البريد'

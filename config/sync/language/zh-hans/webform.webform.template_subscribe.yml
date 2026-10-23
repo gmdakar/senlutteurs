@@ -1,0 +1,6 @@
+title: 订阅
+settings:
+  confirmation_message: 'Merci de votre inscription.'
+handlers:
+  email_notification:
+    label: 邮件提醒

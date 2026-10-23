@@ -1,0 +1,41 @@
+uuid: ae3a217c-44ee-4a1a-9e59-756c3e52b5c3
+langcode: fr
+status: true
+dependencies:
+  config:
+    - search_api.index.default_index
+    - views.view.lutteurs_indexed
+  module:
+    - views
+id: lutteurs_indexed
+label: 'Lutteurs (indexed)'
+index_id: default_index
+suggester_settings:
+  live_results:
+    fields: {  }
+    highlight:
+      enabled: false
+      field: ''
+    suggest_keys: false
+    view_modes:
+      'entity:node':
+        a_venir: ''
+        athlete: ''
+        confrontation: ''
+        ecurie: ''
+        promoteur: ''
+suggester_weights:
+  live_results: 0
+suggester_limits: {  }
+search_settings:
+  'views:lutteurs_indexed':
+    displays:
+      default: true
+      selected: {  }
+options:
+  limit: 10
+  min_length: 1
+  show_count: false
+  delay: null
+  submit_button_selector: ':submit'
+  autosubmit: true

@@ -1,0 +1,4 @@
+filters:
+  obfuscate_email:
+    settings:
+      click_label: 显示电子邮件

@@ -1,0 +1,53 @@
+uuid: 18cb3709-378b-4203-b290-75c27b481ea5
+langcode: fr
+status: true
+dependencies: {  }
+id: senlutteurs_profil
+label: senlutteurs_profil
+config:
+  namer:
+    filename: backup
+    timestamp: true
+    timestamp_format: Y-m-d\TH-i-s
+  compressor:
+    compression: gzip
+  utils:
+    site_offline: false
+  metadata:
+    description: ''
+  db_exclude:
+    exclude_tables: {  }
+    nodata_tables:
+      cache_bootstrap: cache_bootstrap
+      cache_config: cache_config
+      cache_container: cache_container
+      cache_data: cache_data
+      cache_default: cache_default
+      cache_discovery: cache_discovery
+      cache_dynamic_page_cache: cache_dynamic_page_cache
+      cache_entity: cache_entity
+      cache_menu: cache_menu
+      cache_page: cache_page
+      cache_render: cache_render
+      cache_toolbar: cache_toolbar
+      sessions: sessions
+      watchdog: watchdog
+  private_files_exclude:
+    exclude_filepaths:
+      - backup_migrate
+  public_files_exclude:
+    exclude_filepaths:
+      - js
+      - css
+      - php
+      - styles
+      - 'config_*'
+      - .htaccess
+  encrypt:
+    encrypt: 0
+    encrypt_password: ''
+  notify:
+    notify_success_enable: 0
+    notify_success_email: senelutte@gmail.com
+    notify_failure_enable: 0
+    notify_failure_email: senelutte@gmail.com

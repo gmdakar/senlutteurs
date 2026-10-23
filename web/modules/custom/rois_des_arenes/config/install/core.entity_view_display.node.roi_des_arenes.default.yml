@@ -1,0 +1,58 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.roi_des_arenes.field_athlete
+    - field.field.node.roi_des_arenes.field_date_debut
+    - field.field.node.roi_des_arenes.field_date_fin
+    - field.field.node.roi_des_arenes.field_date_intronisation
+    - node.type.roi_des_arenes
+  module:
+    - datetime
+    - user
+id: node.roi_des_arenes.default
+targetEntityType: node
+bundle: roi_des_arenes
+mode: default
+content:
+  field_athlete:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_date_debut:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_date_fin:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_date_intronisation:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+hidden: {  }

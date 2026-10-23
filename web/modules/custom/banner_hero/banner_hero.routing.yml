@@ -1,0 +1,7 @@
+banner_hero.settings:
+  path: '/admin/config/system/banner-hero'
+  defaults:
+    _form: '\Drupal\banner_hero\Form\BannerHeroSettingsForm'
+    _title: 'Banner Hero Settings'
+  requirements:
+    _permission: 'administer site configuration'

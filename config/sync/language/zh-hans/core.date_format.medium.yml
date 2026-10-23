@@ -1,0 +1,2 @@
+label: 默认中日期
+pattern: 'Y年n月j日 - H:i'

@@ -1,0 +1,50 @@
+display:
+  block_2:
+    display_options:
+      use_more_text: 查看更多
+  feed_1:
+    display_options:
+      use_more_text: 查看更多
+  default:
+    display_options:
+      footer:
+        area:
+          content:
+            value: |-
+              <p class="elo-disclaimer">
+                  <strong>注：</strong> 该评分（<a href="https://zh.wikipedia.org/wiki/埃洛等级分制度" target="_blank" rel="noopener">ELO</a>）为内部计算，并非官方来源。它基于系统当前可用数据自动计算得出，因此可能随时间变化。
+              </p>
+            format: full_html
+      title: 摔跤手
+      exposed_form:
+        options:
+          submit_button: 应用
+          reset_button_label: 重置
+      filters:
+        search_api_fulltext:
+          expose:
+            label: 按姓名筛选
+        facets_field_ecurie:
+          expose:
+            label: 训练营
+      pager:
+        options:
+          tags:
+            first: '« 首页'
+            last: '末页 »'
+  block_3:
+    display_options:
+      header:
+        area:
+          content:
+            value: '<div class="homonymes">建议列表：<div> '
+            format: basic_html
+  page_1:
+    display_options:
+      empty:
+        area:
+          content:
+            value: 没有结果
+  page_2:
+    display_options:
+      title: 运动表现排名（Elo积分）

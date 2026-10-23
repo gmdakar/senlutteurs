@@ -1,0 +1,23 @@
+uuid: 454ed1ca-818e-4bb0-805b-f608a274e1c5
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_video_du_combat
+    - node.type.confrontation
+  module:
+    - link
+id: node.confrontation.field_video_du_combat
+field_name: field_video_du_combat
+entity_type: node
+bundle: confrontation
+label: 'Vidéo du combat'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link

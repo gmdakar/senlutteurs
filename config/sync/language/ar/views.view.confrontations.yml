@@ -1,0 +1,111 @@
+label: النزالات
+display:
+  default:
+    display_options:
+      title: النزالات
+      exposed_form:
+        options:
+          submit_button: تطبيق
+          reset_button_label: 'إعادة تعيين'
+      filters:
+        search_api_fulltext:
+          expose:
+            label: 'بحث نصي كامل'
+      header:
+        area:
+          content:
+            value: 'ملاحظة: قد تكون بعض البيانات النادرة غير دقيقة قليلاً (يرجى الإبلاغ عنها في صفحة المصارع).'
+            format: basic_html
+      empty:
+        area:
+          content:
+            value: 'لا نتائج'
+            format: plain_text
+      use_more_text: 'عرض المزيد'
+      fields:
+        field_athlete_1:
+          label: 'المصارع 1'
+        field_athlete_2:
+          label: 'المصارع 2'
+        field_vainqueur:
+          label: الفائز
+        field_video_du_combat:
+          label: 'فيديو النزال'
+        field_face_2_face:
+          label: 'وجهاً لوجه'
+        field_confrontation_date:
+          label: التاريخ
+  block_1:
+    display_options:
+      use_more_text: 'عرض المزيد'
+      pager:
+        options:
+          tags:
+            next: 'التالي ›'
+            previous: '‹ السابق'
+            first: '« الأول'
+            last: 'الأخير »'
+  block_2:
+    display_options:
+      use_more_text: 'عرض جميع النزالات'
+      pager:
+        options:
+          tags:
+            next: 'التالي ›'
+            previous: '‹ السابق'
+  page_1:
+    display_options:
+      fields:
+        field_confrontation_date:
+          label: التاريخ
+        field_athlete_1:
+          label: 'المصارع 1'
+        field_athlete_2:
+          label: 'المصارع 2'
+        field_vainqueur:
+          label: الحكم
+        field_face_2_face:
+          label: 'وجهاً لوجه'
+        field_video_du_combat:
+          label: 'فيديو المباراة'
+      filters:
+        search_api_fulltext:
+          expose:
+            placeholder: 'أدخل كلمة (كلمات) مفتاحية'
+        facets_field_athlete_1:
+          expose:
+            label: 'المصارع 1'
+            description: 'إذا لم تجد اسم المصارع في هذا الحقل، فابحث في حقل المصارع 2'
+        facets_field_athlete_2:
+          expose:
+            label: 'المصارع 2'
+  block_3:
+    display_options:
+      use_more_text: 'عرض المزيد'
+      fields:
+        field_confrontation_date:
+          label: التاريخ
+        field_athlete_1:
+          label: 'المصارع 1'
+        field_athlete_2:
+          label: 'المصارع 2'
+        field_vainqueur:
+          label: الحكم
+        field_face_2_face:
+          label: 'وجهاً لوجه'
+        field_video_du_combat:
+          label: 'فيديو المباراة'
+      filters:
+        facets_field_is_lutte_simple:
+          expose:
+            label: 'تصفية حسب النوع'
+          facet:
+            processor_configs:
+              boolean_item:
+                settings:
+                  on_value: 'مصارعة بسيطة'
+                  off_value: 'مصارعة بالضرب'
+      header:
+        area:
+          content:
+            value: "<section class=\"disclaimer-container\">\r\n  <div class=\"disclaimer-text\">\r\n    <strong>ملاحظة:</strong> قد تكون بعض البيانات النادرة غير دقيقة قليلاً، أو تتوافق مع مباريات مصارعة بسيطة (بدون ضرب) (<a href=\"?signaler=ano\" class=\"news-action\">أبلغ عنها هنا</a>) أو تكون مفقودة (يمكنك <a href=\"/proposer-un-combat\" class=\"news-action\">إضافتها</a> إذا كنت تعرفها)\r\n   <p class='news'>\r\n  ملاحظة: يتم اعتبار مباريات المصارعة بالضرب فقط في حساب تصنيف الأداء.\r\n</p>\r\n  </div>\r\n</section>"

@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Hooks du module shared_lib.
+ */
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_node_presave().
+ *
+ * Pour tout node de type traductible (athlete, confrontation, ecurie, page,
+ * article, a_venir…), quel que soit le code qui le sauvegarde (imports Gemini,
+ * confrontations_recentes, gemini_nextcombats_cron, drush, formulaires…) :
+ *  - création : ajoute une traduction pour CHAQUE langue du site ;
+ *  - mise à jour : recrée les langues manquantes et répercute les changements
+ *    de la source (titre, publié/dépublié…) sur les traductions non retouchées.
+ *
+ * Tout est fait en mémoire : les traductions sont écrites par le même save().
+ * Une erreur ici ne doit jamais empêcher la sauvegarde du node.
+ */
+function shared_lib_node_presave(NodeInterface $node) {
+  try {
+    \Drupal::service('shared_lib.node_translation')->processBeforeSave($node);
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('shared_lib')->error('Synchronisation des traductions impossible (nid @nid) : @msg', [
+      '@nid' => $node->id() ?? 'nouveau',
+      '@msg' => $e->getMessage(),
+    ]);
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Exécute notre presave EN DERNIER, après les presave des autres modules
+ * (confrontations_recentes recalcule titre/vainqueur/field_id_text, misc_divers
+ * force pathauto…) afin que les traductions copient les valeurs finales.
+ */
+function shared_lib_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'node_presave' && isset($implementations['shared_lib'])) {
+    $group = $implementations['shared_lib'];
+    unset($implementations['shared_lib']);
+    $implementations['shared_lib'] = $group;
+  }
+}

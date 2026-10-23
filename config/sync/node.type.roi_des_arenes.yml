@@ -1,0 +1,19 @@
+uuid: 91d90dc6-b11d-4367-bdda-f41a521c01fa
+langcode: fr
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: R-Z1okX1irR3-NIx5V8TT8RIikRrWP8x2WxApDXxGyI
+name: 'Roi des arènes'
+type: roi_des_arenes
+description: 'Type de contenu pour les rois des arènes de la lutte sénégalaise.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

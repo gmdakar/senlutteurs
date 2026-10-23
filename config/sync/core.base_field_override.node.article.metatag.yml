@@ -1,0 +1,20 @@
+uuid: b2935168-3b07-4ac1-bcaa-969b5e4ab1fc
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.article
+  module:
+    - metatag
+id: node.article.metatag
+field_name: metatag
+entity_type: node
+bundle: article
+label: 'Balises meta (champ caché pour la prise en charge du JSON)'
+description: 'The computed meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag_computed

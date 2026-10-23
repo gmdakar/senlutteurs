@@ -1,0 +1,8 @@
+name: Banner Hero
+type: module
+description: Provides a configurable hero banner image block.
+core_version_requirement: ^9 || ^10 || ^11
+package: Custom
+configure: banner_hero.settings
+dependencies:
+  - file

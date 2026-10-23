@@ -1,0 +1,7 @@
+title: 登録
+description: "Un gabarit webform d'inscription."
+settings:
+  confirmation_message: 'Merci pour votre inscription.'
+handlers:
+  email_notification:
+    label: メール通知

@@ -1,0 +1,21 @@
+uuid: acba7f45-9968-49b0-94e1-78cc7fc229da
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_confrontation_date
+    - node.type.confrontation
+  module:
+    - datetime
+id: node.confrontation.field_confrontation_date
+field_name: field_confrontation_date
+entity_type: node
+bundle: confrontation
+label: Date
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

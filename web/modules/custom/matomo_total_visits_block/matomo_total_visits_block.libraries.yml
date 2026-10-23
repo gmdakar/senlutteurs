@@ -1,0 +1,10 @@
+top_countries:
+  version: 1.x
+  css:
+    theme:
+      css/top-countries.css: {}
+  js:
+    js/top-countries.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

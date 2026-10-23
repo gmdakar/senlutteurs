@@ -1,0 +1,4 @@
+title: 用户个人资料
+handlers:
+  email_notification:
+    label: 邮件提醒

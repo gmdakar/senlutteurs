@@ -1,0 +1,18 @@
+uuid: 0d3d14c4-c22f-47b1-9854-5014bd063516
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.athlete
+id: node.athlete.changed
+field_name: changed
+entity_type: node
+bundle: athlete
+label: Modifié
+description: 'La date à laquelle le nœud a été modifié pour la dernière fois.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

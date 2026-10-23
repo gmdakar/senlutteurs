@@ -1,0 +1,27 @@
+uuid: fc7830fd-0e2a-4950-bdee-2e41bae4dca4
+langcode: fr
+status: true
+dependencies:
+  config:
+    - simple_block.simple_block.classement_clone
+  module:
+    - simple_block
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_lienvoirtouslesrois
+theme: sl_theme
+region: content
+weight: -11
+provider: null
+plugin: 'simple_block:classement_clone'
+settings:
+  id: 'simple_block:classement_clone'
+  label: 'Lien voir tous les rois'
+  label_display: '0'
+  provider: simple_block
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/lutteurs\r\n/lutteurs/*\r\n/combats\r\n/combats/*"

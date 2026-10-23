@@ -1,0 +1,21 @@
+label: Lutteurs
+display:
+  default:
+    display_options:
+      title: Lutteurs
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+      filters:
+        title:
+          expose:
+            label: 'Filtrer par le nom'
+  page_1:
+    display_options:
+      title: Lutteurs
+      pager:
+        options:
+          tags:
+            first: '« Premier'
+            last: 'Dernier »'

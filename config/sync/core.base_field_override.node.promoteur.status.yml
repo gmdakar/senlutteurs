@@ -1,0 +1,22 @@
+uuid: b8ebbb4f-41f7-4666-aec5-dd9086f39dc0
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.promoteur
+id: node.promoteur.status
+field_name: status
+entity_type: node
+bundle: promoteur
+label: Publié
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

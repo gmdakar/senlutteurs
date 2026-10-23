@@ -1,0 +1,18 @@
+confrontations_recentes.settings:
+  title: 'Confrontations récentes Settings'
+  description: 'Configure Confrontations récentes API'
+  parent: system.admin_config_services 
+  route_name: confrontations_recentes.settings
+  weight: 10
+confrontations_recentes.import_combats:
+  title: 'Recents Combats Import'
+  description: 'Run the recent confrontations import manually.'
+  parent: system.admin_config_services
+  route_name: confrontations_recentes.import_combats
+  weight: 13
+confrontations_recentes.update_videos:
+  title: 'Recents Combats Update Videos'
+  description: 'Run the recent confrontations update videos manually.'
+  parent: system.admin_config_services
+  route_name: confrontations_recentes.update_videos
+  weight: 14

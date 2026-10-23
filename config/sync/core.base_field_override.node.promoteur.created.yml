@@ -1,0 +1,18 @@
+uuid: 92295ab4-138c-4caf-9dc3-0b7144b8e861
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.promoteur
+id: node.promoteur.created
+field_name: created
+entity_type: node
+bundle: promoteur
+label: 'Écrit le'
+description: "La date et l'heure auxquelles le contenu a été créé."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

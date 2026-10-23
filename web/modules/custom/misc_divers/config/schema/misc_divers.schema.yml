@@ -1,0 +1,84 @@
+misc_divers.settings:
+  type: config_object
+  label: 'Paramètres Divers'
+  mapping:
+    # --- Configuration Cron & Seuils ---
+    cron_iterations:
+      type: integer
+      label: 'Nombre d iterations cron'
+    seuil_max_number_fights:
+      type: integer
+      label: 'Seuil minimum de nombre de combats'
+    seuil_cpt_to_complet_combats:
+      type: integer
+      label: 'Seuil compteur recherche automatique de combats'
+    seuil_max_nb_reset_cpt_lutteur:
+      type: integer
+      label: 'Seuil nombre de cycles max de recherche automatique'
+    
+    # --- Signalements & Votes ---
+    max_votes_proposition:
+      type: integer
+      label: 'Maximum de votes par proposition'
+    max_nb_signalements:
+      type: integer
+      label: 'Maximum de signalements'
+    
+    # --- Remplacements (Tableaux associatifs) ---
+    remplacements:
+      type: sequence
+      label: 'Liste des remplacements de noms'
+      sequence:
+        type: string
+        label: 'Valeur de remplacement'
+    remplacementsYtb:
+      type: sequence
+      label: 'Liste des remplacements YouTube'
+      sequence:
+        type: string
+        label: 'Valeur de remplacement YouTube'
+
+    # --- YouTube Logic (Chaînes CSV / Textes) ---
+    exclude_words_ytb:
+      type: string
+      label: 'Mots à exclure YouTube'
+    archive_words_ytb:
+      type: string
+      label: 'Mots clés Archives'
+    face2face_patterns_ytb:
+      type: string
+      label: 'Patterns Face à Face'
+    combat_patterns_ytb:
+      type: string
+      label: 'Patterns Combat'
+    separators_patterns_ytb:
+      type: string
+      label: 'Patterns Séparateurs'
+    integral_patterns_ytb:
+      type: string
+      label: 'Patterns Intégral'
+    victory_patterns_ytb:
+      type: string
+      label: 'Patterns Victoire'
+    ko_patterns_ytb:
+      type: string
+      label: 'Patterns KO'
+
+    # --- Logs & Alertes ---
+    email_destinataire_logs_errors:
+      type: string
+      label: 'Email destinataire des logs d''erreurs'
+
+    # --- Divers / Autres ---
+    schedules:
+      type: sequence
+      label: 'Planification des commandes'
+      sequence:
+        type: mapping
+        mapping:
+          command:
+            type: string
+          day:
+            type: string
+          time:
+            type: string

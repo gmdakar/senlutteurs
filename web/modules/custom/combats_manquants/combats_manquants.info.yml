@@ -1,0 +1,11 @@
+name: 'Combats manquants'
+type: module
+description: 'Permet à un internaute anonyme de proposer un combat manquant dans le palmarès d''un lutteur. Vérifie les doublons en base puis fait confirmer l''existence du combat par IA (sl_live_search) avant insertion automatique.'
+core_version_requirement: ^11
+configure: combats_manquants.settings
+package: Custom
+dependencies:
+  - drupal:node
+  - sl_live_search:sl_live_search
+  - shared_lib:shared_lib
+  - misc_divers:misc_divers

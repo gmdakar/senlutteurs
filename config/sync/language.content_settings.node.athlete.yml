@@ -1,0 +1,18 @@
+uuid: 41ceb435-3db6-455b-9fee-043feb255e3b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.athlete
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.athlete
+target_entity_type_id: node
+target_bundle: athlete
+default_langcode: site_default
+language_alterable: false

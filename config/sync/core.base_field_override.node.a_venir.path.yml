@@ -1,0 +1,20 @@
+uuid: c8aadb41-983b-47ae-99d8-b41c42ed9d0b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.a_venir
+  module:
+    - path
+id: node.a_venir.path
+field_name: path
+entity_type: node
+bundle: a_venir
+label: "Alias d'URL"
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

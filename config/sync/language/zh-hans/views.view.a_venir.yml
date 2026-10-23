@@ -1,0 +1,22 @@
+label: 即将到来
+display:
+  default:
+    display_options:
+      title: 即将到来
+      exposed_form:
+        options:
+          submit_button: 应用
+          reset_button_label: 重置
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+  block_2:
+    display_options:
+      title: 选手下一场比赛
+      header:
+        area:
+          content:
+            value: 他的下一场比赛
+            format: basic_html

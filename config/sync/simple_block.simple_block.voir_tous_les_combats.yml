@@ -1,0 +1,11 @@
+uuid: 4b021db6-42e5-43f7-b644-a7cfc3d622ab
+langcode: fr
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+id: voir_tous_les_combats
+title: 'Voir tous les combats'
+content:
+  value: '<p><a href="/combats">Voir tous les derniers combats</a></p>'
+  format: basic_html

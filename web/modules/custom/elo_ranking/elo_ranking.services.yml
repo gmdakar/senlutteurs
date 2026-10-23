@@ -1,0 +1,4 @@
+services:
+  elo_ranking.manager:
+    class: Drupal\elo_ranking\Service\EloManager
+    arguments: ['@database', '@entity_type.manager', '@state'] # Ajoute '@state' ici

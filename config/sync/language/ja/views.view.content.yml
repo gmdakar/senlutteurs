@@ -1,0 +1,70 @@
+label: Contenu
+description: 'Trouver et gérer le contenu.'
+display:
+  default:
+    display_title: デフォルト
+    display_options:
+      title: Contenu
+      fields:
+        title:
+          label: Titre
+        type:
+          label: 'Type de contenu'
+        name:
+          label: Auteur
+        status:
+          label: État
+          settings:
+            format_custom_false: 'Non publié'
+            format_custom_true: Publié
+        changed:
+          label: 'Mis à jour'
+        langcode:
+          label: 言語
+        operations:
+          label: 操作
+      pager:
+        options:
+          tags:
+            next: 'Suivant ›'
+            previous: '‹ Précédent'
+            first: '« Premier'
+            last: 'Dernier »'
+      exposed_form:
+        options:
+          submit_button: Filtrer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: 昇順
+          sort_desc_label: 降順
+      empty:
+        area_text_custom:
+          content: 'Aucun contenu disponible.'
+      filters:
+        title:
+          expose:
+            label: Titre
+        type:
+          expose:
+            label: 'Type de contenu'
+        status:
+          expose:
+            label: État
+          group_info:
+            label: 'Statut de publication'
+            group_items:
+              1:
+                title: Publié
+              2:
+                title: 'Non publié'
+        langcode:
+          expose:
+            label: 言語
+  page_1:
+    display_title: ページ
+    display_options:
+      menu:
+        title: Contenu
+      tab_options:
+        title: Contenu
+        description: 'Trouver et gérer le contenu'

@@ -1,0 +1,50 @@
+display:
+  block_2:
+    display_options:
+      use_more_text: 'عرض المزيد'
+  feed_1:
+    display_options:
+      use_more_text: 'عرض المزيد'
+  default:
+    display_options:
+      footer:
+        area:
+          content:
+            value: |-
+              <p class="elo-disclaimer">
+                  <strong>ملاحظة:</strong> هذا التصنيف (<a href="https://ar.wikipedia.org/wiki/تصنيف_إيلو" target="_blank" rel="noopener">ELO</a>) داخلي وبالتالي لا يمثل مصدرًا رسميًا. يعتمد على حساب تلقائي بناءً على البيانات المتاحة حاليًا في النظام وقد يتطور بمرور الوقت.
+              </p>
+            format: full_html
+      title: المصارعون
+      exposed_form:
+        options:
+          submit_button: تطبيق
+          reset_button_label: 'إعادة تعيين'
+      filters:
+        search_api_fulltext:
+          expose:
+            label: 'تصفية حسب الاسم'
+        facets_field_ecurie:
+          expose:
+            label: الإسطبل
+      pager:
+        options:
+          tags:
+            first: '« الأول'
+            last: 'الأخير »'
+  block_3:
+    display_options:
+      header:
+        area:
+          content:
+            value: '<div class="homonymes">قائمة الاقتراحات:<div> '
+            format: basic_html
+  page_1:
+    display_options:
+      empty:
+        area:
+          content:
+            value: 'لا توجد نتائج'
+  page_2:
+    display_options:
+      title: 'تصنيف الأداء الرياضي (نقاط إيلو)'

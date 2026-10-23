@@ -1,0 +1,15 @@
+uuid: c9367d73-6f3f-4431-871b-17fc0f1bc984
+langcode: en
+status: true
+dependencies: {  }
+name: banner_hero_mobile
+label: 'Banner Hero Mobile'
+effects:
+  b69ab978-8ef5-483f-8e6a-facd0b84bccc:
+    uuid: b69ab978-8ef5-483f-8e6a-facd0b84bccc
+    id: image_scale
+    weight: -10
+    data:
+      width: 480
+      height: null
+      upscale: false

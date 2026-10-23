@@ -1,0 +1,30 @@
+misc_divers.settings:
+  title: 'Configurations diverses'
+  description: 'Configurer les itérations du cron et autres réglages du module Misc Divers.'
+  parent: system.admin_config_services 
+  route_name: misc_divers.settings
+  weight: 100
+misc_divers.force_update_nodes:
+  title: 'Force Update Nodes'
+  description: 'Force update changed date on nodes by content type.'
+  parent: system.admin_config_services
+  route_name: misc_divers.force_update_nodes_form
+  weight: 100
+misc_divers.ecurie_duplicated_form:
+  title: 'Duplicated ecuries'
+  description: 'Duplicated ecuries'
+  parent: system.admin_config_services
+  route_name: misc_divers.ecurie_duplicated_form
+  weight: 100
+misc_divers.cron_schedule:
+  title: 'Configuration périodicité crons'
+  description: 'Configuration de la périodicité des crons Custom pour mieux controler, au besoin, le temps de passages des crontab plus fréquentes (ex. chaque 1h)'
+  parent: system.admin_config_services
+  route_name: misc_divers.cron_schedule
+  weight: 100
+misc_divers.fusion_athlete:
+  title: 'Fusion athlètes (doublons)'
+  route_name: misc_divers.fusion_athlete
+  parent: system.admin_config_services
+  description: "Fusionne les doublons d'un lutteur via field_same_athlete"
+  weight: 100

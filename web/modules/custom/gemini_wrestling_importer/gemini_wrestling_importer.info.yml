@@ -1,0 +1,11 @@
+name: 'Gemini Wrestling Importer'
+type: module
+description: 'Imports wrestling fights from the Gemini API and creates Drupal content.'
+package: Custom
+core_version_requirement: ^11.0
+configure: gemini_wrestling_importer.form
+dependencies:
+  - drupal:node
+  - sl_live_search:sl_live_search
+  - shared_lib:shared_lib
+  - misc_divers:misc_divers

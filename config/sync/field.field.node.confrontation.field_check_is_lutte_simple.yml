@@ -1,0 +1,23 @@
+uuid: ca63f96d-c5d9-4d97-abbd-1abc2ac3c384
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_check_is_lutte_simple
+    - node.type.confrontation
+id: node.confrontation.field_check_is_lutte_simple
+field_name: field_check_is_lutte_simple
+entity_type: node
+bundle: confrontation
+label: 'Vérifié - pas lutte simple (IA)'
+description: 'Coché automatiquement quand l''IA a explicitement répondu que ce combat n''est PAS de la lutte simple. Empêche sa remise en queue IA, sans bloquer la propagation automatique "même jour".'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

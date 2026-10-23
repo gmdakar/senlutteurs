@@ -1,0 +1,7 @@
+content:
+  field_is_lutte_simple:
+    settings:
+      format_custom_true: 'النوع: مصارعة بسيطة (بدون ضرب)'
+  field_confrontation_date:
+    settings:
+      date_format: d/m/Y

@@ -1,0 +1,22 @@
+uuid: 0f287607-5ec9-4c67-a559-1706eed582dd
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.a_venir
+id: node.a_venir.promote
+field_name: promote
+entity_type: node
+bundle: a_venir
+label: "Promu en page d'accueil"
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

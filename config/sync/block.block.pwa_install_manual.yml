@@ -1,0 +1,24 @@
+uuid: c696de9e-2ace-4d57-9689-41fdb74c2543
+langcode: fr
+status: true
+dependencies:
+  module:
+    - pwa_a2hs
+  theme:
+    - sl_theme
+id: pwa_install_manual
+theme: sl_theme
+region: footer_first
+weight: -19
+provider: null
+plugin: pwa_add_to_home_screen
+settings:
+  id: pwa_add_to_home_screen
+  label: "Installer l'application"
+  label_display: '0'
+  provider: pwa_a2hs
+  button_text: "Installer l'app"
+  intro_text:
+    value: "<p><em><strong><u>Pour un accès direct&nbsp;:</u></strong></em><br><em>Vous pouvez installer ci-dessous l'application <strong>SenLutteurs AI</strong> sur votre écran d'accueil.</em></p>"
+    format: basic_html
+visibility: {  }

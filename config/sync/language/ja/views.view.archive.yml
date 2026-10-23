@@ -1,0 +1,24 @@
+label: Archiver
+description: 'Tous les contenus, triés par mois.'
+display:
+  default:
+    display_title: デフォルト
+    display_options:
+      title: 'Archive mensuelle'
+      pager:
+        options:
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      exposed_form:
+        options:
+          submit_button: Appliquer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: 昇順
+          sort_desc_label: 降順
+  block_1:
+    display_title: Bloc
+  page_1:
+    display_title: ページ

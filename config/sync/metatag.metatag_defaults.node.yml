@@ -1,0 +1,12 @@
+uuid: a22aec44-d767-4ee4-8e58-7b7525f5f2be
+langcode: fr
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: rpwvgyEURXLz_JjgMCrkS1rUv-0k3L79BpO-ReN7fDI
+id: node
+label: Contenu
+tags:
+  canonical_url: 'https://www.senlutteurs.com/[language:langcode][current-page:url:path]'
+  description: '[node:content-type] [node:title]'
+  title: '[node:title] | [site:name]'

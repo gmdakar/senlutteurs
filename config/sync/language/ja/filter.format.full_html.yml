@@ -1,0 +1,5 @@
+filters:
+  obfuscate_email:
+    settings:
+      click_label: メールを表示
+name: 'フル HTML'

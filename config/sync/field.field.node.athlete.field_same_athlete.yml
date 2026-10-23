@@ -1,0 +1,28 @@
+uuid: 787dd1a0-2db7-4b86-bb96-72867333531b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_same_athlete
+    - node.type.athlete
+id: node.athlete.field_same_athlete
+field_name: field_same_athlete
+entity_type: node
+bundle: athlete
+label: 'Same athlete(s)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      athlete: athlete
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

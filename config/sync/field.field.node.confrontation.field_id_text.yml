@@ -1,0 +1,19 @@
+uuid: f4849242-3a07-4802-8d40-745fd22be93b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_id_text
+    - node.type.confrontation
+id: node.confrontation.field_id_text
+field_name: field_id_text
+entity_type: node
+bundle: confrontation
+label: 'Id text'
+description: "Permet d'identifier un combat (anti doublon).\r\nPattern : « nom_retraité_lutteur1 »_« nom_retraité_lutteur2 »_yyyymmdd"
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

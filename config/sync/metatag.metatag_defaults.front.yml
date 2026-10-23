@@ -1,0 +1,20 @@
+uuid: d223daa5-7e9b-4276-bfc1-ec2b71500a5f
+langcode: fr
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 1noCXlegCr5HFehQRF1ViXy1jhU1jZ_sNN99a8Sj5jo
+id: front
+label: "Page d'accueil"
+tags:
+  canonical_url: 'https://www.senlutteurs.com/[language:langcode]'
+  schema_organization_id: '[site:url]#organization'
+  schema_organization_logo: 'a:2:{s:5:"@type";s:11:"ImageObject";s:3:"url";s:59:"https://www.senlutteurs.com/themes/custom/sl_theme/logo.png";}'
+  schema_organization_name: senlutteurs
+  schema_organization_type: Organization
+  schema_organization_url: '[site:url]'
+  schema_web_site_id: '[site:url]#website'
+  schema_web_site_name: senlutteurs
+  schema_web_site_potential_action: 'a:3:{s:5:"@type";s:12:"SearchAction";s:6:"target";a:2:{s:5:"@type";s:10:"EntryPoint";s:11:"urlTemplate";s:77:"https://www.senlutteurs.com/lutteurs?search_api_fulltext={search_term_string}";}s:11:"query-input";s:33:" required name=search_term_string";}'
+  schema_web_site_type: WebSite
+  schema_web_site_url: '[site:url]'

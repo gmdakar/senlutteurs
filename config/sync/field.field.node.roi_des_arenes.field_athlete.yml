@@ -1,0 +1,30 @@
+uuid: c177a7c5-5274-4aaa-ae89-2646a60d2cd5
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_athlete
+    - node.type.athlete
+    - node.type.roi_des_arenes
+_core:
+  default_config_hash: fxRPrrug8_WhFaKPFa5Q982t8OroCawj08NkukksOLw
+id: node.roi_des_arenes.field_athlete
+field_name: field_athlete
+entity_type: node
+bundle: roi_des_arenes
+label: Athlète
+description: 'Référence vers le node Athlète correspondant au lutteur.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      athlete: athlete
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

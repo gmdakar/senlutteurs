@@ -1,0 +1,74 @@
+uuid: 6e1e6501-1a1b-415a-8047-4571817b90aa
+langcode: fr
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.fiche
+    - field.field.node.athlete.elo_rating
+    - field.field.node.athlete.feeds_item
+    - field.field.node.athlete.field_a_surveiller
+    - field.field.node.athlete.field_actif
+    - field.field.node.athlete.field_athlete_nom_technique
+    - field.field.node.athlete.field_best_elo
+    - field.field.node.athlete.field_ecurie
+    - field.field.node.athlete.field_elo_ranking
+    - field.field.node.athlete.field_en_vogue
+    - field.field.node.athlete.field_illustration
+    - field.field.node.athlete.field_king
+    - field.field.node.athlete.field_not_check
+    - field.field.node.athlete.field_same_athlete
+    - field.field.node.athlete.field_search_combats
+    - field.field.node.athlete.field_vrai_nom
+    - image.style.fiche_lutteur_100_x_150
+    - node.type.athlete
+  module:
+    - image
+    - user
+id: node.athlete.fiche
+targetEntityType: node
+bundle: athlete
+mode: fiche
+content:
+  field_ecurie:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_illustration:
+    type: image
+    label: hidden
+    settings:
+      image_link: content
+      image_style: fiche_lutteur_100_x_150
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_vrai_nom:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  elo_rating: true
+  feeds_item: true
+  field_a_surveiller: true
+  field_actif: true
+  field_athlete_nom_technique: true
+  field_best_elo: true
+  field_elo_ranking: true
+  field_en_vogue: true
+  field_king: true
+  field_not_check: true
+  field_same_athlete: true
+  field_search_combats: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

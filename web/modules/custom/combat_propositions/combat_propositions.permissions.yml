@@ -1,0 +1,4 @@
+administer combat propositions:
+  title: 'Administrer les propositions de combat'
+  description: 'Permet la suppression des propositions de combat. À réserver aux administrateurs complets.'
+  restrict access: true

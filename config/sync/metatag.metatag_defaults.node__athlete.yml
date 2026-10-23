@@ -1,0 +1,15 @@
+uuid: 0fd14f07-37c3-421f-8d95-cffe1ad6ad10
+langcode: fr
+status: true
+dependencies: {  }
+id: node__athlete
+label: 'Contenu: Athlete'
+tags:
+  abstract: 'Palmarès du [node:content-type] [node:title] et tous ses combats'
+  description: 'Palmarès du [node:content-type] [node:title] et tous ses combats'
+  keywords: 'Palmarès du [node:content-type] [node:title] et tous ses combats'
+  schema_person_address: 'a:2:{s:5:"@type";s:13:"PostalAddress";s:14:"addressCountry";s:2:"SN";}'
+  schema_person_name: '[node:title]'
+  schema_person_type: Person
+  schema_person_url: '[node:url]'
+  title: 'Palmarès du [node:content-type] [node:title] et tous ses combats'

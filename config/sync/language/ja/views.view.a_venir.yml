@@ -1,0 +1,22 @@
+label: 今後の予定
+display:
+  default:
+    display_options:
+      title: 今後の予定
+      exposed_form:
+        options:
+          submit_button: 適用
+          reset_button_label: リセット
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+  block_2:
+    display_options:
+      title: 次の試合（選手）
+      header:
+        area:
+          content:
+            value: 次の試合
+            format: basic_html

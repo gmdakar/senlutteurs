@@ -1,0 +1,50 @@
+misc_divers.single_cron:
+  path: '/cron/job/{job}'
+  defaults:
+    _controller: '\Drupal\misc_divers\Controller\MiscDiversCronController::run'
+    _title: 'Run single cron job'
+  requirements:
+    _access: 'TRUE'
+misc_divers.settings:
+  path: '/admin/config/misc-divers-settings'
+  defaults:
+    _form: '\Drupal\misc_divers\Form\MiscDiversSettingsForm'
+    _title: 'Configuration Misc divers'
+  requirements:
+    _permission: 'administer site configuration'
+misc_divers.force_update_nodes_form:
+  path: '/admin/config/force-update-nodes'
+  defaults:
+    _form: '\Drupal\misc_divers\Form\ForceUpdateNodesForm'
+    _title: 'Force update nodes'
+  requirements:
+    _permission: 'administer site configuration'
+misc_divers.ecurie_duplicated_form:
+  path: '/admin/config/ecurie_duplicated_form'
+  defaults:
+    _form: '\Drupal\misc_divers\Form\MultiEcurieForm'
+    _title: 'Duplicated ecuries'
+  requirements:
+    _permission: 'administer site configuration'
+misc_divers.cron_schedule:
+  path: '/admin/config/services/cron-custom-schedule'
+  defaults:
+    _form: '\Drupal\misc_divers\Form\CronScheduleForm'
+    _title: 'Configuration de la périodicité des crons Custom'
+  requirements:
+    _permission: 'administer site configuration'
+misc_divers.increment_cpt_athlete:
+  path: '/athlete/increment-cpt/{nid}'
+  defaults:
+    _controller: '\Drupal\misc_divers\Controller\AthleteCounterCptController::increment'
+  requirements:
+    _permission: 'access content'
+misc_divers.fusion_athlete:
+  path: '/admin/misc-divers/fusion-athlete'
+  defaults:
+    _form: '\Drupal\misc_divers\Form\FusionAthleteForm'
+    _title: 'Fusion Athlètes — Doublons'
+  requirements:
+    _permission: 'administer nodes'
+
+

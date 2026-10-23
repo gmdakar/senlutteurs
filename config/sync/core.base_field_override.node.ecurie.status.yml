@@ -1,0 +1,22 @@
+uuid: 0e88fba8-7db4-455a-ab51-007dd5daeede
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.ecurie
+id: node.ecurie.status
+field_name: status
+entity_type: node
+bundle: ecurie
+label: Publié
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

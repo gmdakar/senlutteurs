@@ -1,0 +1,22 @@
+label: Upcoming
+display:
+  default:
+    display_options:
+      title: Upcoming
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+  block_2:
+    display_options:
+      title: 'Next fight athlete'
+      header:
+        area:
+          content:
+            value: 'His next fight'
+            format: basic_html

@@ -1,0 +1,27 @@
+uuid: 62fa8290-f44f-4c39-a72b-e674b6e998d6
+langcode: fr
+status: true
+dependencies:
+  config:
+    - simple_block.simple_block.classement
+  module:
+    - simple_block
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_lienvoirtouslesclassements
+theme: sl_theme
+region: content
+weight: -10
+provider: null
+plugin: 'simple_block:classement'
+settings:
+  id: 'simple_block:classement'
+  label: 'Lien voir tous les classements'
+  label_display: '0'
+  provider: simple_block
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/lutteurs\r\n/lutteurs/*\r\n/combats\r\n/combats/*"

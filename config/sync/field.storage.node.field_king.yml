@@ -1,0 +1,18 @@
+uuid: 31f968f5-1111-48a2-9d33-c8aacd68070b
+langcode: fr
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_king
+field_name: field_king
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

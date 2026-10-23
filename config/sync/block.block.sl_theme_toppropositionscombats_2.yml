@@ -1,0 +1,25 @@
+uuid: 2ac5e0ec-571e-47c9-9e61-b095061e26bc
+langcode: fr
+status: true
+dependencies:
+  module:
+    - combat_propositions
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_toppropositionscombats_2
+theme: sl_theme
+region: content
+weight: -8
+provider: null
+plugin: top_combat_propositions_block
+settings:
+  id: top_combat_propositions_block
+  label: ' Top propositions combats'
+  label_display: visible
+  provider: combat_propositions
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/lutteurs/*'

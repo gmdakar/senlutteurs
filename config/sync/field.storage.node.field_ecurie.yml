@@ -1,0 +1,19 @@
+uuid: 847f4cb5-0a7e-4b0d-b709-1694e879bb32
+langcode: fr
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_ecurie
+field_name: field_ecurie
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

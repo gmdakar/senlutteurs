@@ -1,0 +1,25 @@
+{% for item in items %}
+
+  {% set v_title = '' %}
+
+  {% if element['#object'].field_king.value == '1' %}
+    {% set classes = classes|default([])|merge(['is-king']) %}
+    {% set v_title = 'Titre non officiel mais attribué de façon consensuelle par la communauté de la lutte'|t %}
+  {% endif %}
+
+  <div{{ attributes
+        .addClass(classes, 'field__item')
+        .setAttribute('title', v_title)
+        .setAttribute('alt', v_title)
+      }}>
+
+    {% if element['#object'].field_king.value == '1' %}
+      <span class="elo-icon elo-king" title="{{ 'Titre non officiel mais attribué de façon consensuelle par la communauté de la lutte'|t }}"></span>
+      <span class="king-text">{{ 'Roi des arènes (actuel)'|t }}</span>
+    {% endif %}
+
+    
+
+  </div>
+
+{% endfor %}

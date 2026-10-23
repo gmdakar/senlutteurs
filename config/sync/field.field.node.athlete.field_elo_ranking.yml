@@ -1,0 +1,23 @@
+uuid: e5ab52a5-84ad-4ac5-9f91-a829afa013f8
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_elo_ranking
+    - node.type.athlete
+id: node.athlete.field_elo_ranking
+field_name: field_elo_ranking
+entity_type: node
+bundle: athlete
+label: Rang
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,6 @@
+settings:
+  label: 'Install PWA app'
+  button_text: 'Install app'
+  intro_text:
+    value: '<p><em><strong><u>For direct access:</u></strong></em><br><em>You can install the <strong>SenLutteurs AI</strong> app on your home screen below.</em></p>'
+    format: basic_html

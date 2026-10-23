@@ -1,0 +1,50 @@
+display:
+  block_2:
+    display_options:
+      use_more_text: 'See more'
+  feed_1:
+    display_options:
+      use_more_text: 'See more'
+  default:
+    display_options:
+      footer:
+        area:
+          content:
+            value: |-
+              <p class="elo-disclaimer">
+                  <strong>NB:</strong> This rating (<a href="https://en.wikipedia.org/wiki/Elo_rating_system" target="_blank" rel="noopener">ELO</a>) is internal and does not represent an official source. It is based on an automatic calculation using data currently available in the system and may therefore evolve over time.
+              </p>
+            format: full_html
+      title: Wrestlers
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+      filters:
+        search_api_fulltext:
+          expose:
+            label: 'Filter by name'
+        facets_field_ecurie:
+          expose:
+            label: Stable
+      pager:
+        options:
+          tags:
+            first: '« First'
+            last: 'Last »'
+  block_3:
+    display_options:
+      header:
+        area:
+          content:
+            value: '<div class="homonymes">Suggested list:<div> '
+            format: basic_html
+  page_1:
+    display_options:
+      empty:
+        area:
+          content:
+            value: 'No results'
+  page_2:
+    display_options:
+      title: 'Sports Performance Ranking (Elo points)'

@@ -1,0 +1,23 @@
+uuid: bd4d5ef6-f6d5-4f5b-9431-abe8c869a57b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_check_homonymie
+    - node.type.confrontation
+id: node.confrontation.field_check_homonymie
+field_name: field_check_homonymie
+entity_type: node
+bundle: confrontation
+label: 'Vérifié - homonymie générationnelle (IA)'
+description: "Coché automatiquement une fois ce combat traité (verdict appliqué ou pivot confirmé) par la vérification IA des homonymes générationnels. Empêche son renvoi dans les données envoyées à l'IA lors des prochains passages, sans affecter la détection du trou de carrière."
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

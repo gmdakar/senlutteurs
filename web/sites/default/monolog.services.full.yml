@@ -1,0 +1,34 @@
+#Full pour les devs ou staging
+parameters:
+  monolog.channel_handlers:
+    default: 
+      - 'dblog'
+      - 'rotating_file'
+      - 'stderr'
+
+services:
+  # On utilise l'alias du service existant plutôt que de recréer la classe
+  monolog.handler.dblog:
+    class: Drupal\monolog\Logger\Handler\DrupalHandler
+    arguments: ['@logger.dblog']
+
+  # 2. Handler Fichier (Rotation sur 10 jours)
+  monolog.handler.rotating_file:
+    class: Monolog\Handler\RotatingFileHandler
+    arguments:
+      - '%app.root%/../private/logs/dev.log'
+      - 10
+      - 'DEBUG'
+
+  # 3. Handler Console (Idéal pour DDEV)
+  monolog.handler.stderr:
+    class: Monolog\Handler\StreamHandler
+    arguments:
+      - 'php://stderr'
+      - 'DEBUG'
+
+  # 4. Email handler errors
+  #monolog.handler.email_config:
+  #  class: Monolog\Handler\NativeMailerHandler
+  #  factory: ['Drupal\misc_divers\Logger\MailHandlerFactory', 'create']
+  #  arguments: ['@config.factory']

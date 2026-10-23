@@ -1,0 +1,24 @@
+label: Luchadores
+display:
+  default:
+    display_options:
+      title: Luchadores
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Restablecer
+      filters:
+        title:
+          expose:
+            label: 'Filtrar por nombre'
+      empty:
+        area:
+          content:
+            value: 'Sin resultados'
+            format: plain_text
+      use_more_text: 'Ver más'
+  block_1:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Aplicar

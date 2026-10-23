@@ -1,0 +1,29 @@
+default:
+  suites:
+    default:
+      paths:
+        - features
+      contexts:
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\DrushContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\MarkupContext
+
+  extensions:
+    Behat\MinkExtension:
+      base_url: "http://web"
+      default_session: browserkit_http
+      javascript_session: selenium2
+
+      sessions:
+        browserkit_http:
+          browserkit_http: ~
+        selenium2:
+          selenium2:
+            wd_host: "http://selenium:4444/wd/hub"
+            capabilities:
+              browserName: firefox
+
+    Drupal\DrupalExtension:
+      blackbox: ~

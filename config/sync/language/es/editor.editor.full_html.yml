@@ -1,0 +1,12 @@
+settings:
+  plugins:
+    ckeditor5_codeBlock:
+      languages:
+        0:
+          label: 'Texto sin formato'
+        5:
+          label: Diferencias
+        8:
+          label: JavaScript
+        9:
+          label: PHP

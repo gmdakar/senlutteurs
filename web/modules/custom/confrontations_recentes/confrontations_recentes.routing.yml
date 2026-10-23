@@ -1,0 +1,22 @@
+confrontations_recentes.settings:
+  path: '/admin/config/confrontations-recentes-cron'
+  defaults:
+    _form: '\Drupal\confrontations_recentes\Form\GeminiCombatCronSettingsForm'
+    _title: 'Confrontations récentes Settings'
+  requirements:
+    _permission: 'administer site configuration'
+confrontations_recentes.import_combats:
+  path: '/combats_recents/import'
+  defaults:
+    _controller: '\Drupal\confrontations_recentes\Controller\ConfrontationsRecentsController::runImport'
+    _title: 'Import Recent Confrontations'
+  requirements:
+    _access: 'TRUE'
+confrontations_recentes.update_videos:
+  path: '/combats_recents/update_videos'
+  defaults:
+    _controller: '\Drupal\confrontations_recentes\Controller\UpdateVideosConfrontationsRecentsController::updateVideos'
+    _title: 'update videos Recent Confrontations'
+  requirements:
+    _access: 'TRUE'
+

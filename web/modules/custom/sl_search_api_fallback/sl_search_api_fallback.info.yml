@@ -1,0 +1,7 @@
+name: 'SL Search API Fallback'
+type: module
+description: 'Inclut la langue par défaut (et und) dans les requêtes Search API pour afficher le contenu non traduit.'
+core_version_requirement: '^10 || ^11'
+package: Custom
+dependencies:
+  - search_api:search_api

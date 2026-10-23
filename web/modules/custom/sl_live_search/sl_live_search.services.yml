@@ -1,0 +1,9 @@
+services:
+  sl_live_search.live_search_service:
+    class: Drupal\sl_live_search\Service\LiveSearchService
+    arguments:
+      - '@http_client'
+      - '@config.factory'
+      - '@logger.factory'
+      - '@state'
+      - '@key.repository'

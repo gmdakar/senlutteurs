@@ -1,0 +1,11 @@
+uuid: 460526d9-d910-4a18-96df-fe07ca93943d
+langcode: fr
+status: true
+dependencies:
+  module:
+    - node
+id: node.fiche
+label: Fiche
+description: null
+targetEntityType: node
+cache: true

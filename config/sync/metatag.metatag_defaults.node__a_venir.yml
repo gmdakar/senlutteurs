@@ -1,0 +1,18 @@
+uuid: 1775f9f5-6df5-494e-aacc-39f5fe4ec608
+langcode: fr
+status: true
+dependencies: {  }
+id: node__a_venir
+label: 'Contenu : A venir'
+tags:
+  description: '[node:title] : La date du combat à venir ([node:field_date:date:olivero_medium])'
+  keywords: '[node:title] : La date du combat à venir ([node:field_date:date:olivero_medium])'
+  schema_event_end_date: '[node:field_date:value]'
+  schema_event_event_status: EventScheduled
+  schema_event_id: '[node:url]'
+  schema_event_location: 'a:3:{s:5:"@type";s:7:"Country";s:4:"name";s:7:"Senegal";s:7:"address";a:2:{s:5:"@type";s:13:"PostalAddress";s:14:"addressCountry";s:2:"SN";}}'
+  schema_event_name: 'Date [node:title]'
+  schema_event_start_date: '[node:field_date:value]'
+  schema_event_type: SportsEvent
+  schema_event_url: '[node:url]'
+  title: '[node:title] ([node:field_date:date:olivero_medium]) : La date du combat'

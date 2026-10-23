@@ -1,0 +1,84 @@
+uuid: f10bb032-9222-412b-ae3c-8bf5b26f7c22
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.roi_des_arenes.field_athlete
+    - field.field.node.roi_des_arenes.field_date_debut
+    - field.field.node.roi_des_arenes.field_date_fin
+    - field.field.node.roi_des_arenes.field_date_intronisation
+    - node.type.roi_des_arenes
+  module:
+    - datetime
+_core:
+  default_config_hash: 9bJb-DBtOpJviTrGUYOh_0_qh9U2FSI9OrcMt0YQRKA
+id: node.roi_des_arenes.default
+targetEntityType: node
+bundle: roi_des_arenes
+mode: default
+content:
+  field_athlete:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: 'Rechercher un athlète...'
+    third_party_settings: {  }
+  field_date_debut:
+    type: datetime_default
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_fin:
+    type: datetime_default
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_intronisation:
+    type: datetime_default
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  simple_sitemap_index_now:
+    weight: 130
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  path: true
+  promote: false
+  status: true
+  sticky: false
+  uid: true

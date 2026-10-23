@@ -1,0 +1,45 @@
+# 1. On isole le fichier tiers Chart.js dans sa propre bibliothèque
+chartjs_vendor:
+  version: "4.4.0"
+  js:
+    /libraries/chart.js/dist/chart.umd.js: {}
+
+# 2. Votre script personnalisé dépend explicitement de la bibliothèque ci-dessus
+elo_chart:
+  version: 1.21
+  js:
+    js/elo_chart.js: {}
+  css:
+    theme:
+      css/elo_chart.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+    - elo_ranking/chartjs_vendor # 🔥 Garantit le chargement de Chart.js en amont
+
+elo_compare:
+  version: 1.17
+  js:
+    js/elo_compare.js: {}
+  css:
+    theme:
+      css/elo_compare.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+    - core/drupal.autocomplete
+
+elo_view_interact:
+  version: 1.16
+  js:
+    js/elo_view_interact.js: {}
+  css:
+    theme:
+      css/elo_view_interact.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+    - core/jquery

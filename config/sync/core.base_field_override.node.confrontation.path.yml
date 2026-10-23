@@ -1,0 +1,20 @@
+uuid: 81494b19-137c-4e91-ba70-aec6b4e643c5
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.confrontation
+  module:
+    - path
+id: node.confrontation.path
+field_name: path
+entity_type: node
+bundle: confrontation
+label: "Alias d'URL"
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

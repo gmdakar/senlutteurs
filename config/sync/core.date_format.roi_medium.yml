@@ -1,0 +1,8 @@
+uuid: b7e4c2a1-9f3d-4e8b-a6c5-1d2e3f4a5b6c
+langcode: fr
+status: true
+dependencies: {  }
+id: roi_medium
+label: 'Date Roi des arènes (localisable)'
+locked: false
+pattern: 'j F Y'

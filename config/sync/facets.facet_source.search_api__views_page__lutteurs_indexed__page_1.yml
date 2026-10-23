@@ -1,0 +1,9 @@
+uuid: f3c31c5c-5a48-4d06-900f-4ddc73fcf2d9
+langcode: fr
+status: true
+dependencies: {  }
+id: search_api__views_page__lutteurs_indexed__page_1
+name: 'search_api:views_page__lutteurs_indexed__page_1'
+filter_key: null
+url_processor: query_string
+breadcrumb: {  }

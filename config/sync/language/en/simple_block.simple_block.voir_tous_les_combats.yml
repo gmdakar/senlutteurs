@@ -1,0 +1,4 @@
+title: 'View all fights'
+content:
+  value: '<p><a href="/en/combats">View all recent fights</a></p>'
+  format: basic_html

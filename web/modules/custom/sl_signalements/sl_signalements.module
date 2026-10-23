@@ -1,0 +1,266 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Misc / Divers module.
+ */
+
+use Drupal\views\ViewExecutable;
+use Drupal\node\NodeInterface;
+use Drupal\Component\Utility\Crypt;
+use Drupal\Core\Site\Settings;
+use Drupal\shared_lib\Tools\SomeTools;
+
+/**
+ * Implements hook_page_attachments().
+ */
+function sl_signalements_page_attachments(array &$attachments) {
+  $env = $_ENV['ENVIRONMENT'] ?? 'dev';
+  $attachments['#attached']['drupalSettings']['sl_signalements']['environment'] = $env;
+}
+
+/**
+ * Implements hook_preprocess_views_view_field().
+ */
+function sl_signalements_preprocess_views_view_field(&$variables) {
+  $view  = $variables['view'];
+  $field = $variables['field'];
+  $row   = $variables['row'];
+
+  if ($view->id() !== 'confrontations') return;
+  if (!isset($row->_entity) || !($row->_entity instanceof NodeInterface)) return;
+
+  $node = $row->_entity;
+  $nid  = $node->id();
+
+  // ─────────────────────────────────────────────────────────────────
+  // 1. Note "lutte simple" sur le champ verdict — toujours, sans ?signaler
+  // ─────────────────────────────────────────────────────────────────
+  if ($field->field == 'field_vainqueur') {
+    // ───────────────────────────────────────────────────────────────
+    // 1a. Traduction d'affichage des verdicts sans lien (valeurs
+    //     brutes stockées en français : 'Nul' / 'Litige (sans verdict)').
+    //     On ne touche jamais à la valeur stockée (utilisée par la
+    //     logique métier via stripos), seulement au rendu.
+    // ───────────────────────────────────────────────────────────────
+    $raw_value = $node->hasField('field_vainqueur') && !$node->get('field_vainqueur')->isEmpty()
+      ? trim($node->get('field_vainqueur')->value)
+      : '';
+
+    if ($raw_value === 'Nul') {
+      $variables['output'] = \Drupal\Core\Render\Markup::create(
+        (string) \Drupal::translation()->translate('Nul', [], ['context' => 'verdict combat'])
+      );
+    }
+    elseif ($raw_value === 'Litige (sans verdict)') {
+      $variables['output'] = \Drupal\Core\Render\Markup::create(
+        (string) \Drupal::translation()->translate('Litige (sans verdict)', [], ['context' => 'verdict combat'])
+      );
+    }
+
+    if ($node->hasField('field_is_lutte_simple')
+        && !$node->get('field_is_lutte_simple')->isEmpty()
+        && (int) $node->get('field_is_lutte_simple')->value === 1) {
+
+      $note_text = \Drupal::translation()->translate('** lutte (sans frappe ou autres)');
+      $note = '<div class="lutte-simple-note" style="font-size: 0.75em; font-style: italic; color: #b52b27; margin-top: 2px;">' . $note_text . '</div>';
+      $variables['output'] = \Drupal\Core\Render\Markup::create((string) $variables['output'] . $note);
+    }
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────
+  // 2. Boutons de signalement — champ nothing, uniquement si ?signaler
+  // ─────────────────────────────────────────────────────────────────
+  if ($field->field == 'nothing') {
+
+    $variables['#cache']['contexts'][] = 'route';
+    $variables['#cache']['contexts'][] = 'url.query_args:signaler';
+
+    $signaler = \Drupal::request()->query->get('signaler');
+    if (empty($signaler)) {
+      $variables['output'] = \Drupal\Core\Render\Markup::create('');
+      return;
+    }
+
+    // 🚫 Blocage : node marqué __skip__
+    $raw = $node->get('field_signalements')->value ?? '';
+    if (str_contains($raw, '__skip__')) {
+      $variables['output'] = \Drupal\Core\Render\Markup::create('');
+      return;
+    }
+
+    $salt = Settings::getHashSalt();
+    $html = (string) $variables['output'];
+
+    // Injection des tokens
+    $event_types = [
+      's_litige',
+      's_nul',
+      's_vainqueur_lutteur1',
+      's_vainqueur_lutteur2',
+      's_combat_fantome',
+      's_combat_doublon',
+      's_lutte_simple',
+      's_lutte_frappe',
+    ];
+
+    foreach ($event_types as $type) {
+      $data       = $nid . ':' . $type;
+      $token      = Crypt::hmacBase64($data, $salt);
+      $token_safe = str_replace(['+', '/', '='], ['-', '_', ''], $token);
+      $html       = str_replace($type . '/REPLACE_TOKEN', $type . '/' . $token_safe, $html);
+    }
+
+    // Lecture directe depuis l'entité
+    $winner_text = '';
+    if ($node->hasField('field_vainqueur') && !$node->get('field_vainqueur')->isEmpty()) {
+      $winner_text = trim($node->get('field_vainqueur')->value);
+    }
+
+    $name_a1 = '';
+    if ($node->hasField('field_athlete_1') && !$node->get('field_athlete_1')->isEmpty()) {
+      $athlete1 = $node->get('field_athlete_1')->entity;
+      if ($athlete1) $name_a1 = trim($athlete1->label());
+    }
+
+    $name_a2 = '';
+    if ($node->hasField('field_athlete_2') && !$node->get('field_athlete_2')->isEmpty()) {
+      $athlete2 = $node->get('field_athlete_2')->entity;
+      if ($athlete2) $name_a2 = trim($athlete2->label());
+    }
+
+    $is_lutte_simple = $node->hasField('field_is_lutte_simple')
+      && !$node->get('field_is_lutte_simple')->isEmpty()
+      && (int) $node->get('field_is_lutte_simple')->value === 1;
+
+    // Logique de masquage
+    // s_combat_doublon : bouton désactivé (masqué en permanence) sur demande.
+    $to_hide = ['s_anomalie', 's_combat_doublon'];
+
+    // Lutte simple / frappe : mutuellement exclusifs
+    if ($is_lutte_simple) {
+      $to_hide[] = 's_lutte_simple';
+    }
+    else {
+      $to_hide[] = 's_lutte_frappe';
+    }
+
+    // Verdict
+    if (stripos($winner_text, 'Litige') !== false) {
+      $to_hide[] = 's_litige';
+    }
+    elseif (stripos($winner_text, 'Nul') !== false) {
+      $to_hide[] = 's_nul';
+    }
+    else {
+      $has_real_winner = !empty($winner_text)
+        && stripos($winner_text, 'Litige') === false
+        && stripos($winner_text, 'Nul')    === false;
+
+      if ($has_real_winner) {
+        $w  = mb_strtolower($winner_text);
+        $a1 = mb_strtolower($name_a1);
+        $a2 = mb_strtolower($name_a2);
+
+        if ($w === $a1) {
+          $to_hide[] = 's_vainqueur_lutteur1';
+        }
+        elseif ($w === $a2) {
+          $to_hide[] = 's_vainqueur_lutteur2';
+        }
+      }
+    }
+
+    // Application du masquage
+    foreach (array_unique($to_hide) as $key) {
+      $pattern = '/(id="signal_' . $key . '_' . $nid . '"[^>]*)/';
+      $html    = preg_replace($pattern, '$1 style="display:none !important;" ', $html);
+    }
+
+    $variables['output'] = \Drupal\Core\Render\Markup::create($html);
+  }
+}
+
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function sl_signalements_views_pre_render(ViewExecutable $view) {
+
+  if ($view->id() !== 'confrontations' || !in_array($view->current_display, ['block_3'], TRUE)) {
+    return;
+  }
+
+  $view->element['#cache']['contexts'][] = 'route';
+  $view->element['#cache']['contexts'][] = 'url.query_args:signaler';
+  $view->element['#cache']['contexts'][] = 'url.path';
+
+  $salt = Settings::getHashSalt();
+
+  $event_types = [
+    's_litige', //Btn "Signaler litige (sans verdict)"
+    's_nul',//Btn "Signaler match nul"
+    's_combat_doublon',  //Btn "Signaler combats doublons"
+    's_vainqueur_lutteur1', //Btn "Signaler vainqueur est lutteur1"
+    's_vainqueur_lutteur2', //Btn "Signaler vainqueur est lutteur2"
+    's_combat_fantome',//Btn "Signaler combat jamais existé"
+    's_lutte_simple', //Btn "Signaler lutte simple"
+    's_lutte_frappe', //Btn "Signaler lutte avec frappe"
+    //'s_anomalie', //Btn "Signaler autre anomalie"
+  ];
+
+  $tokens = [];
+  $is_lutte_simple = [];
+
+  // 🔁 Parcours des résultats de la vue
+  foreach ($view->result as $row) {
+
+    // 🔒 Sécurité : vérifier que l'entité existe
+    if (empty($row->_entity) || !($row->_entity instanceof NodeInterface)) {
+      continue;
+    }
+
+    $entity = $row->_entity;
+
+    $nid = $entity->id();
+
+    $is_lutte_simple[$nid] = 0;
+
+    if ($entity->hasField('field_is_lutte_simple') && !$entity->get('field_is_lutte_simple')->isEmpty()) {
+      if ((int) $entity->get('field_is_lutte_simple')->value === 1) {
+        $is_lutte_simple[$nid] = 1;
+      }
+}
+
+    // 🔒 Sécurité : s'assurer que c'est bien une confrontation
+    if ($entity->bundle() !== 'confrontation') {
+      continue;
+    }
+
+    $nid = $entity->id();
+
+    // ⚡ éviter recalcul si déjà traité (cas doublons dans la vue)
+    if (isset($tokens[$nid])) {
+      continue;
+    }
+
+    // 🔐 Génération des tokens pour ce node
+    foreach ($event_types as $type) {
+      $data = $nid . ':' . $type;
+      $token = Crypt::hmacBase64($data, $salt);
+      
+      // ⚡ FIX : Remplacer les caractères interdits dans les URLs
+      // + devient -
+      // / devient _
+      // = est supprimé
+      $tokens[$nid][$type] = str_replace(['+', '/', '='], ['-', '_', ''], $token);
+    }
+  }
+
+  // 📦 Injection dans drupalSettings
+  if (!empty($tokens)) {
+    $view->element['#attached']['drupalSettings']['sl_signalements']['tokens'] = $tokens;
+  }
+  $view->element['#attached']['drupalSettings']['is_lutte_simple'] = $is_lutte_simple;
+}

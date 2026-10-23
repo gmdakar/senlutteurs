@@ -1,0 +1,7 @@
+name: 'SenLutteurs Cache Warming'
+type: module
+description: 'Commande Drush native exploitant le Kernel de Drupal 11 et l API LiteSpeed pour réchauffer le cache (Desktop & Mobile).'
+package: Custom
+core_version_requirement: ^11
+dependencies:
+  - warmer:warmer

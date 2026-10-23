@@ -1,0 +1,111 @@
+label: 試合
+display:
+  default:
+    display_options:
+      title: 試合
+      exposed_form:
+        options:
+          submit_button: 適用
+          reset_button_label: リセット
+      filters:
+        search_api_fulltext:
+          expose:
+            label: 全文検索
+      header:
+        area:
+          content:
+            value: 注意：まれにデータに誤差がある場合があります（該当レスラーのページでご報告ください）。
+            format: basic_html
+      empty:
+        area:
+          content:
+            value: 結果なし
+            format: plain_text
+      use_more_text: もっと見る
+      fields:
+        field_athlete_1:
+          label: レスラー1
+        field_athlete_2:
+          label: レスラー2
+        field_vainqueur:
+          label: 勝者
+        field_video_du_combat:
+          label: 試合動画
+        field_face_2_face:
+          label: 対面
+        field_confrontation_date:
+          label: 日付
+  block_1:
+    display_options:
+      use_more_text: もっと見る
+      pager:
+        options:
+          tags:
+            next: '次へ ›'
+            previous: '‹ 前へ'
+            first: '« 最初'
+            last: '最後 »'
+  block_2:
+    display_options:
+      use_more_text: すべての試合を見る
+      pager:
+        options:
+          tags:
+            next: '次へ ›'
+            previous: '‹ 前へ'
+  page_1:
+    display_options:
+      fields:
+        field_confrontation_date:
+          label: 日付
+        field_athlete_1:
+          label: レスラー1
+        field_athlete_2:
+          label: レスラー2
+        field_vainqueur:
+          label: 判定
+        field_face_2_face:
+          label: 直接対決
+        field_video_du_combat:
+          label: 試合動画
+      filters:
+        search_api_fulltext:
+          expose:
+            placeholder: キーワードを入力
+        facets_field_athlete_1:
+          expose:
+            label: レスラー1
+            description: この項目で力士名が見つからない場合は、レスラー2の項目で検索してください
+        facets_field_athlete_2:
+          expose:
+            label: レスラー2
+  block_3:
+    display_options:
+      use_more_text: もっと見る
+      fields:
+        field_confrontation_date:
+          label: 日付
+        field_athlete_1:
+          label: レスラー1
+        field_athlete_2:
+          label: レスラー2
+        field_vainqueur:
+          label: 判定
+        field_face_2_face:
+          label: 直接対決
+        field_video_du_combat:
+          label: 試合動画
+      filters:
+        facets_field_is_lutte_simple:
+          expose:
+            label: タイプで絞り込む
+          facet:
+            processor_configs:
+              boolean_item:
+                settings:
+                  on_value: 打撃なし相撲
+                  off_value: 打撃あり相撲
+      header:
+        area:
+          content:
+            value: "<section class=\"disclaimer-container\">\r\n  <div class=\"disclaimer-text\">\r\n    <strong>注:</strong> まれにデータが多少不正確な場合や、打撃なしの相撲の試合に該当する場合があります（<a href=\"?signaler=ano\" class=\"news-action\">こちらから報告してください</a>）。また、データが欠落している場合もあります（ご存知の場合は<a href=\"/proposer-un-combat\" class=\"news-action\">追加</a>できます）\r\n   <p class='news'>\r\n  注：パフォーマンスランキングの計算には、打撃ありの相撲の試合のみが考慮されます。\r\n</p>\r\n  </div>\r\n</section>"

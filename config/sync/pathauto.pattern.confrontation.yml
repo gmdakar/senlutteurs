@@ -1,0 +1,23 @@
+uuid: 36344b30-603f-4d7b-97f8-9a9540022950
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.confrontation
+  module:
+    - node
+id: confrontation
+label: Confrontation
+type: 'canonical_entities:node'
+pattern: '/combats/[node:field_confrontation_date:date:html_date]/[node:title]'
+selection_criteria:
+  43f27305-0958-4664-9750-ec7adad1eb35:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      confrontation: confrontation
+selection_logic: and
+weight: -5
+relationships: {  }

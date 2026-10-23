@@ -1,0 +1,91 @@
+/* Bannière d'aide en haut du formulaire */
+.cron-help-banner {
+  margin-bottom: 2rem;
+  padding: 1.2rem;
+  background-color: #f0f7ff;
+  border-left: 5px solid #007bff;
+  border-radius: 4px;
+  color: #004085;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Conteneur de chaque ligne */
+.cron-item-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  gap: 15px;
+  margin-bottom: 12px;
+  padding: 12px 15px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Indexation (#1, #2...) */
+.cron-index {
+  font-weight: bold;
+  min-width: 40px;
+  color: #888;
+}
+
+/* Champs Select (Commande et Jour) */
+.cron-field-command { 
+  min-width: 280px; 
+  flex-grow: 1; 
+}
+
+.cron-field-day { 
+  width: 160px; 
+}
+
+/* Champ Heure spécifique (HH:mm) */
+.cron-field-time { 
+  width: 85px !important; 
+  min-width: 85px;
+  text-align: center; 
+  font-family: 'Courier New', monospace; 
+  font-size: 1.1rem;
+  font-weight: bold;
+  height: 36px; /* Match parfait avec les selects */
+  padding: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Bouton Supprimer (Rouge) */
+.cron-remove-button {
+  background-color: #dc3545 !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 0 20px !important; 
+  height: 36px !important; 
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease-in-out;
+}
+
+.cron-remove-button:hover {
+  background-color: #a71d2a !important;
+}
+
+/* Bouton Ajouter (Bleu/Info) */
+.cron-add-button {
+  background-color: #17a2b8 !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cron-add-button:hover {
+  background-color: #138496 !important;
+}

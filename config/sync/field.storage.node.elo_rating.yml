@@ -1,0 +1,18 @@
+uuid: c2e490b1-2d54-4e27-9c7a-db87c87a7428
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.elo_rating
+field_name: elo_rating
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

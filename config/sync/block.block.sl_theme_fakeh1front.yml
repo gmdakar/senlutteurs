@@ -1,0 +1,27 @@
+uuid: 55809890-910b-4fd0-8fb5-6a9dc3a33b0f
+langcode: fr
+status: true
+dependencies:
+  config:
+    - simple_block.simple_block.fake_h1_front
+  module:
+    - simple_block
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_fakeh1front
+theme: sl_theme
+region: content
+weight: -21
+provider: null
+plugin: 'simple_block:fake_h1_front'
+settings:
+  id: 'simple_block:fake_h1_front'
+  label: 'Fake H1 front'
+  label_display: '0'
+  provider: simple_block
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

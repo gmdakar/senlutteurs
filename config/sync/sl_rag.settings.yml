@@ -1,0 +1,5 @@
+vector_enabled: true
+vector_api_url: 'https://sl-rag-search.onrender.com'
+vector_api_secret: ''
+vector_top_k: 10
+vector_timeout: 120

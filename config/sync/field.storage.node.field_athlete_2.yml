@@ -1,0 +1,19 @@
+uuid: 848c243f-e64a-42b4-bc07-8727d3eb3d50
+langcode: fr
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_athlete_2
+field_name: field_athlete_2
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

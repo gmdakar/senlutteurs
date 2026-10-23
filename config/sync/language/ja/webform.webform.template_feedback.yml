@@ -1,0 +1,8 @@
+title: フィードバック
+settings:
+  confirmation_message: 'Merci pour vos retours.'
+handlers:
+  email_confirmation:
+    label: メール確認
+  email_notification:
+    label: 'E メール通知'

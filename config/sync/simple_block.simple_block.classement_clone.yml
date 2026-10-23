@@ -1,0 +1,11 @@
+uuid: ca127ac2-840a-4fec-9010-5ea2027faf9e
+langcode: fr
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+id: classement_clone
+title: 'Lien voir tous les rois'
+content:
+  value: '<p><a href="/roi-des-arenes">Voir tous les Rois de l''arène (historique)</a></p>'
+  format: basic_html

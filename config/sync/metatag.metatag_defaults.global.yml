@@ -1,0 +1,18 @@
+uuid: fe9aeedc-fbfb-4bc4-b40d-4cb6379a2248
+langcode: fr
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: sL588ui1E_8-2c_UupwyYxcqX2OVyMFp3HTLbbFqvPc
+id: global
+label: Global
+tags:
+  abstract: ' [site:slogan] '
+  canonical_url: 'https://www.senlutteurs.com/[language:langcode][current-page:url:path]'
+  description: ' [site:slogan] '
+  geo_placename: dakar
+  geo_position: '14.716677; -17.467686'
+  geo_region: SN
+  keywords: 'lutte lutteur sénégalais senegal combats'
+  robots: 'index, follow'
+  title: '[current-page:title] | [site:name]'

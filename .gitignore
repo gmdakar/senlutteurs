@@ -1,0 +1,97 @@
+# === Drupal core (géré via composer) ===
+web/core/
+
+# === Fichiers générés / uploadés ===
+web/sites/default/files/
+web/sites/default/private/
+web/sites/default/services.yml
+web/sites/simpletest/
+web/sites/*/files/
+web/sites/*/private/
+web/sites/*/services.yml
+
+# === Drupal settings (sécurité) ===
+# Ne jamais committer les vrais fichiers de configuration
+web/sites/default/settings.php
+web/sites/default/settings.dev.php
+web/sites/default/settings.local.php
+web/sites/default/settings.ddev.php
+
+# Garder les fichiers d'exemple
+!web/sites/default/settings.example.php
+!web/sites/default/settings.dev.example.php
+
+# === Dépendances ===
+vendor/
+web/modules/contrib/
+web/themes/contrib/
+node_modules/
+
+# === DDEV ===
+.ddev/.global-cache/
+.ddev/.cache/
+.ddev/.secrets/
+
+# === IDE et OS ===
+*.swp
+*.swo
+.DS_Store
+.vscode/
+.idea/
+
+# === Logs ===
+*.log
+/private/logs/*
+!/private/logs/.gitkeep
+!/private/.htaccess
+
+# === Secrets et données sensibles ===
+# .env.example est versionné à la place
+.env
+private/*.json
+# Clés de compte de service Google (web indexing API)
+dump/senelutte1-*.json
+# Archives d'environnement
+*.rar
+
+# === Données volumineuses et dumps ===
+*.jsonl
+*.sql
+*.sql.gz
+dump/**/*.mysql.gz
+
+# === Tests ===
+phpunit.xml
+
+# === Fichiers locaux / outillage ===
+docker-compose-save.yml
+login.ts
+package-lock.json
+package.json
+phpstan.neon
+sl_app/
+web/adminer.php
+web/sites/default/default.services.yml
+web/sites/default/default.settings.php
+
+# === Aider (assistant IA en CLI) ===
+.aider*
+
+# === Environnement Python local ===
+.venv/
+
+# === Binaires Node/npm posés à la racine ===
+/node
+/nodejs
+/npm
+/npx
+/corepack
+
+# === Archives issues de déploiements manuels ===
+vendor.tar.gz
+sync.tar.gz
+web/modules/custom.tar.gz
+.ddev/config.newrelic.yaml
+
+*.zip
+*.tar.gz

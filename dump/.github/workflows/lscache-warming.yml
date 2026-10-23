@@ -1,0 +1,232 @@
+name: LSCache Warming
+
+on:
+  schedule:
+    - cron: '0 6,17 * * *'
+  workflow_dispatch:
+    inputs:
+      lang:
+        description: "Langue unique à réchauffer (vide = toutes)"
+        required: false
+        default: ''
+
+concurrency:
+  group: lscache-warm
+  cancel-in-progress: true
+
+env:
+  SSH_PORT: 5022
+
+jobs:
+  start:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p $SSH_PORT -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Activer flag warming_in_progress
+        run: |
+          ssh -p $SSH_PORT "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
+            "~/www/vendor/drush/drush/drush state:set warming_in_progress 1 && \
+             ~/www/vendor/drush/drush/drush state:set warming_started_at \$(date +%s)"
+
+  warm:
+    needs: start
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 3          # ménage le serveur d'origine
+      matrix:
+        lang: [fr, en, ar, es, ja, zh-hans]
+    steps:
+      - name: Filtrer selon l'input manuel
+        id: gate
+        run: |
+          INPUT="${{ github.event.inputs.lang }}"
+          if [ -n "$INPUT" ] && [ "$INPUT" != "${{ matrix.lang }}" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup SSH
+        if: steps.gate.outputs.skip == 'false'
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p $SSH_PORT -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: LSCache warm (${{ matrix.lang }})
+        if: steps.gate.outputs.skip == 'false'
+        run: |
+          ssh -p $SSH_PORT "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
+            'bash -s' -- "${{ matrix.lang }}" <<'REMOTE_SCRIPT'
+          set +e
+          WARM_LANG="$1"
+          URL_COUNT=0
+          HIT_COUNT=0
+          MISS_COUNT=0
+          NOCACHE_COUNT=0
+          ERROR_COUNT=0
+          PAGE=1
+          DOMAIN="https://www.senlutteurs.com"
+          HOST_HEADER="www.senlutteurs.com"
+          ORIGIN="https://127.0.0.1"
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+
+          echo "##### LANGUE : ${WARM_LANG} #####"
+
+          normalize_url() {
+            local u="$1"
+            u=$(echo "$u" | sed -E 's#^http://#https://#')
+            u=$(echo "$u" | sed -E 's#^https://senlutteurs\.com#https://www.senlutteurs.com#')
+            u=$(echo "$u" | sed -E 's/#.*$//')
+            echo "$u"
+          }
+
+          request_headers() {
+            local url="$1"
+            local path="${url#$DOMAIN}"
+            curl -s \
+              -D - \
+              -o /dev/null \
+              --compressed \
+              --http1.1 \
+              -k \
+              --max-time 15 \
+              -A "$UA" \
+              -H "Host: $HOST_HEADER" \
+              "${ORIGIN}${path}" 2>/dev/null
+          }
+
+          extract_header() {
+            local headers="$1"
+            local name="$2"
+            echo "$headers" \
+              | grep -i "^$name:" \
+              | tail -1 \
+              | cut -d: -f2- \
+              | tr -d '\r' \
+              | xargs
+          }
+
+          while true; do
+            SITEMAP_PATH="/sitemap.xml?page=${PAGE}"
+            SITEMAP_RESP=$(curl -s -k -A "$UA" -H "Host: $HOST_HEADER" --max-time 30 "${ORIGIN}${SITEMAP_PATH}")
+            ALL_URLS=$(echo "$SITEMAP_RESP" \
+              | grep -oE '<loc>[^<]+</loc>' \
+              | sed -e 's#<loc>##' -e 's#</loc>##' \
+              | grep -v 'sitemap\.xml\?page=')
+
+            if [ -z "$ALL_URLS" ]; then
+              echo ""
+              echo "===== FIN SITEMAP PAGE ${PAGE} ====="
+              echo "Taille réponse: $(echo -n "$SITEMAP_RESP" | wc -c) octets"
+              echo "Extrait: $(echo "$SITEMAP_RESP" | head -c 300)"
+              break
+            fi
+
+            # Ne garder que la langue du job
+            URLS=$(echo "$ALL_URLS" \
+              | grep -E "^https?://(www\.)?senlutteurs\.com/${WARM_LANG}(/|$)")
+
+            echo ""
+            echo "===== SITEMAP PAGE ${PAGE} ($(echo "$URLS" | grep -c .) URLs ${WARM_LANG}) ====="
+
+            while read -r RAW_URL; do
+              [ -z "$RAW_URL" ] && continue
+              URL_COUNT=$((URL_COUNT + 1))
+              URL=$(normalize_url "$RAW_URL")
+              echo "[$URL_COUNT] $URL"
+
+              HEADERS=$(request_headers "$URL")
+              if [ -z "$HEADERS" ]; then
+                echo "    [ERROR]"
+                ERROR_COUNT=$((ERROR_COUNT + 1))
+                sleep 0.3
+                continue
+              fi
+
+              HTTP_CODE=$(echo "$HEADERS" \
+                | grep -oP '^HTTP/\S+\s+\K\d+' \
+                | tail -1)
+              CACHE_CONTROL=$(extract_header "$HEADERS" "x-litespeed-cache-control")
+
+              if echo "$CACHE_CONTROL" | grep -qiE 'private|no-cache|no-store'; then
+                echo "    [NO CACHE]"
+                NOCACHE_COUNT=$((NOCACHE_COUNT + 1))
+              else
+                CACHE_STATUS=$(extract_header "$HEADERS" "x-litespeed-cache")
+                if echo "$CACHE_STATUS" | grep -qi '^hit'; then
+                  echo "    [HIT ✓]"
+                  HIT_COUNT=$((HIT_COUNT + 1))
+                else
+                  echo "    [MISS ✗] (${CACHE_STATUS:-none})"
+                  MISS_COUNT=$((MISS_COUNT + 1))
+                fi
+              fi
+
+              if [ "$HTTP_CODE" = "429" ] || [ "$HTTP_CODE" = "503" ]; then
+                echo "    [SERVER LOAD] sleeping 10s"
+                sleep 10
+              else
+                sleep 0.15
+              fi
+            done <<< "$URLS"
+
+            echo ""
+            echo "===== PAGE ${PAGE} DONE (${WARM_LANG}) ====="
+            echo "TOTAL    : $URL_COUNT"
+            echo "HIT      : $HIT_COUNT"
+            echo "MISS     : $MISS_COUNT"
+            echo "NO CACHE : $NOCACHE_COUNT"
+            echo "ERRORS   : $ERROR_COUNT"
+            PAGE=$((PAGE + 1))
+            sleep 1
+          done
+
+          echo ""
+          echo "=================================================="
+          echo "FINAL REPORT (${WARM_LANG})"
+          echo "=================================================="
+          echo "TOTAL URLS : $URL_COUNT"
+          echo "HIT        : $HIT_COUNT"
+          echo "MISS       : $MISS_COUNT"
+          echo "NO CACHE   : $NOCACHE_COUNT"
+          echo "ERRORS     : $ERROR_COUNT"
+          echo "=================================================="
+          REMOTE_SCRIPT
+
+  end:
+    needs: [start, warm]
+    if: always() && needs.start.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p $SSH_PORT -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Désactiver flag warming_in_progress
+        run: |
+          ssh -p $SSH_PORT "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
+            "~/www/vendor/drush/drush/drush state:delete warming_in_progress"
+
+      - name: Keepalive API Ping
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -s -X GET \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}" > /dev/null

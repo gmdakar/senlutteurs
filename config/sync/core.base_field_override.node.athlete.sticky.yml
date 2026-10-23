@@ -1,0 +1,22 @@
+uuid: a44efb11-5678-4e59-ad19-dcb904ce3c18
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.athlete
+id: node.athlete.sticky
+field_name: sticky
+entity_type: node
+bundle: athlete
+label: 'Epinglé en haut des listes'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

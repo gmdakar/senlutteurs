@@ -1,0 +1,38 @@
+_core:
+  default_config_hash: AiX_MF5v23n0VmOoxBv0_qSHx0K5c4FQWZbrAfSb1Bc
+langcode: fr
+prompt_confirmation_combat: |
+  Tu es un expert en lutte sénégalaise (lutte avec frappe / lutte simple).
+
+  Un internaute affirme qu'un combat a eu lieu, au moins durant l'année @date_combat,
+  entre @lutteur_1 (écurie : @ecurie_1) et @lutteur_2 (écurie : @ecurie_2).
+  Le verdict qu'il indique de son côté est : @verdict.
+  Commentaire éventuel de l'internaute : @commentaire
+
+  À partir de tes connaissances et sources disponibles (P.E.R.L., presse spécialisée,
+  vidéos), confirme si un tel combat a RÉELLEMENT eu lieu, au moins durant l'année
+  indiquée.
+
+  RÈGLE SUR LE VERDICT (obligatoire si le combat est confirmé) :
+  - Si tu connais le VRAI verdict, tu DOIS le donner dans "verdict_ia", même s'il
+    DIFFÈRE de celui de l'internaute. Le verdict erroné de l'internaute doit être
+    CORRIGÉ. On enregistrera le verdict correct, pas celui de l'internaute.
+  - "verdict_ia" doit être EXACTEMENT l'un de : le nom du vainqueur (strictement
+    "@lutteur_1" ou "@lutteur_2"), "Nul", ou "Litige".
+  - Si tu confirmes le combat mais que tu n'es PAS certain du verdict, mets
+    "verdict_ia" à null : on conservera alors le verdict de l'internaute.
+  - Un verdict internaute faux n'empêche PAS de confirmer l'existence du combat.
+
+  Réponds STRICTEMENT en JSON, sans aucun texte ni markdown autour, au format exact :
+  {"confirme": true|false, "date_combat": "AAAA-MM-JJ"|"AAAA-MM"|null, "verdict_ia": "..."|null, "commentaire": "..."}
+
+  - confirme : true UNIQUEMENT si tu es raisonnablement certain que ce combat a eu lieu.
+  - date_combat : indique le niveau de précision que tu peux réellement garantir, sans
+    jamais inventer :
+      - "AAAA-MM-JJ" si tu connais la date exacte avec certitude ;
+      - "AAAA-MM" si tu connais seulement le mois et l'année ;
+      - null si tu ne connais/ne confirmes que l'année (déjà donnée par @date_combat).
+  - verdict_ia : verdict RÉEL et corrigé si tu le connais, sinon null. N'affecte pas
+    la valeur de "confirme".
+  - commentaire : brève justification (source, contexte) de ta décision, en indiquant
+    clairement si tu as corrigé le verdict de l'internaute.

@@ -1,0 +1,49 @@
+services:
+  shared_lib.base_wrestling_service:
+    abstract: true
+    arguments:
+      - '@http_client'
+      - '@config.factory'
+      - '@entity_type.manager'
+      - '@logger.factory'
+      - '@?sl_live_search.live_search_service'
+
+  # ── Services issus du découpage de Drupal\shared_lib\Tools\SomeTools ──────
+  # SomeTools reste en place comme façade statique de compatibilité et
+  # délègue à ces services : aucun appelant existant (SomeTools::xxx(...))
+  # n'a besoin d'être modifié.
+
+  shared_lib.text_normalization:
+    class: Drupal\shared_lib\Service\TextNormalizationHelper
+    arguments:
+      - '@config.factory'
+
+  shared_lib.youtube_search:
+    class: Drupal\shared_lib\Service\YoutubeSearchService
+    arguments:
+      - '@shared_lib.text_normalization'
+
+  shared_lib.athlete_deduplication:
+    class: Drupal\shared_lib\Service\AthleteDeduplicationService
+    arguments:
+      - '@shared_lib.text_normalization'
+
+  shared_lib.confrontation_deduplication:
+    class: Drupal\shared_lib\Service\ConfrontationDeduplicationService
+    arguments:
+      - '@shared_lib.text_normalization'
+      - '@shared_lib.youtube_search'
+
+  shared_lib.athlete_merge:
+    class: Drupal\shared_lib\Service\AthleteMergeService
+    arguments:
+      - '@shared_lib.confrontation_deduplication'
+
+  # ── Traductions automatiques des nodes (toutes les langues du site) ────────
+  shared_lib.node_translation:
+    class: Drupal\shared_lib\Service\NodeTranslationService
+    arguments:
+      - '@language_manager'
+      - '@entity_type.bundle.info'
+      - '@logger.factory'
+      - '@?content_translation.manager'

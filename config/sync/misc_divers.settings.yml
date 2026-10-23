@@ -1,0 +1,562 @@
+cron_iterations: 20
+seuil_max_number_fights: 5
+seuil_cpt_to_complet_combats: 10
+seuil_max_nb_reset_cpt_lutteur: 1
+max_votes_proposition: 15
+max_nb_signalements: 2
+remplacements:
+  '12 7': 'Douze sept'
+  12-7: 'Douze sept'
+  'Abdou diassé': 'Abdou ndiassé'
+  'Abdou ndiassé': 'Abdou ndiassé'
+  'Abou diassé': 'Abdou ndiassé'
+  'Aigle bou Mbatal': Aigle
+  'Alaji Gaïndé': 'Aladji Gaïndé'
+  'Alboury 2': 'Alboury (Kay Bakh)'
+  'Aliou seye': 'Alioune seye'
+  'Aliou sèye': 'Alioune seye'
+  'Alou bakh yây': 'Alou bakh yaye'
+  'Ama dia 2': 'Ama dia'
+  'Ama nekh': Amanekh
+  Ambourass: Ambroise
+  Ambuscade: Embuscade
+  'Armee Bou ngueweul': 'Armee Boungueweul'
+  'Armée Bou Gueweul': 'Armée Boungueweul'
+  'Armée boungueweul': 'Armée bou ngueweul'
+  'Arsa 2': 'Arsenal 2'
+  B52: Bombardier
+  'Baba diakhal': 'Baba jaxal'
+  'Baba jaxal': 'Baba diakhal'
+  Baboye: 'Balla Bèye 2 (Baboye)'
+  'Badou Fall': 'Badou Fall 2'
+  'Baye Madione': 'Baye Mandione'
+  'Baye mandione jr': 'Baye mandione 2'
+  'Baye mandione junior': 'Baye mandione 2'
+  BB: Bébé
+  bb: Bébé
+  'Bébé diali': 'bébé dialy'
+  'Birame Mbissine Sene': 'Birame Mbissine'
+  'Blondin camberene': Blondin
+  'Bollo yeumbeul': Bollo
+  Bolo: Bollo
+  'Bolo yeumbeul': Bollo
+  'Bouba bou malika': Bouba
+  'Bouba fiit': 'Bouba fit'
+  'Bouba fit': 'Bouba fiit'
+  'Bouba malika': Bouba
+  'Bouba Yeumbeul Marin': 'Bouba bou Yeumbeul Marin'
+  Boursine: 'Bour sine'
+  Bouteing: Bouting
+  'Bou teng': Bouting
+  Bouyard: Boyard
+  'Boy diakhaw': 'Boy diakhao'
+  'Boy gueth ndar': 'Boy guet ndar'
+  'Boy guett ndar': 'Boy guet ndar'
+  'Boy kaïré 2': 'Kaïré 2'
+  'Boy moulomp': 'Boy mlomp'
+  'Boy sebi': 'Boy seby'
+  Buldozer: Bulldozer
+  'Cheikh Bou Walo': 'Boy Walo'
+  'Cheikh Diagne Diakhao': 'Cheikh Diagne'
+  'Dale sene kao': 'Dal sen kaw'
+  'Dale sene kaw': 'Dal sen kaw'
+  'Dale sen kao': 'Dal sen kaw'
+  'Dal sene kao': 'Dal sen kaw'
+  'Dal sen kao': 'Dal sen kaw'
+  Derangé: Déranger
+  'Deux gigas': '2 gigas'
+  'Diakhas gui': 'Ndiakhass gui'
+  'Diame Faye Ndag': 'Diamé ndag'
+  'Diame Faye Ndag Niary Wor Ndombo': 'Diamé Ndag'
+  Diamtery: 'Modou Diam Terry'
+  Diaménak: 'Diamé ndag'
+  'Diamé ndack': 'Diamé ndag'
+  'Diamé Ndag Gandiaye': 'Diamé Ndag'
+  'Diao 2': 'Diaw 2'
+  'Diaw Dine 2': 'Diaw 2'
+  'Diekh Jam': 'Diekh Diam'
+  Diokel: Diockél
+  Diolof: Djolof
+  'Dix Mille Problèmes': '10000 Problèmes'
+  Djinné: Djiné
+  'Djiné Papo Ngane Sosokh': Sosokh
+  Djokoul: Diokoul
+  Djoloff: Djolof
+  'Docteur faye': 'Doctor faye'
+  Dole: Dollé
+  Dolé: Dollé
+  Doole: Dollé
+  Doolé: Dollé
+  'Doundou fass': 'Doundou bou fass'
+  'Doune bou fass': 'Doundou bou fass'
+  Dérangé: Déranger
+  'Elhadj Gaindé': 'Aladji Gaïndé'
+  'Elhadji Mbaye': 'Aladji Mbaye'
+  'El hadj Ndiaye': 'Elhadj Ndiaye'
+  Eubali: Eubeuly
+  Eubaly: Eubeuly
+  Feugueleu: Feugeuleu
+  'Fils de Bmw': 'Fils de Bm'
+  'Fils de fodé': 'Fils de faudé'
+  'Fils de jordan': 'Domou jordan'
+  'Fils du tigre': 'Fils de tigre'
+  'Fils songué': 'Fils De Sow Gueye'
+  'Franc Ndiago': Franc
+  'Fran Niodior': 'Franc Niodior'
+  Gaaro: Garo
+  Gaingé: Gaindé
+  Gakou: Gackou
+  Gamadji: 'Gris gamadji'
+  'Gamou gueye 2': 'Gamou guèye'
+  'Gamou guèye 2': 'Gamou guèye'
+  'Garo gar': 'Garo gare'
+  Gaïngé: Gaindé
+  'Gourdin 2': 'Kaw gourdin'
+  Gouy-Gui: 'Gouye gui'
+  'Gouye Gui Djimbor': 'Gouye gui'
+  'Gouye Gui Djimbory': 'Gouye Gui'
+  'Gouy gui': 'Gouye gui'
+  'Gouygui Djilass': 'Gouye Gui Djilasse'
+  'Guiros séras': 'Guiro Seras'
+  'Géné bou ndaw': 'Général bou ndaw'
+  'Général Bou Malika': 'Général Malika'
+  'Général fass': Général
+  'Imedi Yallaou': 'Imédi Yallaoua'
+  Imposer: Imposé
+  'Isma diarra 2': 'Diarra 2'
+  Jaxal: Diakhal
+  'Joueur technique': 'Jie technique'
+  jr: Junior
+  Jr: Junior
+  'Juan Espino (lion Blanc)': 'Juan Espino'
+  'Jules Baldé 2': 'Jules Baldé junior'
+  'Kadd Gui': 'Kaad Gui'
+  'Kad Gui': 'Kaad Gui'
+  Kaiiré: Kaïré
+  Kaire: Kaïré
+  Kairé: Kaïré
+  Kangkang: 'Kang Kang'
+  'Kao cissé': 'Kaw cissé'
+  'Kao gourdin': 'Kaw gourdin'
+  'Kara doré': 'Kara dollé'
+  Karbalah: Karbala
+  Karballa: Karbala
+  Karballah: Karbala
+  'Karim Jaol': 'Karime Joal'
+  'Karim Joal': 'Karim Bou Joal'
+  'Kaw Cisse': 'Kaw Gourdin'
+  kayré: kaïré
+  Khadime: Khadim
+  'Khadim Ndiaye 1': 'Khadim Ndiaye'
+  'Khadim Ndiaye n°2': 'Khadim Ndiaye 2'
+  'Lac 2': 'Lac de guiers 2'
+  'Last nder': Lastander
+  'Laye ghote': 'Laye gothé'
+  'Laye Gotes': 'Laye gothé'
+  'Laye gothe': 'Laye gothé'
+  'Laye gothie': 'Laye gothé'
+  'Laye gotte': 'Laye gothé'
+  'Laye gotté': 'Laye gothé'
+  'Laye goté': 'Laye gothé'
+  'Lys ndiago': 'Liss ndiago'
+  'Lys Ndiago': 'Liss Ndiago'
+  Lys_ndiago: 'Liss ndiago'
+  'Madji Madji 2': 'Papa Boy Djiné'
+  'Magnick Kairé': 'Mbagnick Kairé'
+  'Malick Diouf': 'Malick Diouf Réfane'
+  'Malick Ndiaye 37 Fous': 'Malick Ndiaye'
+  'Mama lamine lansar': 'Mama lamine'
+  'Mame Ndieumbane Diom': 'Mame Ndieumbane'
+  'Marley 2': Marley
+  'Mbaya Bou Ndaw': 'Mbaye Bou Ndaw'
+  'Mbaye Diop Palmarin': 'Mbaye Diop Safara'
+  'Mbaye Safara': 'Mbaye Diop Safara'
+  'Mbaye tine jr': 'Mbaye tine 2'
+  'Mbir Dollé Palmarin': 'Mbir Dollé'
+  'Mbirmi bou yoff': Mbirmi
+  "Mod'Lo": 'Modou Lô'
+  "Mod'Lô": 'Modou Lô'
+  "Mod'dia": 'Modou dia'
+  'Mod dia': 'Modou dia'
+  'Modou awa tine': 'Modou awa'
+  'Modou Diame Terry': 'Modou Diam Terry'
+  'Modou Diamteri': 'Modou diam terry'
+  'Modou Diamterri': 'Modou diam terry'
+  'Modou Diamterry': 'Modou diamt terry'
+  'Modou Diamtery': 'Modou diam terry'
+  'Modou kharagne Lô': 'Modou Lô'
+  'Modou xaragne Lô': 'Modou Lô'
+  'Mohamed Aly': 'Mohamed Ali'
+  'Mor reug reug': 'Bébé Reug Reug'
+  'Moustapha gueye 2': 'Tapha gueye 2'
+  'Moustapha guèye 2': 'Tapha gueye 2'
+  'Moustapha guéye 2': 'Tapha gueye 2'
+  N2: '2'
+  N°2: '2'
+  'N° 2': '2'
+  Nandi: Nandy
+  Nangounay: Ngagouné
+  Ndakaru: Ndakarou
+  Ndandy: Nandy
+  'Ndiagass Gui': 'Ndiakhass Gui'
+  'Ndiakhas gui': 'Ndiakhass gui'
+  'Ndiakh Dieurignou': 'Niakh Diarignou'
+  'Ndiambane 2': 'Ndiambane 2 (Baleine)'
+  'Ndiaxass gui': 'Ndiakhass gui'
+  Ndigel: Ndigeul
+  'Ndigeul gm': Ndigeul
+  Ndigueul: Ndigeul
+  'Ndiol bou sana': 'Ndiol sana'
+  'Ndiol wally': 'Ndiol waly'
+  'Necko rel': 'Néko Rël'
+  'Necko rell': 'Néko Rël'
+  'Necko reul': 'Néko Rël'
+  'Neko reul': 'Néko Rël'
+  'Nguer bou saf': 'Mor nguer 2'
+  'Nguer bou zap': 'Mor nguer 2'
+  'Niak Diariniou': 'Niakh Diarignou'
+  'Niakhass gui': 'Ndiakhass gui'
+  'Niakh Diariniou': 'Niakh Diarignou'
+  'Niakh Dieuriniou': 'Niakh Diarignou'
+  'Niarri yaar': 'Niari yards'
+  Noireau: 'Noiraud Junior'
+  'Nécko Rël': 'Néko Rël'
+  'Néss Bou Niacoulrap': 'Ness 2'
+  Obali: Eubeuly
+  Obaly: Eubeuly
+  Obeuly: Eubeuly
+  'Omar naar': 'Omar nar'
+  Oufli: Oufly
+  'Ouza sow 2': 'Ouza 2'
+  'Ouz Diarrere': 'Ouz Diarekh'
+  'Pa mbaye': 'Pape Mbaye 2 (fadam)'
+  'Papa barri barri': 'Papa bari bari'
+  'Papa boy djinee': 'Papa boy djiné'
+  'Papa boy djinné': 'Papa boy djiné'
+  'Papa yade': 'Pape yade'
+  'Pape Ngane Soxsox': Sosokh
+  'Paul Manta': 'Paul Menthe'
+  'Paul Manthe': 'Paul Menthe'
+  'Paul Menta': 'Paul Menthe'
+  Peurge: Peurgueu
+  Peurk: Peurgueu
+  Peurke: Peurgueu
+  Peurkeu: Peurgueu
+  Peurkheu: Peurgueu
+  Pithagore: Pythagore
+  'Prince Ndiago': Prince
+  pytaghore: pythagore
+  'Ram dan': 'Raam daan'
+  'Rock Mbalax': 'Rock Mbalakh'
+  'Sa bokhol': 'Sa bokhal'
+  'Sa bokol': 'Sa bokhal'
+  'Salle siteu': 'Zale siteu'
+  'Santan gning': 'Santang gningue'
+  'Santan gningue': 'Santang gningue'
+  Sathies: 'Sa Thiès'
+  'Seiny bou bargny': 'Seiny bargny'
+  'Seni bargny': 'Seiny bargny'
+  'Seny bargny': 'Seiny bargny'
+  'Serigne dia bombardier': Bombardier
+  'Serpent bou camberene': 'Serpent noir'
+  'Seye Jambar': 'Seye Diambar'
+  'Seye Jambare': 'Seye Diambar'
+  'Siny bargny': 'Seiny bargny'
+  'Siny Sembene': 'Seiny bargny'
+  'Siteu keur mbaye fall': 'Siteu 205'
+  Soguas: Sogas
+  sokas: sogas
+  sokass: sogas
+  'Sokh bou bess': 'Sokh bou ndaw'
+  'Sokh bou res': 'Sokh bou ndaw'
+  'Souley Dop': 'Soulèye Dop'
+  'Souley gaïngé': 'Souleye gaindé'
+  'Soura mbeur': Soura
+  Souroumlé: Souroumblé
+  Soxsox: Sosokh
+  'Také Séras': Takhé
+  'Tapha 2': 'Tapha gueye 2'
+  'Tapha lerr': 'Tapha leer'
+  'Tapha lér': 'Tapha leer'
+  'Tass yakaar': 'Tass yakar'
+  'Tas yakar': 'Tass yakar'
+  Thiaatou: Thiatou
+  'Thiatou Bambara': 'Thiaat boy Bambara'
+  'Thiatou boy bambara': 'Thiaat boy bambara'
+  'Thiatou Djolof 2': 'Thiatou Djolof'
+  'Thiatou mbambara': 'Thiatou bambara'
+  'Thiatou Nguéweul': 'Thiatou Ngueweul'
+  'Thiatou Ngéweul': 'Thiatou Ngueweul'
+  Tubeless: 'Iba less'
+  Tubless: 'Iba less'
+  'Vit fait': 'Vite fait'
+  Wouli: Wouly
+  'Wouly wouly': Wouly
+  'Wouly Wouly wat': Wouly
+  'Yahya Diop Yékini': Yékini
+  'Yakhya Diop Yékini': Yékini
+  'Yillé Baba Tarkinda': 'Yillé Baba'
+  'Yilé Baba': 'Yillé Baba'
+  'Yilé Baba Tarkinda': 'Yillé Baba'
+  Zambla: Zambala
+  'Zeum kane': Zeum
+  Zick: Zik
+  'Zoo technique': 'Joe technique'
+  'Zo technique': 'Joe technique'
+remplacementsYtb:
+  '10000 Problèmes': 'Dix Mille Problèmes'
+  '2 gigas': 'deux gigas, 2 Giga, Deux Giga'
+  'Abdou ndiassé': 'Abou diassé, abdou diassé,abou ndiassé'
+  Aigle: 'Aigle bou Mbatal'
+  'Akon (lansar)': Akon
+  'Aladji Gaïndé': 'Elhadj Gaindé'
+  'Aladji Mbaye': 'Elhadji Mbaye'
+  'Alboury (Kay Bakh)': 'Alboury 2'
+  'Alioune Diop 2': 'Alioune Diouf 2'
+  'Alou bakh yaye': 'Akou bakh yay'
+  Amanekh: 'Ama nekh'
+  Ambroise: Ambourass
+  'André Sarr': 'Léopard André Sarr'
+  'Armée bou ngueweul': 'Armée boungueweul'
+  'Arsenal 2': 'Arsa,Arsa 2'
+  'Baba diakhal': 'Baba jaxal, bebe diakhal,bebe jaxal'
+  'Badou Fall 2': 'Badou Fall'
+  'Balla Bèye 2 (baboye)': 'balla beye 2,baboye'
+  'Balla Gaye 1': 'Balla Gaye'
+  'Baye Mandione': 'Baye Madione'
+  Bazooka: Bazooka
+  Blondin: 'Blondin camberene'
+  Bollo: 'Bolo yeumbeul, bolo'
+  Bombardier: b52
+  'Boni Iliassou': 'Bony Benin'
+  Bouba: 'Bouba malika, Bouba bou malika'
+  'Boucher ketchup': Boucher
+  'Boy diakhao': 'Boy diakhaw'
+  'Boy diop 2': 'Diop 2'
+  'Boy mlomp': 'Doudou baka, boy moulomp'
+  'Boy nar fall': 'Boy nar, Boye nar, boy naar'
+  'Boy Niang 2 (balla Gaye)': 'Boy Niang'
+  'Boy Niang Deranger': 'Boy Niang Derangé'
+  'Boy seby': 'Boy sebi, boy sebikotane'
+  'Boy Walo': 'Cheikh Bou Walo'
+  'Bébé dialy': 'Bébé diali'
+  'Bébé diene': 'Bb diene'
+  'Bébé Reug Reug': 'Mor Reug Reug'
+  'Cheikh niang (pikine)': 'Cheikh niang'
+  'Dal sen kaw': 'Dal sen kao, Dal sene kaw, Dale seen kaw, Dale sen kaw'
+  Darso: Darso
+  'Demba déranger': 'Demba derangé,Demba dérangé'
+  'Diamé ndag': 'Diaménak,Diamé ndack'
+  'Diaw 2': 'Diaw Dine 2,Diao 2'
+  'Diekh Diam': 'Diekh Jam'
+  'Djidiack Djilas': 'Djidiack, Djidiak Djilass, Djidiack Djilasse, Djidiack Djilass, Djidiack Djilas Djilas Djilas'
+  'Djiné Bou Ndaw': Djiné
+  dollé: 'doolé,dolé'
+  'Domou jordan': 'Fils de jordan'
+  'Double less 2': 'Less 2'
+  'Doudou Sané': 'Doudou Sané boyard'
+  'Doundou bou fass': 'Doundou, Doune bou fass'
+  'Douze sept': '12-7,12 7'
+  'Fils De Batling': 'Fils De Batlin, Fils De Batléne'
+  'Fils de BM': 'Fils de Bmw'
+  'Fils de katy': 'Fils De Doudou Yaye Katy'
+  'Franc Niodior': 'Fran Niodior'
+  'Gackou 2': Gakou
+  'Garo gare': 'Gaaro gare,Garo gar'
+  'Gouye gui': 'gouy gui'
+  'Gouye gui 2': 'Gouy gui 2'
+  'Gouye Gui Djilasse': 'Gouygui Djilass'
+  'Gouygui Djilas': 'Gouygui Djilass, Gouye Gui Djilasse'
+  'Gris gamadji': Gamadji
+  'Général bou ndaw': 'Géné bou ndaw'
+  'Général fass': Général
+  'Iba less': 'tubeless, tube less,tubless'
+  'Ibo bou keur mbaye fall': 'Ibo, Ibou'
+  'Ibou Ndiaye Eubeuly': 'Ibou Ndiaye, Eubeuli, Obali, Obaly, Obeuly'
+  'Joe technique': 'Zoo technique, Joueur technique'
+  'Joe technique 2': 'Joe technique, Zoo technique'
+  'Kara dollé': 'Kara dolé, kara doré'
+  'Kara dollé 2': 'Kara dolé 2, kara doré 2'
+  Karballah: 'Karbalah,karbala,karballa'
+  'Karim Bou Joal': 'Karim Joal'
+  'Karime Joal': 'Karim Jaol'
+  'Kaw gourdin': 'gourdin,Kaw Cisse'
+  'Khadim Sarr': 'Khadime Sarr'
+  'Lac de guiers 2': 'Lac 2'
+  Lakhass: Lakhas
+  Lastander: 'Last nder'
+  'Lastander 2': 'Last nder 2'
+  'Laye gothé': 'Laye goté, Laye gotes,Laye gotté'
+  'Laye pythagore': 'Laye pytaghore'
+  'Lys ndiago': 'Liss ndiago'
+  'Malick Diouf Réfane': 'Malick Diouf'
+  'Marley 2': Marley
+  'Mathieu Preira': 'Mathieu Pereira, Mathie Preira'
+  'Mbagnick Kairé': 'Magnick Kairé'
+  'Mbaya Bou Ndaw': 'Mbaye Bou Ndaw'
+  'Mbaye Diop Safara': 'Mbaye Safara,Safara,Mbaye diop,Mbaye Diop Palmarin'
+  'Mbaye Gueye Junior': 'Fils De Mbaye Gueye'
+  'Mbir Dollé': 'Mbir Dollé Palmarin'
+  'Mbissane dione': mbissane
+  'Modou dia': 'Mod dia'
+  'Modou Diam Terry': 'Modou Diame Terry'
+  'Modou Diam terry': 'Modou diamteri,Modou diam terri, modou diamtery, Modou diam teri,Diamtery'
+  'Mohamed Ali': 'Mohamed Aly'
+  'mohamed ndao tyson': Tyson
+  'Mor nguer 2': 'Nguer bou zap, nguer bou saf'
+  'Moustapha guèye': 'tapha gueye,tigre de fass'
+  'Nandy Fall': 'Ndandy,Ndandi,Nandi'
+  'Narou sogas': 'Narou sokhass, Narou soguas'
+  'Ndiaga dollé': 'Ndiaga dolé, ndiaga doolé, ndiaga dolie'
+  'Ndiaga Thiam': 'Ndiaga Thiam'
+  'Ndiakhass gui': 'Niakhass,Ndiakhas,diakhas, ndiaxass'
+  'Ndiambane 2 (Baleine)': 'Baleine,Ndiambane'
+  Ndigeul: 'Ndigueul,Ndigel'
+  'Ndiol Diamano': 'Ndiol Diamono'
+  'Ndiol waly': 'Ndiol wally'
+  'Ngala deranger': 'Ngala derangé'
+  'Niakh Diarignou': 'Niakh Dieuriniou, Ndiakh Dieurignou, Niakh Diariniou'
+  'Noiraud Junior': Noireau
+  'Néko Rël': 'Necko Rel,Neko Rel,Neko Reul,Neko Reule'
+  'Néss Bou Niacoulrap': Ness
+  'Omar nar': 'Omar naar'
+  'Ouz Diarekh': 'Ouz Diarrere'
+  'Papa boy djiné': 'Papa boy djinee,Papa boy djinné,madji'
+  'Pape Mbaye 2 (fadam)': 'pape mbaye, pape mbaye 2'
+  'Pape Mbaye 2 (keur massar)': 'pape mbaye, pape mbaye 2,pa mbaye'
+  'Pape Mbaye Hersent': 'pape mbaye'
+  'Pape yade': 'Papa yade'
+  'Paul Menthe': 'Paul Menta,Paul Manthe, Paul Manta'
+  Peurgueu: 'Peurk,Peurkheu,Peurke, Peurkeu,Peurge,Peurgue,Peurgeu'
+  'Pokola Baldé': Pokola
+  'Raam daan': 'Ram dan,Ramdan'
+  'Sa bokhal': 'Sa bokhol, sa bokol'
+  'Sa Cadior 2 (thiaroye)': 'sa cadior 2, sa cadior'
+  'Santang gningue': 'Santang gning, Santan gningue,Santan ngning'
+  'Seiny bargny': 'Seny bargny,Seny bou bargny,Seiny bou bargny,Seni bargny,Siny bargny,Siny Sembene'
+  'Serpent Bou Cambèrène': Serpent
+  'Serpent Noir': 'Serpent bou camberene'
+  'Seulou Bou Ndaw': 'Seuleu Boundao, Seuleu Boundaw, Seul Nou Ndaw, Seull Boundaw'
+  'Seye Diambar': 'Seye Jambare,Seye Jambar'
+  'Sokh bou ndaw': 'Sokh bou res,Sokh bou bess'
+  'Sokh Sokh': 'Sosokh, Papo Ngane Sossokh'
+  'Souley gaindé': 'Souleye gaïngé,souleye gaingé, souley gaïngé'
+  Soura: 'Soura mbeur'
+  Takhé: Také
+  'Tapha gueye 2': 'moustapha gueye 2, tapha 2'
+  'Tapha Leer 2': 'Tapha Ler 2, tapha Lerr 2'
+  'Tapha Léer': 'Tapha Ler,tapha lerr'
+  'Thiatou bambara': 'Thiatou mbambara, Thiaat boy Bambara'
+  'Thiatou ndakaru': 'Thiatou ndakarou'
+  'Thiatou Nguéweul': 'Thiatou Ngeweul,thiatou géweul'
+  Tigo: 'Tigo Khariitou Yayam'
+  'Tigo Kharitou Yayam': 'Tigo, Tigo Khariitou Yayam'
+  'Turbo bou tivaouane': 'Turbo tivaouane'
+  'Vite fait': 'Vit fait'
+  'Yillé Baba': 'Yilé Baba Tarkinda,Yillé Baba Tarkinda'
+  'Zale siteu': 'Salle siteu'
+  Zarco: Zarko
+  Zeum: 'Zeum kane Zeume'
+  Zik: Zick
+exclude_words_ytb: "24h, accuse, altercation, ambiance, analyse, analysent, analyser, anecdote, annulation, annulé, avance, averti, avis, avorté, bakou, battre, charge, chauffe, combattrait, critique, critiquer, debrief, depart, dévoile, dévoilent, devoilent, devoile, débrief, défi, défie, defie, débat, décorticage, décortique, décortiquer, drapeau, entretien, failli, ficelé, film, histoire, idole, interview, interview, interviewer, khaar, khar, lance, menace, mystique, mystiquement, parle, point de vue, preview, previent, prono, pronostic, promo, promet, promettent, promesse, prépare, prêt, pret, prévient, raconte, reaction, réaction, réactions, reactions, reclame, regardez, réagit, reagit, réclame, remise, répond, réponse, report, reporté, revient, rêve, révélation, révélations, s'exprime, sermonne, souhaite, souhaiterait, spectacle, tacle, temoignage, temoignages, teukou, teukkou, touss, témoignage, témoignages, veux, voudrait, vouloir"
+archive_words_ytb: 'archive, archives, demb, retro, retros, retrospective, retrospectives, rétro, rétros, historique, revivez, var'
+face2face_patterns_ytb: 'confrontation, contrat, f2f, face a face, face à face, face 2 face, face to face, face2face, facetoface, ftof, jamarlo, jamarloo, open, recoit, reçoit, signature'
+combat_patterns_ytb: 'combat, combats, fight, match'
+separators_patterns_ytb: 'bat, contre, et, terrasse, vs, vs.'
+integral_patterns_ytb: 'complet, entier, full, integral, integrale, integralite, reportage'
+victory_patterns_ytb: 'bat, battu, chute, corrige, corrigé, daan, daanou, dane, dann, danne, danou, dessus, diell, dieul, dieule, dieulle, dieulleeu, dieulle, diéleu, djeul, djeule, djeuleu, domine, explose, explosé, jell, jelle, jelleu, jél, jéleu, gagne, gagné, remporte, terrasse, terrassé, trompe, vainqueur, victoire, victorieux'
+ko_patterns_ytb: 'ko, k.o, knock out, met ko, mis ko'
+email_destinataire_logs_errors: senelutte@gmail.com;ssmmsow@yahoo.com
+schedules:
+  -
+    command: 'athletes_envogue:import'
+    day: bypassed
+    time: '02:00'
+  -
+    command: 'combats_next:import'
+    day: '7'
+    time: '08:00'
+  -
+    command: 'combats_next:update_videos'
+    day: '3'
+    time: '11:00'
+  -
+    command: 'confrontations_recentes:import'
+    day: '2'
+    time: '22:00'
+  -
+    command: 'confrontations_recentes:update_videos'
+    day: all
+    time: '09:00'
+  -
+    command: 'confrontations_doublons:run'
+    day: '1'
+    time: '21:00'
+  -
+    command: 'confrontations_recentes:update_videos'
+    day: '1'
+    time: '07:00'
+  -
+    command: 'confrontations_recentes:update_videos'
+    day: '1'
+    time: '11:00'
+  -
+    command: 'confrontations_recentes:update_videos'
+    day: '1'
+    time: '21:00'
+  -
+    command: 'gemini:import-all-fights-athlete-less'
+    day: bypassed
+    time: '14:00'
+  -
+    command: 'sl:live-search-reset'
+    day: bypassed
+    time: '00:00'
+  -
+    command: 'elo:rebuild'
+    day: bypassed
+    time: '00:00'
+  -
+    command: '404:fix'
+    day: bypassed
+    time: '00:00'
+  -
+    command: 'confrontations_doublons:run'
+    day: bypassed
+    time: '00:00'
+  -
+    command: 'confrontations_recentes:import'
+    day: '7'
+    time: '08:00'
+  -
+    command: 'confrontations_recentes:import'
+    day: '7'
+    time: '22:00'
+  -
+    command: 'confrontations_recentes:import'
+    day: '1'
+    time: '08:00'
+  -
+    command: 'confrontations_recentes:import'
+    day: '1'
+    time: '22:00'
+  -
+    command: 'gemini:import-one-fighter-fights'
+    day: bypassed
+    time: '00:00'
+  -
+    command: 'combats_next:import'
+    day: all
+    time: '01:00'
+  -
+    command: 'confrontations_recentes:import'
+    day: all
+    time: '02:00'
+  -
+    command: 'confrontations_recentes:update-unknown-results'
+    day: bypassed
+    time: '00:00'
+  -
+    command: 'confrontations_lutte_simple:run'
+    day: '7'
+    time: '12:00'

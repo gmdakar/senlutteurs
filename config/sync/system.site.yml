@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: ijfbzDTN4CbE7Sr-6ubWzy_t1vH4OtU1doNCLssVz-4
+langcode: fr
+uuid: 3fbe1c3e-c53f-48e7-a51f-cd4ba67288bb
+name: 'SenLutteurs AI'
+mail: senelutte@gmail.com
+slogan: "Site de vulgarisation de la lutte sénégalaise, à travers les performances et palmarès des lutteurs, au moyen de l'intelligence artificielle."
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: fr
+mail_notification: noreply@senelutte.com

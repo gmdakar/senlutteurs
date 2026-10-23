@@ -1,0 +1,5 @@
+name: 'SL i18n Dates'
+type: module
+description: 'Force la langue d interface pour les dates a_venir'
+core_version_requirement: '^10 || ^11'
+package: Custom

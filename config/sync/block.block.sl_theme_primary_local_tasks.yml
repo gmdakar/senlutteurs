@@ -1,0 +1,22 @@
+uuid: 7b2b46f0-cb9c-48c3-aaee-2504f618ee3b
+langcode: fr
+status: true
+dependencies:
+  theme:
+    - sl_theme
+_core:
+  default_config_hash: nGE3EoPQQaQCuqTUtZgw0-KIzmrqdKDzdNQf2JyPUt4
+id: sl_theme_primary_local_tasks
+theme: sl_theme
+region: highlighted
+weight: -4
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Onglets principaux'
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: false
+visibility: {  }

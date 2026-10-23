@@ -1,0 +1,8 @@
+uuid: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+langcode: fr
+status: true
+dependencies: {  }
+id: a_venir_block
+label: 'Date bloc À venir'
+locked: false
+pattern: 'Y-m-d - H:i'

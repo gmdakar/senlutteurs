@@ -1,0 +1,2 @@
+label: 中日付
+pattern: 'Y年n月j日 H:i'

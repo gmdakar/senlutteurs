@@ -1,0 +1,6 @@
+services:
+  elo_ranking.commands:
+    class: Drupal\elo_ranking\Commands\EloCommands
+    arguments: ['@elo_ranking.manager']
+    tags:
+      - { name: drush.command }

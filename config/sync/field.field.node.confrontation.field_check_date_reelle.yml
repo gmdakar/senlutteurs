@@ -1,0 +1,23 @@
+uuid: 8b14df9b-1861-4b3f-9d67-0129707152cb
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_check_date_reelle
+    - node.type.confrontation
+id: node.confrontation.field_check_date_reelle
+field_name: field_check_date_reelle
+entity_type: node
+bundle: confrontation
+label: 'Not Check Date réelle'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

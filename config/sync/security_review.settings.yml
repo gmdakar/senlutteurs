@@ -1,0 +1,30 @@
+_core:
+  default_config_hash: 62GMsnqB8RjxdgNyxCGrnNjjxDft8qnQQIWXU9YbUbw
+untrusted_roles:
+  - anonymous
+  - authenticated
+  - content_editor
+log: true
+skipped:
+  account_creation:
+    skipped: true
+    skipped_by: '1'
+    skipped_on: 1774623784
+views_access:
+  ignore_default: false
+  hushed_views: {  }
+upload_extensions:
+  hush_upload_extensions:
+    - 'jpg jpeg png gif pdf doc docx xls xlsx txt'
+fields:
+  known_risky_fields: {  }
+file_permissions:
+  hushed_files: {  }
+headers:
+  headers_to_check:
+    - X-Frame-Options
+    - X-Content-Type-Options
+    - X-XSS-Protection
+    - Strict-Transport-Security
+    - Referrer-Policy
+    - Content-Security-Policy

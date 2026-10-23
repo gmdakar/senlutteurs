@@ -1,0 +1,8 @@
+title: About
+content:
+  value: |-
+    <p><strong>Senlutteurs AI</strong> is a digital tool for discovering and exploring Senegalese wrestling, powered by artificial intelligence for the automated collection of public sports data related to Senegalese wrestling. Through this site, you can search for information about a wrestler's professional profile and consult their fight history: opponents, dates, results and verdicts.</p>
+    <p>- This site is not a news site; it simply uses technology to promote Senegalese sports culture. The goal is to showcase athletes, document their performances and facilitate access to them for all Senegalese wrestling enthusiasts.</p>
+    <p>- <strong>If you find any incorrect data, you can always </strong><a href="/en/contact"><strong>contact</strong></a><strong> us for correction</strong>, if confirmed.</p>
+    <p>- <strong>Links to YouTube videos or other videos referenced on this site belong to their creators and official distributors. This site does not hold any ownership rights to this video content, which remains the property of its authors</strong>. It simply indexes videos that have already been publicly published on the internet.</p>
+  format: full_html

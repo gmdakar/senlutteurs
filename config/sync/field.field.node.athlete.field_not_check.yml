@@ -1,0 +1,23 @@
+uuid: 64d682e7-6072-447d-8e1f-34c70181824e
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_not_check
+    - node.type.athlete
+id: node.athlete.field_not_check
+field_name: field_not_check
+entity_type: node
+bundle: athlete
+label: 'Not check'
+description: 'Si checké, les lutteurs avec moins de N combats ne seront plus répertoriés et loggués (LESS N) pour recherche automatique de combats supplémentaires'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

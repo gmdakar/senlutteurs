@@ -1,0 +1,11 @@
+sl_signalements.settings:
+  title: 'SL Signalements'
+  description: 'Prompt de validation IA des actions de signalement.'
+  route_name: sl_signalements.settings
+  parent: system.admin_config_services
+
+sl_signalements.flood_reset:
+  title: 'SL Signalements Flood Reset'
+  description: 'Prompt de reset Flood actions de signalement.'
+  route_name: sl_signalements.flood_reset
+  parent: system.admin_config_services

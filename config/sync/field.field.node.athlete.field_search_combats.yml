@@ -1,0 +1,23 @@
+uuid: 3838172d-4627-4956-9fc5-713559ea6e4e
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_search_combats
+    - node.type.athlete
+id: node.athlete.field_search_combats
+field_name: field_search_combats
+entity_type: node
+bundle: athlete
+label: "Chercher d'autres combats"
+description: 'Permet de forcer la recherche automatique de combats supplémentaires (via IA request)'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

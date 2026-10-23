@@ -1,0 +1,11 @@
+uuid: cae9c97d-e6fb-439c-ba16-266c77288764
+langcode: fr
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+id: copyright
+title: Copyright
+content:
+  value: '<p><a href="/mentions_legales">Mentions légales</a> / <a href="/politique_confidentialite">Politique de confidentialité</a>&nbsp;</p><p>Copyright <a href="https://www.senlutteurs.com">senlutteurs.com</a> / 2025 - [date:html_year]</p>'
+  format: full_html

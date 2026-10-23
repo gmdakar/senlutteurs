@@ -1,0 +1,90 @@
+{#
+/**
+ * @file
+ * Theme override for field_vainqueur on confrontation nodes.
+ * Traduit les valeurs spéciales (Nul, Litige...) selon la langue.
+ */
+#}
+
+{% set lang = (current_lang|default('fr'))|split('-')|first %}
+
+{% set translations = {
+  'Nul': {
+    'fr': 'Nul',
+    'en': 'Draw',
+    'es': 'Empate',
+    'ja': '引き分け',
+    'zh': '平局',
+    'ar': 'تعادل'
+  },
+  'Litige (sans verdict)': {
+    'fr': 'Litige (sans verdict)',
+    'en': 'Dispute (no verdict)',
+    'es': 'Disputa (sin veredicto)',
+    'ja': '紛争（判定なし）',
+    'zh': '争议（无裁决）',
+    'ar': 'نزاع (بدون حكم)'
+  },
+  'Litige': {
+    'fr': 'Litige',
+    'en': 'Dispute',
+    'es': 'Disputa',
+    'ja': '紛争',
+    'zh': '争议',
+    'ar': 'نزاع'
+  },
+  'Match nul': {
+    'fr': 'Match nul',
+    'en': 'Draw',
+    'es': 'Empate',
+    'ja': '引き分け',
+    'zh': '平局',
+    'ar': 'تعادل'
+  }
+} %}
+
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+  ]
+%}
+
+{% if label_hidden %}
+  {% if multiple %}
+    <div{{ attributes.addClass(classes, 'field__items') }}>
+      {% for item in items %}
+        {% set raw = item.content|render|striptags|trim %}
+        {% set translated = translations[raw][lang]|default(translations[raw]['fr']|default(raw)) %}
+        <div{{ item.attributes.addClass('field__item') }}>{{ translated }}</div>
+      {% endfor %}
+    </div>
+  {% else %}
+    {% for item in items %}
+      {% set raw = item.content|render|striptags|trim %}
+      {% set translated = translations[raw][lang]|default(translations[raw]['fr']|default(raw)) %}
+      <div{{ attributes.addClass(classes, 'field__item') }}>{{ translated }}</div>
+    {% endfor %}
+  {% endif %}
+{% else %}
+  <div{{ attributes.addClass(classes) }}>
+    <div{{ title_attributes.addClass('field__label') }}>{{ label }}</div>
+    {% if multiple %}
+      <div class="field__items">
+        {% for item in items %}
+          {% set raw = item.content|render|striptags|trim %}
+          {% set translated = translations[raw][lang]|default(translations[raw]['fr']|default(raw)) %}
+          <div{{ item.attributes.addClass('field__item') }}>{{ translated }}</div>
+        {% endfor %}
+      </div>
+    {% else %}
+      {% for item in items %}
+        {% set raw = item.content|render|striptags|trim %}
+        {% set translated = translations[raw][lang]|default(translations[raw]['fr']|default(raw)) %}
+        <div{{ item.attributes.addClass('field__item') }}>{{ translated }}</div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endif %}

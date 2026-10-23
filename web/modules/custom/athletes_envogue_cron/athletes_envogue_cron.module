@@ -1,0 +1,23 @@
+<?php
+
+use Drupal\athletes_envogue_cron\Service\AthleteService;
+
+/**
+ * Implements hook_cron().
+ * ************ OBSOLETE!!!  ***********************
+ */
+/*function athletes_envogue_cron_cron() {
+  $athletes_service = \Drupal::service('athletes_envogue_cron.athletes_service');
+  $athletes = $athletes_service->fetchAthletesEnVogue(); //get some en vogue athletes
+
+  foreach ($athletes as $athlete) {
+    $lutteur_name = $athlete['nom'] ?? null;
+    if (!$lutteur_name)
+      continue;
+
+    $athlete_exist = $athletes_service->athleteExists($lutteur_name);
+    if ($athlete_exist) {
+      $athletes_service->enqueueAthlete($athlete);
+    }
+  }
+}*/

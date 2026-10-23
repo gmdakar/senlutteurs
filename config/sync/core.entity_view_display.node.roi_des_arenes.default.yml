@@ -1,0 +1,51 @@
+uuid: b8c9e037-8799-4d6b-900b-8af6cdcc169e
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.roi_des_arenes.field_athlete
+    - field.field.node.roi_des_arenes.field_date_debut
+    - field.field.node.roi_des_arenes.field_date_fin
+    - field.field.node.roi_des_arenes.field_date_intronisation
+    - node.type.roi_des_arenes
+  module:
+    - datetime
+    - user
+_core:
+  default_config_hash: 5uCVAw2Ih2aqvHQuMNuSm0AN9z7eMoCnyvRVXIxZKd0
+id: node.roi_des_arenes.default
+targetEntityType: node
+bundle: roi_des_arenes
+mode: default
+content:
+  field_athlete:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_date_fin:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: olivero_medium
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_date_intronisation:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: olivero_medium
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_date_debut: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

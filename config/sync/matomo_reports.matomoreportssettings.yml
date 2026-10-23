@@ -1,0 +1,7 @@
+matomo_report_server: null
+matomo_server_url: 'https://senlutteurs.com/matomo/'
+token_auth: null
+matomo_reports_token_auth: ''
+matomo_reports_sites: null
+matomo_reports_allowed_sites: 'https://senlutteurs.com/,https://www.senlutteurs.com/'
+matomo_server_url_ignore_ssl: 0

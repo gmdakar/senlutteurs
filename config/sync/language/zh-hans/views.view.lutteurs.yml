@@ -1,0 +1,24 @@
+label: 摔跤手
+display:
+  default:
+    display_options:
+      title: 摔跤手
+      exposed_form:
+        options:
+          submit_button: 应用
+          reset_button_label: 重置
+      filters:
+        title:
+          expose:
+            label: 按姓名筛选
+      empty:
+        area:
+          content:
+            value: 无结果
+            format: plain_text
+      use_more_text: 查看更多
+  block_1:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: 应用

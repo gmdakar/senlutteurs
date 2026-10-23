@@ -1,0 +1,32 @@
+
+{% set classes = classes|default([]) %}
+{% set v_title = '' %}
+
+{% set is_king = element['#object'].field_king.value == '1' %}
+{% set is_best_elo = element['#object'].field_best_elo.value == '1' %}
+
+{% for item in items %}
+
+  <div{{ attributes
+    .addClass(classes, 'field__item')
+    .setAttribute('title', v_title)
+  }}>
+
+    {# ===== Icones AVANT le nom ===== #}
+
+    {% if is_king %}
+      <span class="elo-icon elo-king"
+            title="{{ 'Roi des arènes (actuel)'|t }}"></span>
+    {% endif %}
+
+    {% if is_best_elo %}
+      <span class="elo-icon elo-best_elo"
+            title="{{ 'Meilleure performance (actuelle)'|t }}"></span>
+    {% endif %}
+
+    {# ===== Nom ===== #}
+    {{ item.content }}
+
+  </div>
+
+{% endfor %}

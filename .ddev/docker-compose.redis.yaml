@@ -1,0 +1,16 @@
+version: '3.6'
+services:
+  redis:
+    container_name: ddev-${DDEV_SITENAME}-redis
+    image: redis:7-alpine
+    restart: "no"
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=6379:6379
+    command: ["redis-server", "--appendonly", "yes"]
+  web:
+    links:
+      - redis:redis

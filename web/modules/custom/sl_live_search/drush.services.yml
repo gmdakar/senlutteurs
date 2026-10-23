@@ -1,0 +1,8 @@
+services:
+  sl_live_search.reset_live_search_commands:
+    class: Drupal\sl_live_search\Commands\ResetLiveSearchCommands
+    arguments:
+      - '@state'
+      - '@database'
+    tags:
+      - { name: drush.command }

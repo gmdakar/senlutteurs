@@ -1,0 +1,6 @@
+title: Suscribirse
+settings:
+  confirmation_message: 'Merci de votre inscription.'
+handlers:
+  email_notification:
+    label: 'Notificación por correo electrónico'

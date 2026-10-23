@@ -1,0 +1,8 @@
+name: 'SL Path alias neutral'
+type: module
+description: 'Force des alias Pathauto language-neutral (und) pour les types de contenu non traduits (athlete, etc.).'
+core_version_requirement: '^10 || ^11'
+package: Custom
+dependencies:
+  - pathauto:pathauto
+  - path_alias:path_alias

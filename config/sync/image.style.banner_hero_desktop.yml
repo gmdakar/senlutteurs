@@ -1,0 +1,15 @@
+uuid: 662f6437-200a-461f-bfb3-7190b4f0fd3e
+langcode: en
+status: true
+dependencies: {  }
+name: banner_hero_desktop
+label: 'Banner Hero Desktop'
+effects:
+  d1c38400-f0c2-4ee7-a64f-6840c7cb18d0:
+    uuid: d1c38400-f0c2-4ee7-a64f-6840c7cb18d0
+    id: image_scale
+    weight: null
+    data:
+      width: 1920
+      height: null
+      upscale: false

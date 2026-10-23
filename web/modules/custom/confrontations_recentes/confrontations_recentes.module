@@ -1,0 +1,174 @@
+<?php
+
+use Drupal\confrontations_recentes\Service\CombatService;
+use Drupal\node\NodeInterface;
+use Drupal\shared_lib\Tools\SomeTools;
+
+/**
+ * Implements hook_cron(). OBSOLETE !!!!
+ */
+/*function confrontations_recentes_cron() {
+  $combat_service = \Drupal::service('confrontations_recentes.combat_service');
+  $combats = $combat_service->fetchCombats();
+  if (is_array($combats) && count($combats)) {
+    foreach ($combats as $combat) {
+      $combat_service->enqueueCombat($combat);
+    }
+  }
+}*/
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for node entities.
+ *
+ * Un nouveau combat vient d'être créé pour un ou deux lutteurs : leur
+ * historique/contexte a changé, donc tout verdict IA "pas lutte simple"
+ * (field_check_is_lutte_simple = TRUE) déjà posé sur un de leurs combats
+ * existants doit être réexaminé. On le remet à FALSE afin que ce combat
+ * redevienne éligible à queueSuspectedLutteSimpleCombats().
+ */
+function confrontations_recentes_node_insert(Drupal\node\NodeInterface $node) {
+  if ($node->getType() !== 'confrontation') {
+    return;
+  }
+
+  $athleteIds = [];
+  foreach (['field_athlete_1', 'field_athlete_2'] as $fieldName) {
+    if ($node->hasField($fieldName) && !$node->get($fieldName)->isEmpty()) {
+      $athleteIds[] = (int) $node->get($fieldName)->target_id;
+    }
+  }
+  $athleteIds = array_values(array_unique(array_filter($athleteIds)));
+
+  if (empty($athleteIds)) {
+    return;
+  }
+
+  SomeTools::resetLutteSimpleCheckForAthletes($athleteIds, (int) $node->id());
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for node entities.
+ */
+function confrontations_recentes_node_presave(Drupal\node\NodeInterface $node) {
+  if ($node->getType() === 'confrontation') {
+
+    // Skip si save technique (videos, etc.) car juste pour add/alter videos
+    if (!empty($node->_skip_other_only_update_videos)) {
+        return;
+    }
+    else {
+      if ($node->get('field_id_text')->isEmpty()) return;
+
+      $value = $node->get('field_id_text')->value;
+
+      $query = \Drupal::entityQuery('node')
+          ->condition('type', 'confrontation')
+          ->condition('field_id_text', $value)
+          ->accessCheck(FALSE);
+
+      // Exclure le nœud lui-même (en cas d'update)
+      if (!$node->isNew()) {
+          $query->condition('nid', $node->id(), '!=');
+      }
+
+      $results = $query->execute();
+      if (!empty($results)) {
+          \Drupal::logger('confrontations_recentes')->warning("field_id_text '$value' déjà utilisé par le nœud " . reset($results));
+          //throw new \Exception("field_id_text '$value' déjà utilisé par le nœud " . reset($results));
+      }
+    }
+    
+    // 1. Récupération des entités athlètes
+    $l1_entity = $node->get('field_athlete_1')->entity;
+    $l2_entity = $node->get('field_athlete_2')->entity;
+
+    // Logique de Normalisation (Accents + Minuscules)
+    $normalize = function($str) {
+      if (empty($str)) return '';
+      $str = mb_strtolower($str, 'UTF-8');
+      $transliterator = \Transliterator::create('Any-Latin; Latin-ASCII');
+      return $transliterator ? $transliterator->transliterate($str) : $str;
+    };
+
+    // 2. Traitement du vainqueur (Fuzzy Matching et cas spéciaux)
+    $winner_to_test = $node->get('field_vainqueur')->value;
+
+    if (!empty($winner_to_test)) {
+      $clean_input = $normalize($winner_to_test);
+
+      // Cas match nul
+      if (strcasecmp($clean_input, 'nul') === 0) {
+        $node->set('field_vainqueur', \Drupal::translation()->translate('Nul'));
+        $winner_to_test = 'nul';
+      }
+
+      // Cas inconnu ?
+      if ($winner_to_test !== 'nul') {
+        if (trim($winner_to_test) === '?') {
+          $node->set('field_vainqueur', '?');
+          $winner_to_test = '?';
+        }
+      }
+
+      // Cas litige
+      if ($winner_to_test !== 'nul' && $winner_to_test !== '?') {
+        $keywords = [
+          (string) \Drupal::translation()->translate('litige'),
+          (string) \Drupal::translation()->translate('sans verdict'),
+        ];
+        $clean_input_lower = mb_strtolower($clean_input);
+        foreach ($keywords as $keyword) {
+          if (str_contains($clean_input_lower, mb_strtolower($keyword))) {
+            $node->set('field_vainqueur', \Drupal::translation()->translate('Litige (sans verdict)'));
+            $winner_to_test = 'litige';
+            break;
+          }
+        }
+      }
+
+      // Fuzzy matching avec les noms des athlètes
+      $excluded = ['nul', 'litige', '?'];
+      if (!in_array(mb_strtolower($winner_to_test), $excluded) && $l1_entity && $l2_entity) {
+        $name1 = $l1_entity->label();
+        $name2 = $l2_entity->label();
+        
+        similar_text($normalize($winner_to_test), $normalize($name1), $perc1);
+        similar_text($normalize($winner_to_test), $normalize($name2), $perc2);
+
+        $threshold = 35;
+        if ($perc1 > $perc2 && $perc1 > $threshold) {
+          $node->set('field_vainqueur', $name1);
+        } 
+        elseif ($perc2 > $perc1 && $perc2 > $threshold) {
+          $node->set('field_vainqueur', $name2);
+        }
+      }
+    }
+
+    // 3. Mise à jour du Titre et de l'ID Technique
+    if ($l1_entity && $l2_entity) {
+      $n1 = $l1_entity->label();
+      $n2 = $l2_entity->label();
+      
+      $node->setTitle("$n1 vs $n2");
+
+      $date_val = $node->get('field_confrontation_date')->value;
+      if ($date_val) {
+        try {
+          $dateObj = new \DateTime($date_val);
+          $names = [
+            \Drupal\shared_lib\Tools\SomeTools::technicalWrestlerName($n1), 
+            \Drupal\shared_lib\Tools\SomeTools::technicalWrestlerName($n2)
+          ];
+          sort($names);
+          
+          $tech_id = $names[0] . '_' . $names[1] . '_' . $dateObj->format('Ymd');
+          $node->set('field_id_text', $tech_id);
+          
+        } catch (\Exception $e) {
+          \Drupal::logger('confrontations_recentes')->error('Erreur presave date: @msg', ['@msg' => $e->getMessage()]);
+        }
+      }
+    }
+  }
+}

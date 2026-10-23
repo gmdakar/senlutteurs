@@ -1,0 +1,11 @@
+name: 'Athletes en vogue Cron'
+type: module
+description: 'Interroge Gemini API via cron et upour connaitre les lutteurs les plus en vogue à ce jour.'
+core_version_requirement: ^11
+configure: athletes_envogue_cron.settings
+package: Custom
+dependencies:
+  - drupal:node
+  - sl_live_search:sl_live_search
+  - shared_lib:shared_lib
+  - misc_divers:misc_divers

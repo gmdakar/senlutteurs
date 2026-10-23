@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @file
+ * .install. file
+ */
+
+/**
+ * Ajoute des contraintes d'unicité sur les champs techniques  des athletes et confrontations.
+ *  (pas de doublons)
+ *  hook_update_N()
+ */
+function misc_divers_update_9003() {
+  $schema = \Drupal::database()->schema();
+
+  // Liste des tables et colonnes à rendre de valeurs uniques
+  $fields = [
+    'node__field_id_text' => [
+      'key' => 'field_id_text_value_unique',
+      'column' => 'field_id_text_value',
+    ],
+    'node__field_athlete_nom_technique' => [
+      'key' => 'field_athlete_nom_technique_value_unique',
+      'column' => 'field_athlete_nom_technique_value',
+    ],
+  ];
+
+  foreach ($fields as $table => $info) {
+    try {
+      // On vérifie que la table existe et que l'index n'existe pas encore
+      if ($schema->tableExists($table) && !$schema->indexExists($table, $info['key'])) {
+        $schema->addUniqueKey($table, $info['key'], [$info['column']]);
+      }
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('confrontations_recentes')->error(
+        "Erreur lors de la mise à jour de l'index pour la table @table : @message",
+        ['@table' => $table, '@message' => $e->getMessage()]
+      );
+    }
+  }
+}
+
+/**
+* On annule la gestiondes contraintes d'unicité via le SQL on le gere directement via Drupal cf. hook_ENTITY_TYPE_presave()
+*/
+function misc_divers_update_9004() {
+    $schema = \Drupal::database()->schema();
+    
+    if ($schema->indexExists('node__field_id_text', 'field_id_text_value_unique')) {
+        $schema->dropUniqueKey('node__field_id_text', 'field_id_text_value_unique');
+    }
+    if ($schema->indexExists('node__field_athlete_nom_technique', 'field_athlete_nom_technique_value_unique')) {
+        $schema->dropUniqueKey('node__field_athlete_nom_technique', 'field_athlete_nom_technique_value_unique');
+    }
+}

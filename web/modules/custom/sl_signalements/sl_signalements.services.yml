@@ -1,0 +1,3 @@
+services:
+  sl_signalements.tools_actions:
+    class: Drupal\sl_signalements\Tools\SToolsActions

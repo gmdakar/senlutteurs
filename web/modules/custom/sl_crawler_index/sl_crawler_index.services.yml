@@ -1,0 +1,22 @@
+services:
+
+  sl_crawler_index.sitemap_parser:
+    class: Drupal\sl_crawler_index\Service\SitemapParser
+    arguments:
+      - '@http_client'
+      - '@logger.factory'
+
+  sl_crawler_index.google_indexer:
+    class: Drupal\sl_crawler_index\Service\GoogleIndexer
+    arguments:
+      - '@logger.factory'
+
+  sl_crawler_index.crawler_commands:
+    class: Drupal\sl_crawler_index\Commands\CrawlerCommands
+    arguments:
+      - '@sl_crawler_index.sitemap_parser'
+      - '@sl_crawler_index.google_indexer'
+      - '@queue'
+      - '@plugin.manager.queue_worker'
+    tags:
+      - { name: drush.command }

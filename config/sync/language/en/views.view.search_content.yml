@@ -1,0 +1,33 @@
+label: 'Search content'
+description: 'A search page preconfigured to search through the content of your site'
+display:
+  default:
+    display_title: Master
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Search
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Enter some keywords to search.'
+      pager:
+        options:
+          tags:
+            previous: '‹ previous'
+            next: 'next ›'
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      filters:
+        search_api_fulltext:
+          expose:
+            label: Search
+      title: 'Search Content'
+      header:
+        result:
+          content: 'Displaying results @start - @end of @total'
+  page_1:
+    display_title: Page

@@ -1,0 +1,24 @@
+label: レスラー
+display:
+  default:
+    display_options:
+      title: レスラー
+      exposed_form:
+        options:
+          submit_button: 適用
+          reset_button_label: リセット
+      filters:
+        title:
+          expose:
+            label: 名前で絞り込む
+      empty:
+        area:
+          content:
+            value: 結果なし
+            format: plain_text
+      use_more_text: もっと見る
+  block_1:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: 適用

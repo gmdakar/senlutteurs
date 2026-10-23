@@ -1,0 +1,4 @@
+title: 查看所有比赛
+content:
+  value: '<p><a href="/zh-hans/combats">查看所有最近的比赛</a></p>'
+  format: basic_html

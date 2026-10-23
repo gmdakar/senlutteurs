@@ -1,0 +1,16 @@
+combat_propositions.combat:
+  type: mapping
+  label: 'Combat proposition'
+  mapping:
+    lutteur_1:
+      type: string
+      label: 'Lutteur 1'
+    lutteur_2:
+      type: string
+      label: 'Lutteur 2'
+    proposals:
+      type: integer
+      label: 'Nombre de propositions'
+    votes:
+      type: integer
+      label: 'Nombre de votes'

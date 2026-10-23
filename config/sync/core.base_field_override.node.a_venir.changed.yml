@@ -1,0 +1,18 @@
+uuid: b75e3d80-7e77-4754-9dfb-8c8abbd7787c
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.a_venir
+id: node.a_venir.changed
+field_name: changed
+entity_type: node
+bundle: a_venir
+label: Modifié
+description: 'La date à laquelle le nœud a été modifié pour la dernière fois.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

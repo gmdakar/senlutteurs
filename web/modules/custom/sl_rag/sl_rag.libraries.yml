@@ -1,0 +1,12 @@
+ask_block:
+  version: 1.04
+  css:
+    theme:
+      css/ask-block.css: {}
+  js:
+    js/ask-block.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupal.ajax
+    - core/jquery

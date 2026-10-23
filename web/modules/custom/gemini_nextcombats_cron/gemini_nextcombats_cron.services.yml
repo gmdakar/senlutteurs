@@ -1,0 +1,4 @@
+services:
+  gemini_nextcombats_cron.combat_service:
+    class: Drupal\gemini_nextcombats_cron\Service\CombatService
+    parent: shared_lib.base_wrestling_service

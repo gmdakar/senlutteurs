@@ -1,0 +1,8 @@
+title: 反馈
+settings:
+  confirmation_message: 'Merci pour vos retours.'
+handlers:
+  email_confirmation:
+    label: 'Courriel de confirmation'
+  email_notification:
+    label: 电子邮件通知

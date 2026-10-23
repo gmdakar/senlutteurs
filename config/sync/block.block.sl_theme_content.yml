@@ -1,0 +1,22 @@
+uuid: 5a205028-5cd7-4b93-857b-dc0ddffc2e0b
+langcode: fr
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - sl_theme
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: sl_theme_content
+theme: sl_theme
+region: content
+weight: -18
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Contenu de la page principale'
+  label_display: '0'
+  provider: system
+visibility: {  }

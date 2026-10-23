@@ -1,0 +1,5 @@
+name: 'SL Signalements'
+type: module
+description: 'Gestion sécurisée des signalements de lutte avec anonymisation IP (CDP) et intégration ECA.'
+package: Custom
+core_version_requirement: ^10 || ^11

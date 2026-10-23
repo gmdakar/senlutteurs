@@ -1,0 +1,15 @@
+uuid: ba17ef35-3176-4659-9514-02f181bebc81
+langcode: fr
+status: true
+dependencies: {  }
+name: fiche_lutteur
+label: 'Fiche lutteur 300 x 400'
+effects:
+  575dcc91-4c88-439a-8490-e2c11816e8ae:
+    uuid: 575dcc91-4c88-439a-8490-e2c11816e8ae
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 300
+      height: 400
+      anchor: center-center

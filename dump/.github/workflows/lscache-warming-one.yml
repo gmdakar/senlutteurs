@@ -1,0 +1,86 @@
+name: Test LSCache Unique URL
+
+on:
+  workflow_dispatch: # Active le bouton "Run workflow" sur GitHub
+
+jobs:
+  test-cache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Tester le cache sur l'URL cible
+        shell: bash
+        run: |
+          set +e
+
+          URL="https://www.senlutteurs.com/fr/lutteurs/lscache/15693"
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+
+          request_headers() {
+            curl -s \
+              -D - \
+              -o /dev/null \
+              --compressed \
+              --http2 \
+              --max-time 20 \
+              -A "$UA" \
+              "$1" 2>/dev/null
+          }
+
+          extract_header() {
+            echo "$1" | grep -i "^$2:" | tail -1 | cut -d: -f2- | tr -d '\r' | xargs
+          }
+
+          echo "========================================"
+          echo "=== TEST DE CACHE SUR UNE SEULE URL ==="
+          echo "URL : $URL"
+          echo "========================================"
+
+          # ----------------------------------------------------------------------
+          # PREMIER PASSAGE : Premier chargement (Warm-up)
+          # ----------------------------------------------------------------------
+          echo ""
+          echo "[1] Premier appel (Warm-up)..."
+          HEADERS1=$(request_headers "$URL")
+
+          if [ -z "$HEADERS1" ]; then
+            echo "    ❌ Erreur : Impossible de joindre le serveur."
+            exit 1
+          fi
+
+          HTTP_CODE=$(echo "$HEADERS1" | grep -oP '^HTTP/\S+\s+\K\d+' | tail -1)
+          CACHE_CONTROL=$(extract_header "$HEADERS1" "x-litespeed-cache-control")
+          CACHE_STATUS1=$(extract_header "$HEADERS1" "x-litespeed-cache")
+
+          echo "    -> Code HTTP : $HTTP_CODE"
+          echo "    -> X-LiteSpeed-Cache-Control : ${CACHE_CONTROL:-non défini}"
+          echo "    -> Status initial : ${CACHE_STATUS1:-none}"
+
+          if echo "$CACHE_CONTROL" | grep -qiE 'private|no-cache|no-store'; then
+            echo "    ⚠️ Attention : La page est configurée pour NE PAS être mise en cache."
+            exit 0
+          fi
+
+          # Pause d'une seconde pour s'assurer que LiteSpeed a écrit le cache
+          sleep 1
+
+          # ----------------------------------------------------------------------
+          # DEUXIÈME PASSAGE : Vérification du HIT
+          # ----------------------------------------------------------------------
+          echo ""
+          echo "[2] Deuxième appel (Vérification du HIT)..."
+          HEADERS2=$(request_headers "$URL")
+          CACHE_STATUS2=$(extract_header "$HEADERS2" "x-litespeed-cache")
+
+          echo "    -> X-LiteSpeed-Cache : ${CACHE_STATUS2:-none}"
+
+          if echo "$CACHE_STATUS2" | grep -qi '^hit'; then
+            echo ""
+            echo "    ✅ RESULTAT : [HIT] Le cache fonctionne correctement sur cette URL !"
+          else
+            echo ""
+            echo "    ❌ RESULTAT : [MISS] Le cache n'a pas embarqué au deuxième appel."
+          fi
+
+          echo "========================================"

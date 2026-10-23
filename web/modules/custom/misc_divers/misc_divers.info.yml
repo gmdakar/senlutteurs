@@ -1,0 +1,16 @@
+name: 'Misc / Divers'
+type: module
+description: 'Regroupe les fonctionnalités personnalisées pour la gestion des athlètes et des écuries.'
+package: Custom
+# Compatible avec Drupal 10 et Drupal 11
+core_version_requirement: ^10 || ^11
+
+dependencies:
+  - drupal:node
+  - drupal:path_alias
+  - drupal:user
+  - simple_sitemap:simple_sitemap
+  - shared_lib:shared_lib
+
+# Optionnel : définit une version par défaut pour le module
+version: '1.05'

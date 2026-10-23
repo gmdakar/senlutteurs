@@ -1,0 +1,19 @@
+uuid: 95078a4d-8319-4000-8312-da618e569a66
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_athlete_nom_technique
+    - node.type.athlete
+id: node.athlete.field_athlete_nom_technique
+field_name: field_athlete_nom_technique
+entity_type: node
+bundle: athlete
+label: nom_technique
+description: "permet \"d'appauvrir\" (pas d'espaces, ni de caracteres speciaux ou accentués, tout en miniscule) au maximum le nom d'un lutteur afin de permettre une recherche de doublon potentiel plus simple"
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

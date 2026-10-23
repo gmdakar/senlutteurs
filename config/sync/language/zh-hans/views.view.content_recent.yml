@@ -1,0 +1,20 @@
+label: 'Contenu récent'
+description: 'Contenu récent.'
+display:
+  default:
+    display_title: 默认
+    display_options:
+      title: 'Contenu récent'
+      exposed_form:
+        options:
+          submit_button: 应用
+          reset_button_label: 重置
+          exposed_sorts_label: 排序依据
+          sort_asc_label: 升序
+          sort_desc_label: 降序
+      empty:
+        area_text_custom:
+          content: 'Aucun contenu disponible.'
+      use_more_text: 更多
+  block_1:
+    display_title: 区块

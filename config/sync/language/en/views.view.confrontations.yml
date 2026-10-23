@@ -1,0 +1,111 @@
+label: Fights
+display:
+  default:
+    display_options:
+      title: Fights
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+      filters:
+        search_api_fulltext:
+          expose:
+            label: 'Full text search'
+      header:
+        area:
+          content:
+            value: "Note: Some rare data may be slightly inaccurate (please report it on the wrestler's profile page)."
+            format: basic_html
+      empty:
+        area:
+          content:
+            value: 'No results'
+            format: plain_text
+      use_more_text: 'See more'
+      fields:
+        field_athlete_1:
+          label: 'Wrestler 1'
+        field_athlete_2:
+          label: 'Wrestler 2'
+        field_vainqueur:
+          label: Winner
+        field_video_du_combat:
+          label: 'Fight video'
+        field_face_2_face:
+          label: 'Head to head'
+        field_confrontation_date:
+          label: Date
+  block_1:
+    display_options:
+      use_more_text: 'See more'
+      pager:
+        options:
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: '« First'
+            last: 'Last »'
+  block_2:
+    display_options:
+      use_more_text: 'See all fights'
+      pager:
+        options:
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+  page_1:
+    display_options:
+      fields:
+        field_confrontation_date:
+          label: Date
+        field_athlete_1:
+          label: 'Wrestler 1'
+        field_athlete_2:
+          label: 'Wrestler 2'
+        field_vainqueur:
+          label: Verdict
+        field_face_2_face:
+          label: 'Head to head'
+        field_video_du_combat:
+          label: 'Fight video'
+      filters:
+        search_api_fulltext:
+          expose:
+            placeholder: 'Enter keyword(s)'
+        facets_field_athlete_1:
+          expose:
+            label: 'Wrestler 1'
+            description: "If you can't find the wrestler's name in this field, try the wrestler 2 field"
+        facets_field_athlete_2:
+          expose:
+            label: 'Wrestler 2'
+  block_3:
+    display_options:
+      use_more_text: 'See more'
+      fields:
+        field_confrontation_date:
+          label: Date
+        field_athlete_1:
+          label: 'Wrestler 1'
+        field_athlete_2:
+          label: 'Wrestler 2'
+        field_vainqueur:
+          label: Verdict
+        field_face_2_face:
+          label: 'Head to head'
+        field_video_du_combat:
+          label: 'Fight video'
+      filters:
+        facets_field_is_lutte_simple:
+          expose:
+            label: 'Filter by type'
+          facet:
+            processor_configs:
+              boolean_item:
+                settings:
+                  on_value: 'Simple wrestling'
+                  off_value: 'Striking wrestling'
+      header:
+        area:
+          content:
+            value: "<section class=\"disclaimer-container\">\r\n  <div class=\"disclaimer-text\">\r\n    <strong>NB:</strong> Some rare data may be slightly inaccurate, or may correspond to non-striking wrestling matches (<a href=\"?signaler=ano\" class=\"news-action\">report them here</a>) or may be missing (you can <a href=\"/proposer-un-combat\" class=\"news-action\">add them</a> if you know of any)\r\n   <p class='news'>\r\n  Nb: only striking wrestling matches are taken into account for the performance ranking calculation.\r\n</p>\r\n  </div>\r\n</section>"

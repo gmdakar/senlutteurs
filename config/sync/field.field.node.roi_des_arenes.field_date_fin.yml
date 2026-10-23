@@ -1,0 +1,23 @@
+uuid: d7a9d8a4-b86b-41cb-aebd-d4176e2c20aa
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_fin
+    - node.type.roi_des_arenes
+  module:
+    - datetime
+_core:
+  default_config_hash: IKbwh3RyNfA6P_K9ur6dHm29U35xTk1mY_uxRfYz43o
+id: node.roi_des_arenes.field_date_fin
+field_name: field_date_fin
+entity_type: node
+bundle: roi_des_arenes
+label: 'Date de fin de règne'
+description: 'Laisser vide pour un règne en cours.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

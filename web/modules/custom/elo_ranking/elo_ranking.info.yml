@@ -1,0 +1,10 @@
+name: Elo Ranking
+type: module
+description: Wrestling Elo ranking engine
+core_version_requirement: ^10 || ^11
+package: Custom
+dependencies:
+  - drupal:node
+  - shared_lib:shared_lib
+  - rois_des_arenes:rois_des_arenes
+  - misc_divers:misc_divers

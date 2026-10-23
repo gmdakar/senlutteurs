@@ -1,0 +1,23 @@
+uuid: 58e4e827-ab3c-4692-b4ce-9c6b1bb5abef
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_a_surveiller
+    - node.type.athlete
+id: node.athlete.field_a_surveiller
+field_name: field_a_surveiller
+entity_type: node
+bundle: athlete
+label: 'Alerte actions'
+description: "Permet de surveiller toutes nouvelles modifications (ajout, modification, suppression) de combats concernant le lutteur concerné.\r\nNotamment suite aux lancements de cron de mise à jour de combats"
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

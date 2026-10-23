@@ -1,0 +1,20 @@
+uuid: ec12a59a-fa40-425c-9b16-04154816fe95
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.ecurie
+  module:
+    - metatag
+id: node.ecurie.metatag
+field_name: metatag
+entity_type: node
+bundle: ecurie
+label: 'Balises meta (champ caché pour la prise en charge du JSON)'
+description: 'The computed meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag_computed

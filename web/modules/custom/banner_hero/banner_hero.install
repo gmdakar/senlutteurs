@@ -1,0 +1,36 @@
+<?php
+
+use Drupal\image\Entity\ImageStyle;
+
+function banner_hero_install() {
+  foreach ([
+    'banner_hero_desktop' => ['label' => 'Banner Hero Desktop', 'width' => 1920],
+    'banner_hero_mobile'  => ['label' => 'Banner Hero Mobile',  'width' => 479],
+  ] as $name => $info) {
+    if (\Drupal::entityTypeManager()->getStorage('image_style')->load($name)) {
+      continue;
+    }
+    $style = ImageStyle::create([
+      'name'  => $name,   // <-- clé correcte pour ImageStyle (entity_keys: "id" = "name")
+      'label' => $info['label'],
+    ]);
+    $style->addImageEffect([
+      'id'   => 'image_scale',
+      'data' => ['width' => $info['width'], 'height' => NULL, 'upscale' => FALSE],
+    ]);
+    $style->save();
+  }
+}
+
+function banner_hero_uninstall() {
+  foreach (['banner_hero_desktop', 'banner_hero_mobile'] as $name) {
+    $style = \Drupal::entityTypeManager()->getStorage('image_style')->load($name);
+    if ($style) $style->delete();
+  }
+  
+  \Drupal::state()->delete('banner_hero_image_fid');
+  \Drupal::state()->delete('banner_hero_image_fid_desktop');
+  \Drupal::state()->delete('banner_hero_image_fid_mobile');
+  \Drupal::configFactory()->getEditable('banner_hero.settings')->delete();
+
+}

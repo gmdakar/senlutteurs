@@ -1,0 +1,156 @@
+<?php
+
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+
+/**
+ * Add elo_rating field to athlete content type and configure display.
+ */
+function elo_ranking_update_9002() {
+
+  $field_name = 'elo_rating';
+
+  // ===== Field Storage =====
+  if (!FieldStorageConfig::loadByName('node', $field_name)) {
+    FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'float',
+      'cardinality' => 1,
+      'settings' => [
+        'precision' => 10,
+        'scale' => 2,
+      ],
+    ])->save();
+  }
+
+  // ===== Field Instance (athlete bundle) =====
+  if (!FieldConfig::loadByName('node', 'athlete', $field_name)) {
+    FieldConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'bundle' => 'athlete',
+      'label' => 'Elo Rating',
+      'required' => FALSE,
+    ])->save();
+  }
+
+  // ===== View Display Configuration =====
+  $view_display = EntityViewDisplay::load('node.athlete.default');
+
+  if ($view_display && !$view_display->getComponent($field_name)) {
+    $view_display->setComponent($field_name, [
+      'type' => 'number_decimal',
+      'label' => 'above',
+      'settings' => [
+        'scale' => 2,
+      ],
+    ])->save();
+  }
+
+  // ===== Form Display Configuration =====
+  $form_display = EntityFormDisplay::load('node.athlete.default');
+
+  if ($form_display && !$form_display->getComponent($field_name)) {
+    $form_display->setComponent($field_name, [
+      'type' => 'number',
+      'settings' => [
+        'disabled' => TRUE,
+      ],
+    ])->save();
+  }
+
+  // ===== View Display Configuration =====
+  $view_display = EntityViewDisplay::load('node.athlete.default');
+
+  if ($view_display) {
+
+    if (!$view_display->getComponent('elo_rating')) {
+
+      $view_display->setComponent('elo_rating', [
+        'type' => 'number_decimal',
+        'label' => 'above',
+        'settings' => [
+          'scale' => 2,
+        ],
+      ])->save();
+    }
+  }
+}
+
+function elo_ranking_schema() {
+
+  $schema['elo_rating'] = [
+    'fields' => [
+      'wrestler_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'elo' => [
+        'type' => 'float',
+        'not null' => TRUE,
+        'default' => 1000,
+      ],
+    ],
+    'primary key' => ['wrestler_id'],
+  ];
+
+  $schema['elo_history'] = [
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'wrestler_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'confrontation_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'elo_before' => ['type' => 'float'],
+      'elo_after' => ['type' => 'float'],
+      'delta' => ['type' => 'float'],
+      'fight_date' => [
+        'type' => 'datetime',
+        'mysql_type' => 'datetime',
+      ],
+      'is_vs_roi' => [
+        'type' => 'int',
+        'size' => 'tiny',
+        'default' => 0,
+      ],
+    ],
+    'unique keys' => [
+      'unique_history' => ['wrestler_id', 'confrontation_id'],
+    ],
+    'indexes' => [
+      'fight_idx' => ['confrontation_id'],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function elo_ranking_uninstall() {
+  $database = \Drupal::database();
+
+  // Supprimer les tables si elles existent.
+  if ($database->schema()->tableExists('elo_rating')) {
+    $database->schema()->dropTable('elo_rating');
+  }
+
+  if ($database->schema()->tableExists('elo_history')) {
+    $database->schema()->dropTable('elo_history');
+  }
+}

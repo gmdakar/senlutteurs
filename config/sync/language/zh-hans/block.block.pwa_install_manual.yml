@@ -1,0 +1,6 @@
+settings:
+  label: 安装应用
+  button_text: 安装应用
+  intro_text:
+    value: '<p><em><strong><u>直接访问：</u></strong></em><br><em>您可以在下方将 <strong>SenLutteurs AI</strong> 应用安装到主屏幕。</em></p>'
+    format: basic_html

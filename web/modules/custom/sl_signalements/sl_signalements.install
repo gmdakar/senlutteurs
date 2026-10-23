@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function sl_signalements_install() {
+  // ECA 3.x: nothing to install here.
+  // Events are handled dynamically via event dispatcher.
+}

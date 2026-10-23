@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Force language fallback for Search API queries.
+ *
+ * Les nœuds non traduits (ex. athlete, confrontation) n'existent qu'en FR.
+ * Sans fallback, une requête en zh-hans/en/… ne renvoie aucun résultat.
+ * On force current interface language + site default + und.
+ */
+
+use Drupal\search_api\Query\QueryInterface;
+use Drupal\Core\Language\LanguageInterface;
+
+/**
+ * Implements hook_search_api_query_alter().
+ */
+function sl_search_api_fallback_search_api_query_alter(QueryInterface $query) {
+  // Langues à inclure : interface courante + défaut site + und.
+  $language_manager = \Drupal::languageManager();
+  $current = $language_manager
+    ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
+    ->getId();
+  $default = $language_manager->getDefaultLanguage()->getId();
+
+  $languages = array_unique(array_filter([
+    $current,
+    $default,
+    LanguageInterface::LANGCODE_NOT_SPECIFIED, // und
+  ]));
+
+  // Remplace la restriction éventuelle à une seule langue.
+  $query->setLanguages($languages);
+}
+
+/**
+ * Implements hook_search_api_query_TAG_alter() for views safety net.
+ *
+ * Certaines vues taguent leurs requêtes ; on s'assure que le fallback s'applique
+ * aussi si un autre code réécrit les langues après le hook générique.
+ */
+function sl_search_api_fallback_search_api_query_search_api_views_alter(QueryInterface $query) {
+  sl_search_api_fallback_search_api_query_alter($query);
+}

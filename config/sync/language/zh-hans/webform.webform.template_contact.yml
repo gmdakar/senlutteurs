@@ -1,0 +1,8 @@
+title: 'Nous contacter'
+settings:
+  confirmation_message: 您的信息已被送出。
+handlers:
+  email_confirmation:
+    label: 'Courriel de confirmation'
+  email_notification:
+    label: 电子邮件通知

@@ -1,0 +1,25 @@
+uuid: e7b8ee50-670a-492c-b959-951f2c832709
+langcode: fr
+status: true
+dependencies:
+  module:
+    - banner_hero
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_bannerheroblock_2
+theme: sl_theme
+region: content
+weight: -20
+provider: null
+plugin: banner_hero_block
+settings:
+  id: banner_hero_block
+  label: ' Banner Hero Block (pages interieures)'
+  label_display: '0'
+  provider: banner_hero
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '<front>'

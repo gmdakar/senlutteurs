@@ -1,0 +1,4 @@
+services:
+  athletes_envogue_cron.athletes_service:
+    class: Drupal\athletes_envogue_cron\Service\AthleteService
+    parent: shared_lib.base_wrestling_service

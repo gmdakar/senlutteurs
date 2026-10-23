@@ -1,0 +1,28 @@
+uuid: 56b00689-c93d-4c19-b730-c40733cbe3f4
+langcode: fr
+status: false
+dependencies:
+  module:
+    - elo_ranking
+    - node
+  theme:
+    - sl_theme
+id: sl_theme_eloevolutionchart
+theme: sl_theme
+region: content
+weight: -5
+provider: null
+plugin: elo_chart_block
+settings:
+  id: elo_chart_block
+  label: "Courbe de l'évolution de sa performance (ELO)"
+  label_display: visible
+  provider: elo_ranking
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      athlete: athlete

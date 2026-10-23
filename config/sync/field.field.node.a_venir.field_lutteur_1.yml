@@ -1,0 +1,29 @@
+uuid: 121d9ff5-3e4d-451f-acd3-eee0b1108769
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_lutteur_1
+    - node.type.a_venir
+    - node.type.athlete
+id: node.a_venir.field_lutteur_1
+field_name: field_lutteur_1
+entity_type: node
+bundle: a_venir
+label: 'Lutteur 1'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      athlete: athlete
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

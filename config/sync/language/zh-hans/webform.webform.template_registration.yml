@@ -1,0 +1,7 @@
+title: 注册
+description: "Un gabarit webform d'inscription."
+settings:
+  confirmation_message: 'Merci pour votre inscription.'
+handlers:
+  email_notification:
+    label: 邮件提醒

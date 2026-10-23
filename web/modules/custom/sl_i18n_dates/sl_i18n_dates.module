@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @file
+ * Force interface language when formatting a_venir dates.
+ */
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Language\LanguageInterface;
+
+/**
+ * Implements hook_entity_display_build_alter().
+ */
+function sl_i18n_dates_entity_display_build_alter(array &$build, array $context) {
+  $entity = $context['entity'] ?? NULL;
+  if (!$entity || $entity->getEntityTypeId() !== 'node' || $entity->bundle() !== 'a_venir') {
+    return;
+  }
+  if (empty($build['field_date']) || !$entity->hasField('field_date')) {
+    return;
+  }
+
+  // Ne traiter que les affichages configures avec le format a_venir_block.
+  $component = isset($context['display']) ? $context['display']->getComponent('field_date') : NULL;
+  $format_type = $component['settings']['format_type'] ?? '';
+  if ($format_type !== 'a_venir_block') {
+    return;
+  }
+
+  $langcode = \Drupal::languageManager()
+    ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
+    ->getId();
+
+  // Pattern : override de langue explicite, sinon pattern de base.
+  $pattern = \Drupal::languageManager()
+    ->getLanguageConfigOverride($langcode, 'core.date_format.a_venir_block')
+    ->get('pattern');
+  if (!$pattern) {
+    $pattern = \Drupal::config('core.date_format.a_venir_block')->get('pattern') ?: 'Y-m-d - H:i';
+  }
+
+  $formatter = \Drupal::service('date.formatter');
+  $timezone = 'UTC';
+
+  foreach ($entity->get('field_date') as $delta => $item) {
+    $value = $item->value ?? NULL;
+    if (!$value) {
+      continue;
+    }
+    try {
+      $date = new DrupalDateTime($value, $timezone);
+      $build['field_date'][$delta] = [
+        '#markup' => $formatter->format($date->getTimestamp(), 'custom', $pattern, $timezone, $langcode),
+      ];
+    }
+    catch (\Exception $e) {
+      // Garder le rendu d'origine.
+    }
+  }
+
+  $build['field_date']['#cache']['contexts'][] = 'languages:language_interface';
+}

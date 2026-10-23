@@ -1,0 +1,8 @@
+title: 'Acerca de'
+content:
+  value: |-
+    <p><strong>Senlutteurs AI</strong> es una herramienta digital para descubrir y explorar la lucha libre senegalesa, impulsada por inteligencia artificial para la recopilación automatizada de datos deportivos públicos sobre la lucha libre senegalesa. A través de este sitio, puede buscar información sobre el perfil profesional de un luchador y consultar su historial de combates: oponentes, fechas, resultados y veredictos.</p>
+    <p>- Este sitio no es un sitio de noticias; simplemente utiliza la tecnología para promover la cultura deportiva senegalesa. El objetivo es mostrar a los atletas, documentar sus actuaciones y facilitar el acceso a ellas a todos los aficionados a la lucha libre senegalesa.</p>
+    <p>- <strong>Si encuentra algún dato incorrecto, siempre puede </strong><a href="/es/contact"><strong>contactarnos</strong></a><strong> para su corrección</strong>, si se confirma.</p>
+    <p>- <strong>Los enlaces a vídeos de YouTube u otros vídeos referenciados en este sitio pertenecen a sus creadores y distribuidores oficiales. Este sitio no tiene ningún derecho de propiedad sobre el contenido de estos vídeos, que sigue siendo propiedad de sus autores</strong>. Simplemente indexa vídeos ya publicados en internet.</p>
+  format: full_html

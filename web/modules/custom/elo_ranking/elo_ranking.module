@@ -1,0 +1,181 @@
+<?php
+
+use Drupal\node\NodeInterface;
+use Drupal\views\ViewExecutable;
+/**
+ * Implements hook_page_attachments().
+ */
+function elo_ranking_page_attachments(array &$attachments) {
+
+  $route_match = \Drupal::routeMatch();
+  $node = $route_match->getParameter('node');
+
+  if (!$node || $node->bundle() !== 'athlete') {
+    return;
+  }
+
+  $attachments['#attached']['library'][] = 'elo_ranking/elo_chart';
+
+  $attachments['#attached']['drupalSettings']['elo_ranking'] = [
+    'nid' => $node->id(),
+  ];
+}
+
+function elo_ranking_entity_insert($entity) {
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'confrontation') {
+    
+    // On vérifie que le combat a bien une date et des athlètes
+    if ($entity->get('field_athlete_1')->isEmpty() || $entity->get('field_athlete_2')->isEmpty()) {
+      return;
+    }
+
+    $manager = \Drupal::service('elo_ranking.manager');
+
+    // On prépare l'objet $fight comme s'il sortait de la base de données
+    $fight = new \stdClass();
+    $fight->entity_id = $entity->id();
+    $fight->field_athlete_1_target_id = $entity->get('field_athlete_1')->target_id;
+    $fight->field_athlete_2_target_id = $entity->get('field_athlete_2')->target_id;
+    $fight->field_confrontation_date_value = $entity->get('field_confrontation_date')->value;
+    $fight->field_vainqueur_value = $entity->get('field_vainqueur')->value;
+    
+    // TRÈS IMPORTANT : Le titre est utilisé par SomeTools dans ton service
+    $fight->title = $entity->label(); 
+
+    // 1. Calcul et mise à jour des tables techniques (elo_rating / elo_history)
+    $manager->processFight($fight); 
+
+    // 2. Synchronisation vers la table node__elo_rating (avec le revision_id que nous avons ajouté)
+    $manager->syncEloToNodes(); 
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ * Met à jour le ELO en temps réel lors de la modification d'un combat.
+ */
+function elo_ranking_entity_update($entity) {
+  if (!($entity instanceof NodeInterface) || $entity->bundle() !== 'confrontation') {
+    return;
+  }
+
+  // Champs déclencheurs d'un recalcul ELO
+  $watched_fields = [
+    'field_athlete_1',
+    'field_athlete_2',
+    'field_vainqueur',
+    'field_confrontation_date', 
+  ];
+
+  $has_changed = FALSE;
+
+  if ($entity->original) {
+    foreach ($watched_fields as $field) {
+        $new_value = $entity->get($field)->getValue();
+        $old_value = $entity->original->get($field)->getValue();
+
+        if ($field === 'field_vainqueur') {
+            $new_str = strtolower(trim($new_value[0]['value'] ?? ''));
+            $old_str = strtolower(trim($old_value[0]['value'] ?? ''));
+            if ($new_str !== $old_str) {
+                $has_changed = TRUE;
+                break;
+            }
+        }
+        else {
+            if ($new_value !== $old_value) {
+                $has_changed = TRUE;
+                break;
+            }
+        }
+    }
+  }
+  else {
+    // Pas d'original = création déguisée, on recalcule par sécurité
+    $has_changed = TRUE;
+  }
+
+  if (!$has_changed) {
+    return;
+  }
+
+  // Même logique que entity_insert
+  elo_ranking_entity_insert($entity);
+}
+
+function elo_ranking_entity_delete($entity) {
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'confrontation') {
+    //TROP Lourd, laissons le cron nocturne recalculer
+    //\Drupal::service('elo_ranking.manager')->rebuildAll();
+  }
+}
+
+function elo_ranking_form_node_athlete_edit_form_alter(&$form, &$form_state, $form_id) {
+  if (isset($form['elo_rating'])) {
+    $form['elo_rating']['#disabled'] = TRUE;
+    //$form['elo_rating']['#access'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ * Alter la rendue charts par défaut, en simulant des liens cliquables sur les lutteurs
+ */
+function elo_ranking_preprocess_views_view(&$variables) {
+  $view = $variables['view'];
+  if ($view->id() === 'lutteurs_indexed' && $view->current_display === 'page_2') {
+    
+    $urls = [];
+    foreach ($view->result as $row) {
+      $raw_id = $row->nid ?? ($row->search_api_id ?? NULL);
+      if ($raw_id) {
+        $nid = (is_string($raw_id) && strpos($raw_id, '/') !== FALSE) ? explode('/', $raw_id)[1] : $raw_id;
+        $urls[] = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => (int) $nid])->toString();
+      }
+    }
+
+    // IMPORTANT : Attache au build de la rangée ou du conteneur pour l'AJAX
+    $variables['rows']['#attached']['library'][] = 'elo_ranking/elo_view_interact';
+    $variables['rows']['#attached']['drupalSettings']['elo_ranking']['ranking_urls'] = $urls;
+    
+    // Empêche le cache de figer les URLs de la page 1 sur toutes les pages
+    $variables['#cache']['max-age'] = 0;
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function elo_ranking_preprocess_page(&$variables) {
+  // On l'injecte dans le JS sous drupalSettings.elo_ranking.rebuild_active
+  $variables['#attached']['drupalSettings']['elo_ranking']['rebuild_active'] = (bool) \Drupal::state()->get('elo_rebuild_in_progress') || (int) \Drupal::state()->get('search_api_is_indexing');
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function elo_ranking_views_pre_render(\Drupal\views\ViewExecutable $view) {
+  // 1. On cible la vue spécifique
+  if ($view->id() == 'lutteurs_indexed') {
+    
+    // 2. On restreint uniquement aux 3 afficheurs concernés
+    $targeted_displays = ['page_2', 'block_1', 'block_2'];
+    
+    if (in_array($view->current_display, $targeted_displays)) {
+      
+      // 3. On vérifie le verrou State API posé par ton EloManager
+      $is_rebuilding = \Drupal::state()->get('elo_rebuild_in_progress');
+      $is_fully_reindexing = (int) \Drupal::state()->get('search_api_is_indexing'); //si search api entrain de TOUT reindexer (+delete index.  cf crontab)
+
+      if ($is_rebuilding || $is_fully_reindexing) {
+        // On vide les résultats pour déclencher le "No results behavior" 
+        // ou le masquage du bloc.
+        $view->result = [];
+        $view->total_rows = 0;
+        
+        // On empêche le cache de se figer sur cet état vide
+        $view->element['#cache']['max-age'] = 0;
+      }
+    }
+  }
+}

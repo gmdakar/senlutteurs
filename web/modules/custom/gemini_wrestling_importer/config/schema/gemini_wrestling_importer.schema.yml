@@ -1,0 +1,22 @@
+gemini_wrestling_importer.fight_pairs:
+  type: config_object
+  label: 'Wrestling Fight Import Configuration'
+  mapping:
+    pairs:
+      type: sequence
+      label: 'List of wrestling fighter imports'
+      sequence:
+        type: mapping
+        mapping:
+          fighter:
+            type: label
+            label: 'Fighter Name'
+          fights:
+            type: string
+            label: 'JSON Data of Fights'
+          import:
+            type: label
+            label: 'Import Button Label'
+          remove:
+            type: label
+            label: 'Remove Button Label'

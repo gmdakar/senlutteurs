@@ -1,0 +1,18 @@
+uuid: 34517bc1-2fad-46e6-b94c-f706dce2a50d
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.promoteur
+id: node.promoteur.title
+field_name: title
+entity_type: node
+bundle: promoteur
+label: Titre
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

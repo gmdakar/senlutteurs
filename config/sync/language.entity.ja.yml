@@ -1,0 +1,9 @@
+uuid: ffc18c56-7d95-4ac9-a629-3d31ec672708
+langcode: fr
+status: true
+dependencies: {  }
+id: ja
+label: 日本語
+direction: ltr
+weight: 3
+locked: false

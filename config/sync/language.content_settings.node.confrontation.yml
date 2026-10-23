@@ -1,0 +1,18 @@
+uuid: 2c5b464c-8cc8-4844-b14c-7625fb6eed36
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.confrontation
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.confrontation
+target_entity_type_id: node
+target_bundle: confrontation
+default_langcode: site_default
+language_alterable: true

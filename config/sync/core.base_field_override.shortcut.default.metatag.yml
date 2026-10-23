@@ -1,0 +1,20 @@
+uuid: a3a0b710-b4b9-49ea-b44d-6b85abbdcc74
+langcode: fr
+status: true
+dependencies:
+  config:
+    - shortcut.set.default
+  module:
+    - metatag
+id: shortcut.default.metatag
+field_name: metatag
+entity_type: shortcut
+bundle: default
+label: 'Balises meta (champ caché pour la prise en charge du JSON)'
+description: 'The computed meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag_computed

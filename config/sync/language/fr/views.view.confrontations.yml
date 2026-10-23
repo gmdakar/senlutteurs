@@ -1,0 +1,13 @@
+display:
+  block_3:
+    display_options:
+      filters:
+        facets_field_is_lutte_simple:
+          expose:
+            label: 'Filtrer par type'
+          facet:
+            processor_configs:
+              boolean_item:
+                settings:
+                  off_value: 'Lutte avec frappe'
+                  on_value: 'Lutte simple'

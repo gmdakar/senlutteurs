@@ -1,0 +1,184 @@
+uuid: 2a9fdc3b-c3d3-4a12-b05f-6eacd5d970d5
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.athlete.field_athlete_nom_technique
+    - field.field.node.athlete.field_ecurie
+    - node.type.athlete
+  module:
+    - feeds_tamper
+    - node
+third_party_settings:
+  feeds_tamper:
+    tampers:
+      e2f64b19-e66d-4cc5-8110-f3fe33eeaaa1:
+        character: ''
+        side: trim
+        uuid: e2f64b19-e66d-4cc5-8110-f3fe33eeaaa1
+        plugin: trim
+        source: nom
+        weight: -6
+        label: 'Characters to trim'
+      550026cf-2841-420b-beff-2d2c8da61cbe:
+        find: _
+        replace: ' '
+        case_sensitive: false
+        word_boundaries: false
+        whole: false
+        uuid: 550026cf-2841-420b-beff-2d2c8da61cbe
+        plugin: find_replace
+        source: nom
+        weight: -5
+        label: 'Find replace'
+      d37ba694-0bb6-430a-afdb-90c884223917:
+        find: /_/
+        replace: ' '
+        limit: null
+        uuid: d37ba694-0bb6-430a-afdb-90c884223917
+        plugin: find_replace_regex
+        source: nom
+        weight: -7
+        label: 'Find replace REGEX'
+      137ece1c-079d-45ca-9923-f56f17995f81:
+        find: '/  /'
+        replace: ' '
+        limit: null
+        uuid: 137ece1c-079d-45ca-9923-f56f17995f81
+        plugin: find_replace_regex
+        source: nom
+        weight: -8
+        label: 'Find replace REGEX'
+      ed45518c-51d5-47c3-b1f6-485f505db89e:
+        find: /-/
+        replace: ' '
+        limit: null
+        uuid: ed45518c-51d5-47c3-b1f6-485f505db89e
+        plugin: find_replace_regex
+        source: nom
+        weight: -9
+        label: 'Find replace REGEX'
+      de9b0a53-5fd3-4dbf-9a7f-69b0482f6111:
+        find: '/\s*\(.*\)/'
+        replace: ''
+        limit: null
+        uuid: de9b0a53-5fd3-4dbf-9a7f-69b0482f6111
+        plugin: find_replace_regex
+        source: nom
+        weight: -10
+        label: 'Find replace REGEX'
+      94ce1057-cffd-48d4-8316-470bee7f1778:
+        operation: ucfirst
+        uuid: 94ce1057-cffd-48d4-8316-470bee7f1778
+        plugin: convert_case
+        source: nom
+        weight: -4
+        label: 'Convert case'
+      70226fb2-8468-4588-b636-bb45ad8870b3:
+        to_from: from
+        copy_source: nom
+        uuid: 70226fb2-8468-4588-b636-bb45ad8870b3
+        plugin: copy
+        source: new_slug
+        weight: -10
+        label: 'Copy title'
+      718544ea-f205-49ed-bb83-756aa0f2a475:
+        find: '/[^A-Za-z0-9]+/'
+        replace: ''
+        limit: null
+        uuid: 718544ea-f205-49ed-bb83-756aa0f2a475
+        plugin: find_replace_regex
+        source: new_slug
+        weight: -8
+        label: 'Find replace REGEX'
+      9ecb4f83-6a58-4208-9f4f-e4f15c0b9142:
+        operation: strtolower
+        uuid: 9ecb4f83-6a58-4208-9f4f-e4f15c0b9142
+        plugin: convert_case
+        source: new_slug
+        weight: -7
+        label: 'Convert case'
+      7a485e3a-3b91-4d98-b1ea-749ec0c6705c:
+        uuid: 7a485e3a-3b91-4d98-b1ea-749ec0c6705c
+        plugin: transliteration
+        source: new_slug
+        weight: -9
+        label: 'Transliterates text from Unicode to US-ASCII.'
+label: Athletes
+id: athletes
+description: ''
+help: ''
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ;
+  no_headers: false
+  line_limit: 100
+processor: 'entity:node'
+processor_configuration:
+  values:
+    type: athlete
+  langcode: fr
+  insert_new: 1
+  update_existing: 0
+  update_non_existent: _keep
+  skip_hash_check: false
+  skip_validation: false
+  skip_validation_types: {  }
+  authorize: true
+  revision: false
+  expire: -1
+  owner_feed_author: false
+  owner_id: 1
+custom_sources:
+  nom:
+    value: Nom
+    label: Nom
+    machine_name: nom
+    type: csv
+  ecurie:
+    value: Ecurie
+    label: Ecurie
+    machine_name: ecurie
+    type: csv
+  '':
+    value: ''
+    label: ''
+    machine_name: ''
+    type: blank
+  new_slug:
+    value: new_slug
+    label: new_slug
+    machine_name: new_slug
+    type: blank
+mappings:
+  -
+    target: title
+    map:
+      value: nom
+    settings:
+      language: null
+    unique:
+      value: 1
+  -
+    target: field_ecurie
+    map:
+      target_id: ecurie
+    settings:
+      language: ''
+      reference_by: title
+      feeds_item: guid
+      autocreate: 1
+      autocreate_bundle: ecurie
+  -
+    target: field_athlete_nom_technique
+    map:
+      value: new_slug
+    settings:
+      language: null
+    unique:
+      value: 1

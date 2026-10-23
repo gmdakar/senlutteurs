@@ -1,0 +1,19 @@
+uuid: 817c93a4-1012-4bea-b428-f8a47a28e7ce
+langcode: fr
+status: true
+dependencies: {  }
+id: node__confrontation
+label: 'Contenu: Confrontation'
+tags:
+  abstract: '[node:content-type] [node:title] '
+  description: '[node:content-type] [node:title] '
+  keywords: '[node:content-type] [node:title] '
+  schema_event_end_date: '[node:field_confrontation_date:value]'
+  schema_event_event_status: EventCompleted
+  schema_event_id: '[node:url]'
+  schema_event_location: 'a:3:{s:5:"@type";s:7:"Country";s:4:"name";s:7:"Senegal";s:7:"address";a:2:{s:5:"@type";s:13:"PostalAddress";s:14:"addressCountry";s:2:"SN";}}'
+  schema_event_name: '[node:content-type] [node:title]'
+  schema_event_start_date: '[node:field_confrontation_date:value]'
+  schema_event_type: SportsEvent
+  schema_event_url: '[node:url]'
+  title: '[node:content-type] [node:title] '

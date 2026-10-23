@@ -1,0 +1,22 @@
+uuid: 15ecf85f-6554-41e8-9a93-c1d3a6dcdb21
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.confrontation
+id: node.confrontation.sticky
+field_name: sticky
+entity_type: node
+bundle: confrontation
+label: 'Epinglé en haut des listes'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

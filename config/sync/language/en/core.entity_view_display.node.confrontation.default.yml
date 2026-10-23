@@ -1,0 +1,7 @@
+content:
+  field_is_lutte_simple:
+    settings:
+      format_custom_true: 'Type: simple wrestling (no strikes)'
+  field_confrontation_date:
+    settings:
+      date_format: 'F j, Y'

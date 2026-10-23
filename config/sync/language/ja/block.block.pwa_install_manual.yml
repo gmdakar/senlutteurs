@@ -1,0 +1,6 @@
+settings:
+  label: アプリをインストール
+  button_text: アプリをインストール
+  intro_text:
+    value: '<p><em><strong><u>直接アクセスするには：</u></strong></em><br><em>下のボタンから <strong>SenLutteurs AI</strong> アプリをホーム画面に追加できます。</em></p>'
+    format: basic_html

@@ -1,0 +1,15 @@
+<?php
+
+use Drupal\gemini_nextcombats_cron\Service\CombatService;
+
+/**
+ * Implements hook_cron().  OBSOLETE !!!!!!!!!!!
+ */
+/*function gemini_nextcombats_cron_cron() {
+  $combat_service = \Drupal::service('gemini_nextcombats_cron.combat_service');
+  $combats = $combat_service->fetchCombats();
+
+  foreach ($combats as $combat) {
+    $combat_service->enqueueCombat($combat);
+  }
+}*/

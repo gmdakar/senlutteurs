@@ -1,0 +1,12 @@
+settings:
+  plugins:
+    ckeditor5_codeBlock:
+      languages:
+        0:
+          label: プレーンテキスト
+        5:
+          label: 差分
+        8:
+          label: JavaScript
+        9:
+          label: PHP

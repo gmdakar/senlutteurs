@@ -1,0 +1,18 @@
+uuid: c1f522d7-07c5-4a6f-8d14-82eddc4ee742
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.roi_des_arenes
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.roi_des_arenes
+target_entity_type_id: node
+target_bundle: roi_des_arenes
+default_langcode: site_default
+language_alterable: false

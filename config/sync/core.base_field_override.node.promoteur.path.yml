@@ -1,0 +1,20 @@
+uuid: ae2ad3b1-7f0d-406c-82cc-f1fea4bf529b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.promoteur
+  module:
+    - path
+id: node.promoteur.path
+field_name: path
+entity_type: node
+bundle: promoteur
+label: "Alias d'URL"
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

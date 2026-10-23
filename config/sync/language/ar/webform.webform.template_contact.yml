@@ -1,0 +1,8 @@
+title: 'تواصل معنا'
+settings:
+  confirmation_message: 'أُرسلت رسالتك.'
+handlers:
+  email_confirmation:
+    label: 'تأكيد البريد الإلكتروني'
+  email_notification:
+    label: 'إشعارات البريد'

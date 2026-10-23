@@ -1,0 +1,6 @@
+settings:
+  label: 'Instalar aplicación'
+  button_text: 'Instalar app'
+  intro_text:
+    value: '<p><em><strong><u>Para un acceso directo:</u></strong></em><br><em>Puede instalar la aplicación <strong>SenLutteurs AI</strong> en su pantalla de inicio a continuación.</em></p>'
+    format: basic_html

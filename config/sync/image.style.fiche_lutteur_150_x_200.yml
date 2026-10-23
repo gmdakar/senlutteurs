@@ -1,0 +1,15 @@
+uuid: ce326f49-af3e-40b1-9962-cf7495493f4d
+langcode: fr
+status: true
+dependencies: {  }
+name: fiche_lutteur_150_x_200
+label: 'Fiche lutteur 150 x 200'
+effects:
+  44040d6a-083e-4465-9d1b-c33efeccd6c6:
+    uuid: 44040d6a-083e-4465-9d1b-c33efeccd6c6
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 150
+      height: 200
+      anchor: center-center

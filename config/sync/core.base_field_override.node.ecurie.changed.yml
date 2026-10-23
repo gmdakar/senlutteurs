@@ -1,0 +1,18 @@
+uuid: ac6c8c0f-e804-450c-bf83-2a7d81c4fab8
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.ecurie
+id: node.ecurie.changed
+field_name: changed
+entity_type: node
+bundle: ecurie
+label: Modifié
+description: 'La date à laquelle le nœud a été modifié pour la dernière fois.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

@@ -1,0 +1,7 @@
+content:
+  field_is_lutte_simple:
+    settings:
+      format_custom_true: 'Tipo: lucha simple (sin golpes)'
+  field_confrontation_date:
+    settings:
+      date_format: j/m/Y

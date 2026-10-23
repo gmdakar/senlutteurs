@@ -1,0 +1,23 @@
+uuid: 4ae4bdb7-ad18-4093-be9a-cc6fa722e3d4
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_king
+    - node.type.athlete
+id: node.athlete.field_king
+field_name: field_king
+entity_type: node
+bundle: athlete
+label: 'Roi des arènes'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Oui
+  off_label: Non
+field_type: boolean

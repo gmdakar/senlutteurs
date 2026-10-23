@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: bOF2EuCZHVdb4QLAieUBMpt07h91YGQxJsnRZIMxvHc
+purge_host: 'http://127.0.0.1'
+purge_host_header: www.senlutteurs.com
+timeout: 4
+purge_strategy: auto
+unmappable_fallback: none
+static_url_map: {  }
+tag_mappings:
+  'config:block_list': 'config:block_list'
+  'config:configurable_language_list': 'config:configurable_language_list'
+  node_list: node_list
+  'search_api_autocomplete_search_list:views:confrontations': 'search_api_autocomplete_search_list:views:confrontations'
+  'search_api_autocomplete_search_list:views:lutteurs_indexed': 'search_api_autocomplete_search_list:views:lutteurs_indexed'
+  'search_api_list:default_index': 'search_api_list:default_index'

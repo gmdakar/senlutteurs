@@ -1,0 +1,13 @@
+#ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+RUN NR_VERSION=$(curl -s https://download.newrelic.com/php_agent/release/ | grep -oE 'newrelic-php5-[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+-linux\.tar\.gz' | head -n 1) \
+    && curl -fsSL "https://download.newrelic.com/php_agent/release/${NR_VERSION}" -o /tmp/nr.tar.gz \
+    && mkdir -p /tmp/nr \
+    && tar -xzf /tmp/nr.tar.gz -C /tmp/nr --strip-components=1 \
+    && mkdir -p /usr/lib/php/20230831 /var/log/newrelic \
+    && cp /tmp/nr/agent/x64/newrelic-20230831.so /usr/lib/php/20230831/newrelic.so \
+    && cp /tmp/nr/daemon/newrelic-daemon.x64 /usr/bin/newrelic-daemon \
+    && chmod 755 /usr/lib/php/20230831/newrelic.so /usr/bin/newrelic-daemon \
+    && chmod 777 /var/log/newrelic \
+    && rm -rf /tmp/nr*

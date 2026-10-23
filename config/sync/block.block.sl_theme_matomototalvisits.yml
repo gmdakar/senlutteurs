@@ -1,0 +1,22 @@
+uuid: 2aecb47f-55f3-44cb-8c4d-219914d49dfa
+langcode: fr
+status: true
+dependencies:
+  module:
+    - matomo_total_visits_block
+  theme:
+    - sl_theme
+id: sl_theme_matomototalvisits
+theme: sl_theme
+region: footer_fifth
+weight: -19
+provider: null
+plugin: matomo_total_visits_block
+settings:
+  id: matomo_total_visits_block
+  label: 'Matomo total visits'
+  label_display: '0'
+  provider: matomo_total_visits_block
+  matomo_site_id: '1'
+  matomo_database_key: matomo
+visibility: {  }

@@ -1,0 +1,12 @@
+athletes_envogue_cron.settings:
+  title: 'Athlètes en vogue cron Settings'
+  description: 'Configure Athlétes en vogue cron API'
+  parent: system.admin_config_services 
+  route_name: athletes_envogue_cron.settings
+  weight: 10
+athletes_envogue_cron.import_athletes:
+  title: 'Athletes en Vogue Import'
+  description: 'Run the athlete import manually.'
+  parent: system.admin_config_services
+  route_name: athletes_envogue_cron.import_athletes
+  weight: 10

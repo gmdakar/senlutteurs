@@ -1,0 +1,29 @@
+channels:
+  -
+    id: purgers
+    grants:
+      - 0
+      - 2
+      - 3
+  -
+    id: queue
+    grants:
+      - 0
+      - 2
+      - 3
+  -
+    id: purger_lscache_7b1aee1b51
+    grants:
+      - 0
+      - 2
+      - 3
+  -
+    id: diagnostics
+    grants:
+      - 3
+  -
+    id: purger_cloudflare_c2f26d99a3
+    grants:
+      - 0
+      - 2
+      - 3

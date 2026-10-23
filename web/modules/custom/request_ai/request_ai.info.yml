@@ -1,0 +1,8 @@
+name: Request AI
+type: module
+description: 'Service centralisé pour les requêtes AI et Indexation SEO utilisant le module Key pour la sécurité.'
+core_version_requirement: ^11
+configure: request_ai.settings
+dependencies:
+  - key:key
+  - drupal:serialization

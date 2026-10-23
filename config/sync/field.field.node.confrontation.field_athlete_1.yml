@@ -1,0 +1,29 @@
+uuid: 232cd210-c364-40d4-8357-686abbe5abd1
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_athlete_1
+    - node.type.athlete
+    - node.type.confrontation
+id: node.confrontation.field_athlete_1
+field_name: field_athlete_1
+entity_type: node
+bundle: confrontation
+label: 'Lutteur 1'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      athlete: athlete
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

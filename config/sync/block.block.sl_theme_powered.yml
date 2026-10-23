@@ -1,0 +1,22 @@
+uuid: 1b23fa2a-b334-4a4c-a157-8f76c4ba79d3
+langcode: fr
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - sl_theme
+_core:
+  default_config_hash: eYL19CLDyinGTWYQfBD1DswWzglEotE_kHnHx3AxTXM
+id: sl_theme_powered
+theme: sl_theme
+region: footer_second
+weight: -14
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Propulsé par Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

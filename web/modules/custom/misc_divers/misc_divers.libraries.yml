@@ -1,0 +1,11 @@
+misc_divers_assets:
+  version: VERSION
+  css:
+    theme:
+      css/misc_divers.css: {}
+  js:
+    js/misc_divers.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupal.ajax

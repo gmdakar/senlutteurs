@@ -1,0 +1,29 @@
+uuid: 35fcf522-5450-4a4a-bf7f-5d21ad409bee
+langcode: fr
+status: true
+dependencies:
+  config:
+    - views.view.confrontations
+  module:
+    - system
+    - views
+  theme:
+    - sl_theme
+id: sl_theme_views_block__confrontations_block_2
+theme: sl_theme
+region: side_left
+weight: -17
+provider: null
+plugin: 'views_block:confrontations-block_2'
+settings:
+  id: 'views_block:confrontations-block_2'
+  label: 'Les derniers combats'
+  label_display: visible
+  provider: views
+  views_label: 'Les derniers combats'
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

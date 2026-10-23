@@ -1,0 +1,11 @@
+services:
+  gemini_wrestling_importer.commands:
+    class: Drupal\gemini_wrestling_importer\Commands\GeminiWrestlingCommands
+    arguments:
+      - '@plugin.manager.queue_worker'
+      - '@queue'
+      - '@entity_type.manager'
+      - '@gemini_wrestling_importer.service'
+      - '@database'
+    tags:
+      - { name: drush.command }

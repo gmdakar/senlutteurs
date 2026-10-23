@@ -1,0 +1,20 @@
+uuid: d29bd408-5c3b-4575-bb6c-7c0cf3b95935
+langcode: fr
+status: true
+dependencies:
+  module:
+    - search_api_db
+_core:
+  default_config_hash: jHQatMW-yK0Qx_lugNuilJ0KNjEiIve4SCN07jwW1bg
+id: default_server
+name: 'Serveur de base de données'
+description: "Serveur d'indexation en base de données par défaut créé par le module Database Search Defaults"
+backend: search_api_db
+backend_config:
+  database: 'default:default'
+  min_chars: 2
+  matching: partial
+  phrase: disabled
+  autocomplete:
+    suggest_suffix: true
+    suggest_words: true

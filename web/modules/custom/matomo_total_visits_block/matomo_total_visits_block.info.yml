@@ -1,0 +1,6 @@
+name: Matomo Total Visits Block
+type: module
+description: 'Provides blocks showing cumulative Matomo visits and Top 5 visitor countries (with flags & percentages).'
+package: Custom
+core_version_requirement: ^9 || ^10 || ^11
+version: 1.1

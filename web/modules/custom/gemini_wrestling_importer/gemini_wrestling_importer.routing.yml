@@ -1,0 +1,28 @@
+gemini_wrestling_importer.form:
+  path: '/admin/config/gemini-wrestling-importer'
+  defaults:
+    _form: '\Drupal\gemini_wrestling_importer\Form\GeminiWrestlingForm'
+    _title: 'Importateur de lutte Gemini'
+  requirements:
+    _permission: 'access administration pages'
+gemini_wrestling_importer_cfg.settings:
+  path: '/admin/config/gemini-wrestling-importer-cfg'
+  defaults:
+    _form: '\Drupal\gemini_wrestling_importer\Form\GeminiWrestlingSettingsForm'
+    _title: 'Gemini Wrestling import Settings'
+  requirements:
+    _permission: 'administer site configuration'
+gemini_wrestling_importer.structured_form:
+  path: '/admin/config/gemini-wrestling/structured-import'
+  defaults:
+    _form: '\Drupal\gemini_wrestling_importer\Form\ImportWrestlingStructuredForm'
+    _title: 'Importateur structuré de combats'
+  requirements:
+    _permission: 'administer site configuration'
+gemini_wrestling_importer.autocomplete_athlete:
+  path: '/gemini-wrestling/athlete-autocomplete'
+  defaults:
+    _controller: '\Drupal\gemini_wrestling_importer\Controller\AthleteAutocompleteController::handleAutocomplete'
+    _title: 'Athlete Autocomplete'
+  requirements:
+    _permission: 'access content'

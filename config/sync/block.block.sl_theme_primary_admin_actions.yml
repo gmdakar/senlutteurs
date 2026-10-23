@@ -1,0 +1,20 @@
+uuid: af7e55cf-7d48-4e33-a250-39ed902ec804
+langcode: fr
+status: true
+dependencies:
+  theme:
+    - sl_theme
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: sl_theme_primary_admin_actions
+theme: sl_theme
+region: highlighted
+weight: -6
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: "Actions d'administration principales"
+  label_display: '0'
+  provider: core
+visibility: {  }

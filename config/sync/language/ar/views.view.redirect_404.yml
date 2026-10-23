@@ -1,0 +1,46 @@
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Filtrer
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: تصاعدي
+          sort_desc_label: تنازلي
+      pager:
+        options:
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      fields:
+        path:
+          label: المسار
+        count:
+          label: Décompte
+        daily_count:
+          label: 'Décompte quotidien'
+        timestamp:
+          label: 'Dernier accès'
+        langcode:
+          label: اللغة
+        redirect_404_operations:
+          label: العمليات
+      filters:
+        path:
+          expose:
+            label: المسار
+        langcode:
+          expose:
+            label: اللغة
+        resolved:
+          expose:
+            label: Résolu
+      title: 'Réparer les pages 404'
+      empty:
+        area_text_custom:
+          content: "Il n'y a aucune erreur 404 à corriger."
+  page_1:
+    display_title: الصفحة

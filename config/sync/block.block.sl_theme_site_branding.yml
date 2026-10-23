@@ -1,0 +1,25 @@
+uuid: 8d4b5409-505f-4002-8d43-926d48910e37
+langcode: fr
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - sl_theme
+_core:
+  default_config_hash: '-OAAZDw1OR_UyAEPEKX0Hu4LaZD149vW9PmMnIC-v0o'
+id: sl_theme_site_branding
+theme: sl_theme
+region: header
+weight: -13
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Identité du site'
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }

@@ -1,0 +1,33 @@
+combat_propositions.ajax_form:
+  path: '/combat-propositions/ajax-form'
+  defaults:
+    _controller: '\Drupal\combat_propositions\Controller\AjaxFormController::loadForm'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _no_cache: 'TRUE'
+
+combat_propositions.vote:
+  path: '/combat-propositions/vote/{id}'
+  defaults:
+    _controller: '\Drupal\combat_propositions\Controller\VoteController::vote'
+  requirements:
+    _access: 'TRUE'
+    _method: 'POST'
+  options:
+    _no_cache: 'TRUE'
+combat_propositions.autocomplete_lutteur:
+  path: '/combat-propositions/autocomplete-lutteur'
+  defaults:
+    _controller: '\Drupal\combat_propositions\Controller\AutocompleteController::handleAutocomplete'
+    _title: 'Autocomplete Lutteur'
+  requirements:
+    _access: 'TRUE'
+combat_propositions.delete:
+  path: '/combat_propositions/delete/{id}'
+  defaults:
+    _controller: '\Drupal\combat_propositions\Controller\DeleteController::delete'
+    _title: 'Supprimer une proposition de combat'
+  requirements:
+    _permission: 'administer combat propositions' 
+    id: '\d+'

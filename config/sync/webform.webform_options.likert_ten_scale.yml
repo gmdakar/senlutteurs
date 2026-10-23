@@ -1,0 +1,14 @@
+uuid: 3b5543d2-2189-4c70-b6e5-0bd9e27d54dd
+langcode: fr
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform
+_core:
+  default_config_hash: zEZX8JSVqznnFtqFfpuC593h3t1JDAZhF0Q3pvA229o
+id: likert_ten_scale
+label: 'Likert: Ten Scale'
+category: Likert
+likert: true
+options: "1: 1\r\n2: 2\r\n3: 3\r\n4: 4\r\n5: 5\r\n6: 6\r\n7: 7\r\n8: 8\r\n9: 9\r\n10: 10\n"

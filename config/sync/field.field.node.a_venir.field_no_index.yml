@@ -1,0 +1,23 @@
+uuid: 7ff9d8a8-106e-4e01-b519-236dba22ecef
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_no_index
+    - node.type.a_venir
+id: node.a_venir.field_no_index
+field_name: field_no_index
+entity_type: node
+bundle: a_venir
+label: 'No index'
+description: 'Permet de tagger à no_index les nodes expirés'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

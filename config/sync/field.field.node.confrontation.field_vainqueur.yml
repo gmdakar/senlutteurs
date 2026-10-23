@@ -1,0 +1,19 @@
+uuid: 5f4ba4df-627f-45e0-968a-24527503e9d6
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vainqueur
+    - node.type.confrontation
+id: node.confrontation.field_vainqueur
+field_name: field_vainqueur
+entity_type: node
+bundle: confrontation
+label: Vainqueur
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

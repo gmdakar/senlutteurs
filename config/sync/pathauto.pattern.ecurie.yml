@@ -1,0 +1,22 @@
+uuid: 1c17caa9-0c92-44d2-9206-7dc8cb0a47f9
+langcode: fr
+status: true
+dependencies:
+  module:
+    - node
+id: ecurie
+label: Ecurie
+type: 'canonical_entities:node'
+pattern: 'ecurie_stable/[node:title]/[node:nid]'
+selection_criteria:
+  e0793d37-67a8-4024-a688-f1804e7116bc:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: e0793d37-67a8-4024-a688-f1804e7116bc
+    context_mapping:
+      node: node
+    bundles:
+      ecurie: ecurie
+selection_logic: and
+weight: -5
+relationships: {  }

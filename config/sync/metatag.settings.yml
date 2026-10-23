@@ -1,0 +1,23 @@
+_core:
+  default_config_hash: DrYt8PcXA0xB3C3L1SvtefnkO5SwUonhY3n4Ld8yun4
+entity_type_groups:
+  node:
+    athlete:
+      basic: basic
+      schema_person: schema_person
+    a_venir:
+      basic: basic
+      schema_event: schema_event
+    confrontation:
+      basic: basic
+      schema_event: schema_event
+separator: ','
+tag_trim_method: beforeValue
+use_maxlength: true
+tag_trim_maxlength:
+  metatag_maxlength_title: null
+  metatag_maxlength_description: null
+  metatag_maxlength_abstract: null
+tag_scroll_max_height: ''
+tag_trim_end: '|.,-:;/+&([{"'''
+trim_suffix: ''

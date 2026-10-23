@@ -1,0 +1,7 @@
+_core:
+  default_config_hash: wEnTvW_oLKEDn0XKBbDs2UBan1crZOOnRdAbXKMoRoo
+vector_enabled: true
+vector_api_url: 'https://web-production-f2a2f.up.railway.app'
+vector_api_secret: senlutteurs.com
+vector_top_k: 10
+vector_timeout: 30

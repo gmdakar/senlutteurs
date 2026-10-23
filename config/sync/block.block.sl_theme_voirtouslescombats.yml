@@ -1,0 +1,27 @@
+uuid: 1ccb34b1-f733-4ea5-b3ed-ae90b9e7e40d
+langcode: fr
+status: true
+dependencies:
+  config:
+    - simple_block.simple_block.voir_tous_les_combats
+  module:
+    - simple_block
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_voirtouslescombats
+theme: sl_theme
+region: content
+weight: -12
+provider: null
+plugin: 'simple_block:voir_tous_les_combats'
+settings:
+  id: 'simple_block:voir_tous_les_combats'
+  label: 'Voir tous les combats'
+  label_display: '0'
+  provider: simple_block
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/lutteurs/*\r\n/combats/*"

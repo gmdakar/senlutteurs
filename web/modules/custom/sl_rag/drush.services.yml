@@ -1,0 +1,5 @@
+services:
+  sl_rag.commands.rag_export:
+    class: Drupal\sl_rag\Commands\RagExportCommands
+    tags:
+      - { name: drush.command }

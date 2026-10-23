@@ -1,0 +1,4 @@
+administer sl_signalements flood:
+  title: 'Réinitialiser le flood anti-doublon des signalements'
+  description: 'Autorise l’appel de la route /admin/sl-signalements/flood-reset pour purger le flood (Redis en prod, table {flood} en dev local).'
+  restrict access: true

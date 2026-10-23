@@ -1,0 +1,22 @@
+uuid: 05546252-fd3e-4587-90be-9dc2d3304d47
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.roi_des_arenes
+id: node.roi_des_arenes.promote
+field_name: promote
+entity_type: node
+bundle: roi_des_arenes
+label: "Promu en page d'accueil"
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

@@ -1,0 +1,20 @@
+uuid: 8a68e4a2-64b2-4344-adc7-91ad61ce6ddc
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.a_venir
+id: node.a_venir.uid
+field_name: uid
+entity_type: node
+bundle: a_venir
+label: 'Écrit par'
+description: 'The username of the content author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

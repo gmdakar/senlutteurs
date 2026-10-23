@@ -1,0 +1,23 @@
+uuid: 0d6b52f0-4229-4838-80df-3080d8b3e353
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_actif
+    - node.type.athlete
+id: node.athlete.field_actif
+field_name: field_actif
+entity_type: node
+bundle: athlete
+label: 'En activité'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Oui
+  off_label: Non
+field_type: boolean

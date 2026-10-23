@@ -1,0 +1,9 @@
+name: Rois des Arènes
+type: module
+description: Module custom pour gérer les rois des arènes de la lutte sénégalaise.
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - drupal:node
+  - drupal:datetime
+  - drupal:field

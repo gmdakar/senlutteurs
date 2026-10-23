@@ -1,0 +1,5 @@
+filters:
+  obfuscate_email:
+    settings:
+      click_label: 'عرض البريد الإلكتروني'
+name: 'HTML كامل'

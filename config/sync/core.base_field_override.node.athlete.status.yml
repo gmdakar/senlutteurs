@@ -1,0 +1,22 @@
+uuid: 4a425d06-a14c-43d1-8ff3-6fe36bae2256
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.athlete
+id: node.athlete.status
+field_name: status
+entity_type: node
+bundle: athlete
+label: Publié
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

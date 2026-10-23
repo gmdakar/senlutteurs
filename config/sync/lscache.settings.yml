@@ -1,0 +1,14 @@
+_core:
+  default_config_hash: ewGBqsQJWO7cFpEkFFQ9vXZw12noXH_87GNNodkFFXM
+enabled: true
+default_ttl: 86400
+tag_prefix: ''
+tag_filter: true
+debug: false
+private_cache:
+  enabled: false
+  ttl: 600
+  contexts:
+    - user
+    - session
+vary_cookies: {  }

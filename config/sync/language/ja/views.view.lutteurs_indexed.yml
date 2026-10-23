@@ -1,0 +1,50 @@
+display:
+  block_2:
+    display_options:
+      use_more_text: もっと見る
+  feed_1:
+    display_options:
+      use_more_text: もっと見る
+  default:
+    display_options:
+      footer:
+        area:
+          content:
+            value: |-
+              <p class="elo-disclaimer">
+                  <strong>注:</strong> この評価（<a href="https://ja.wikipedia.org/wiki/イロレーティング" target="_blank" rel="noopener">ELO</a>）は内部データに基づく独自の自動計算であり、公式な情報源ではありません。システム内で現在利用可能なデータに基づいているため、今後変動する可能性があります。
+              </p>
+            format: full_html
+      title: レスラー
+      exposed_form:
+        options:
+          submit_button: 適用
+          reset_button_label: リセット
+      filters:
+        search_api_fulltext:
+          expose:
+            label: 名前で絞り込む
+        facets_field_ecurie:
+          expose:
+            label: 所属チーム
+      pager:
+        options:
+          tags:
+            first: '« 最初'
+            last: '最後 »'
+  block_3:
+    display_options:
+      header:
+        area:
+          content:
+            value: '<div class="homonymes">候補リスト：<div> '
+            format: basic_html
+  page_1:
+    display_options:
+      empty:
+        area:
+          content:
+            value: 結果がありません
+  page_2:
+    display_options:
+      title: スポーツパフォーマンスランキング（ELOポイント）

@@ -1,0 +1,22 @@
+uuid: bee8b419-3661-46e3-9a36-eb6a49b559ab
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.promoteur
+id: node.promoteur.sticky
+field_name: sticky
+entity_type: node
+bundle: promoteur
+label: 'Epinglé en haut des listes'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

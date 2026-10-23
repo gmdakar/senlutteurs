@@ -1,0 +1,7 @@
+sl_rag.settings:
+  path: '/admin/config/sl-rag/settings'
+  defaults:
+    _form: '\Drupal\sl_rag\Form\RagSettingsForm'
+    _title: 'SL RAG settings'
+  requirements:
+    _permission: 'administer site configuration'

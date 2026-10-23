@@ -1,0 +1,50 @@
+display:
+  block_2:
+    display_options:
+      use_more_text: 'Ver más'
+  feed_1:
+    display_options:
+      use_more_text: 'Ver más'
+  default:
+    display_options:
+      footer:
+        area:
+          content:
+            value: |-
+              <p class="elo-disclaimer">
+                  <strong>NB:</strong> Esta calificación (<a href="https://es.wikipedia.org/wiki/Sistema_de_puntuación_Elo" target="_blank" rel="noopener">ELO</a>) es interna y no representa por tanto una fuente oficial. Se basa en un cálculo automático a partir de los datos actualmente disponibles en el sistema y podría evolucionar con el tiempo.
+              </p>
+            format: full_html
+      title: Luchadores
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Restablecer
+      filters:
+        search_api_fulltext:
+          expose:
+            label: 'Filtrar por nombre'
+        facets_field_ecurie:
+          expose:
+            label: Cuadra
+      pager:
+        options:
+          tags:
+            first: '« Primero'
+            last: 'Último »'
+  block_3:
+    display_options:
+      header:
+        area:
+          content:
+            value: '<div class="homonymes">Lista de sugerencias:<div> '
+            format: basic_html
+  page_1:
+    display_options:
+      empty:
+        area:
+          content:
+            value: 'Sin resultados'
+  page_2:
+    display_options:
+      title: 'Clasificación de rendimiento deportivo (puntos Elo)'

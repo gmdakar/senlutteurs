@@ -1,0 +1,12 @@
+name: 'Gemini Combats à venir Cron'
+type: module
+description: 'Interroge Gemini API via cron et crée des nodes pour les combats "a_venir".'
+core_version_requirement: ^11
+configure: gemini_nextcombats_cron.settings
+package: Custom
+dependencies:
+  - drupal:node
+  - sl_live_search:sl_live_search
+  - shared_lib:shared_lib
+  - misc_divers:misc_divers
+  - sl_live_search:sl_live_search

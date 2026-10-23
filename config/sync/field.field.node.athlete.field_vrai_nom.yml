@@ -1,0 +1,19 @@
+uuid: 350cfa7b-804a-408a-8386-99e8f78eb9cb
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vrai_nom
+    - node.type.athlete
+id: node.athlete.field_vrai_nom
+field_name: field_vrai_nom
+entity_type: node
+bundle: athlete
+label: 'Vrai nom'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

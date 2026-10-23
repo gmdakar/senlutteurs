@@ -1,0 +1,34 @@
+services:
+  update_videos_confrontations_recentes.commands:
+    class: Drupal\confrontations_recentes\Commands\UpdateVideosConfrontationsRecentesCommands
+    tags:
+      - { name: drush.command }
+    arguments:
+      - '@confrontations_recentes.combat_service'
+      - '@entity_type.manager'
+  confrontations_recentes.commands:
+    class: Drupal\confrontations_recentes\Commands\ConfrontationsRecentesCommands
+    tags:
+      - { name: drush.command }
+    arguments:
+      - '@confrontations_recentes.combat_service'
+      - '@entity_type.manager'
+  confrontations_doublons.commands:
+    class: Drupal\confrontations_recentes\Commands\ConfrontationsDoublonsCommands
+    tags:
+      - { name: drush.command }
+    arguments:
+      - '@confrontations_recentes.combat_service'
+      - '@entity_type.manager'
+  confrontations_lutte_simple.commands:
+    class: Drupal\confrontations_recentes\Commands\ConfrontationsLutteSimpleCommands
+    tags:
+      - { name: drush.command }
+  confrontations_purge.commands:
+    class: Drupal\confrontations_recentes\Commands\ConfrontationsPurgeCommands
+    tags:
+      - { name: drush.command }
+  confrontations_homonymes_generationnels.commands:
+    class: Drupal\confrontations_recentes\Commands\ConfrontationsHomonymesGenerationnelsCommands
+    tags:
+      - { name: drush.command }

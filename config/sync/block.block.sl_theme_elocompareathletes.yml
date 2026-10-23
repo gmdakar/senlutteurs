@@ -1,0 +1,25 @@
+uuid: b8f93c03-2349-46ff-8778-ffb6b35d2ffb
+langcode: fr
+status: true
+dependencies:
+  module:
+    - elo_ranking
+    - system
+  theme:
+    - sl_theme
+id: sl_theme_elocompareathletes
+theme: sl_theme
+region: content
+weight: -8
+provider: null
+plugin: elo_compare_block
+settings:
+  id: elo_compare_block
+  label: 'Comparateur de carrières'
+  label_display: visible
+  provider: elo_ranking
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /elo_classement_ranking

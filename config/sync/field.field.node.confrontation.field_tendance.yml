@@ -1,0 +1,19 @@
+uuid: 553d3000-e5ec-4423-b0be-fee34e473ed0
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tendance
+    - node.type.confrontation
+id: node.confrontation.field_tendance
+field_name: field_tendance
+entity_type: node
+bundle: confrontation
+label: Tendance
+description: "Servira à préciser que le résultat verdict obtenu pour ce combat est issu d'une forte tendance (ex. lu dans les commentaires de réseaux sociaux ou video du combat)"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

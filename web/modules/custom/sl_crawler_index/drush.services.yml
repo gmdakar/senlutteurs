@@ -1,0 +1,9 @@
+services:
+  sl_crawler_index.crawler_commands:
+    class: Drupal\sl_crawler_index\Commands\CrawlerCommands
+    arguments:
+      - '@sl_crawler_index.sitemap_parser'
+      - '@queue'
+      - '@plugin.manager.queue_worker'
+    tags:
+      - { name: drush.command }

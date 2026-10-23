@@ -1,0 +1,47 @@
+
+.elo-chart-wrapper {
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Permet d'éviter que le texte soit coupé */
+.elo-chart-wrapper canvas {
+  width: 100% !important;
+  height: 200px !important;
+  display: block;
+}
+
+/* Disclaimer */
+.elo-disclaimer {
+  width: 90% !important;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #595959;
+  line-height: 1.5;
+  padding: 0 10px;
+}
+
+/* Lien discret */
+.elo-disclaimer a {
+  color: #333333;
+  text-decoration: underline;
+}
+
+.elo-disclaimer a:hover {
+  color: #000000;
+}
+
+@media (min-width: 992px) {
+  #elo-chart {
+    width: 90% !important;
+    height: 200px !important;
+    display: block;
+  }
+
+  .elo-chart-wrapper canvas {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+  }
+}

@@ -3382,10 +3382,102 @@ class ConfrontationDeduplicationService
     }
 
     /**
+     * Matching STRICT pour le pipeline cross-athlètes.
+     *
+     * Contrairement à opponentNamesLookRelated (préfixe 3, token "boy"),
+     * on exige un lien nominal réel entre deux noms :
+     *  1. Un nom contient l'autre (après normalisation) — ex. "confiance"
+     *     ⊂ "confiance tp", "fils de falaye" ⊂ "elou fils de falaye".
+     *  2. OU un token DISTINCTIF (longueur ≥ 5, hors stopwords laamb)
+     *     est identique ou à Levenshtein ≤ 1.
+     *
+     * Stopwords exclus : boy, fils, de, thiatou, mame, baye, pape, papa,
+     * elhadj, hadj, junior, bou, ndaw, etc. — trop fréquents pour discriminer.
+     */
+    protected function crossAthleteNamesStronglyRelated(string $normA, string $normB): bool
+    {
+        $normA = trim($normA);
+        $normB = trim($normB);
+        if ($normA === '' || $normB === '') {
+            return false;
+        }
+        if ($normA === $normB) {
+            return true;
+        }
+
+        // 1. Contenance (après normalisation espaces).
+        $a = preg_replace('/\s+/', ' ', $normA);
+        $b = preg_replace('/\s+/', ' ', $normB);
+        // ≥ 4 car. pour le plus court : "bony" ⊂ "bony iliassou",
+        // mais "boy" (3) reste exclu.
+        $shorter = mb_strlen($a) <= mb_strlen($b) ? $a : $b;
+        $longer = mb_strlen($a) <= mb_strlen($b) ? $b : $a;
+        if (mb_strlen($shorter) >= 4 && str_contains($longer, $shorter)) {
+            return true;
+        }
+
+        // 2. Token distinctif partagé (hors stopwords, longueur ≥ 4).
+        $tokensA = $this->crossAthleteDistinctiveTokens($a);
+        $tokensB = $this->crossAthleteDistinctiveTokens($b);
+        if (!$tokensA || !$tokensB) {
+            return false;
+        }
+
+        foreach ($tokensA as $ta) {
+            foreach ($tokensB as $tb) {
+                if ($ta === $tb) {
+                    return true;
+                }
+                // Levenshtein 1 seulement si les deux tokens ont ≥ 6 car.
+                // (évite "diop"/"diouf" ; capte "faxass"/"fakhass", "yeukk"/"yeuk" non car yeuk=4).
+                if (mb_strlen($ta) >= 6 && mb_strlen($tb) >= 6
+                    && levenshtein($ta, $tb) <= 1) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Tokens discriminants d'un nom normalisé pour le matching cross-athlètes.
+     *
+     * @return string[]
+     */
+    protected function crossAthleteDistinctiveTokens(string $nameNorm): array
+    {
+        static $stopwords = [
+            'boy', 'fils', 'de', 'du', 'la', 'le', 'les', 'des',
+            'thiatou', 'thiat', 'mame', 'baye', 'pape', 'papa',
+            'elhadj', 'elhadji', 'el', 'hadj', 'hadji', 'aladji',
+            'junior', 'jr', 'bou', 'ndaw', 'ndar', 'gui', 'gaa',
+            'siteu', 'mbapat', 'mbapatte', 'espoir',
+        ];
+        $tokens = preg_split('/\s+/', trim($nameNorm), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+        $out = [];
+        foreach ($tokens as $t) {
+            if (ctype_digit($t)) {
+                continue;
+            }
+            // Min 4 : "bony", "yeuk" passent ; "boy" (3) non.
+            if (mb_strlen($t) < 4) {
+                continue;
+            }
+            if (in_array($t, $stopwords, true)) {
+                continue;
+            }
+            $out[] = $t;
+        }
+        return array_values(array_unique($out));
+    }
+
+    /**
      * Détecte des paires de combats publiés à ≤ $days jours d'écart, sans NID
      * athlète en commun, mais dont les noms des deux côtés se ressemblent
-     * (tokens / préfixe / Levenshtein) — typiquement "Confiance vs Fils De
-     * Falaye" et "Confiance Tp vs Elou Fils De Falaye".
+     * FORTEMENT (contenance ou token distinctif ≥5 car., hors stopwords) —
+     * typiquement "Confiance vs Fils De Falaye" et "Confiance Tp vs Elou
+     * Fils De Falaye".
      *
      * Ces cas sont invisibles pour queueAmbiguousNearDateCombats() (pas de
      * pivot NID partagé). Chaque paire suspecte est mise en queue
@@ -3404,7 +3496,8 @@ class ConfrontationDeduplicationService
 
         $days = max(1, $days);
         $windowSeconds = $days * 86400;
-        $prefixLen = 3;
+        // Matching STRICT pour le cross-athlètes (≠ pipeline pivot ≤7j).
+        // prefixLen élevé + stopwords + pas de match sur "Boy"/"Fils"/"Thiatou".
 
         // Tous les combats publiés avec date + 2 athlètes (tri date ASC).
         $fight_ids = $storage->getQuery()
@@ -3490,11 +3583,13 @@ class ConfrontationDeduplicationService
                     continue;
                 }
 
-                // Similarité des deux côtés (ordre direct ou croisé).
-                $direct = $this->opponentNamesLookRelated($A['norm1'], $B['norm1'], $prefixLen)
-                    && $this->opponentNamesLookRelated($A['norm2'], $B['norm2'], $prefixLen);
-                $crossed = $this->opponentNamesLookRelated($A['norm1'], $B['norm2'], $prefixLen)
-                    && $this->opponentNamesLookRelated($A['norm2'], $B['norm1'], $prefixLen);
+                // Similarité STRICTE des deux côtés (ordre direct ou croisé).
+                // opponentNamesLookRelated (préfixe 3 / token "boy") est trop
+                // permissif ici et produisait des paires sans lien réel.
+                $direct = $this->crossAthleteNamesStronglyRelated($A['norm1'], $B['norm1'])
+                    && $this->crossAthleteNamesStronglyRelated($A['norm2'], $B['norm2']);
+                $crossed = $this->crossAthleteNamesStronglyRelated($A['norm1'], $B['norm2'])
+                    && $this->crossAthleteNamesStronglyRelated($A['norm2'], $B['norm1']);
                 if (!$direct && !$crossed) {
                     continue;
                 }

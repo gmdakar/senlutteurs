@@ -12,7 +12,7 @@ dependencies:
 id: sl_theme_lienvoirtouslesclassements
 theme: sl_theme
 region: content
-weight: -10
+weight: -9
 provider: null
 plugin: 'simple_block:classement'
 settings:

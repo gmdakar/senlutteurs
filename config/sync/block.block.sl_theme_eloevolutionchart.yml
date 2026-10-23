@@ -10,7 +10,7 @@ dependencies:
 id: sl_theme_eloevolutionchart
 theme: sl_theme
 region: content
-weight: -6
+weight: -5
 provider: null
 plugin: elo_chart_block
 settings:

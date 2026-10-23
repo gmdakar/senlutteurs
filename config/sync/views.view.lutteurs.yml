@@ -364,7 +364,6 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
@@ -483,6 +482,7 @@ display:
                   collapsible_disable_automatic_open: false
                   open_by_default: false
                   is_secondary: false
+                  no_reset: false
                   hide_label: false
                   field_classes: ''
       style:
@@ -543,6 +543,7 @@ display:
     position: 1
     display_options:
       enabled: false
+      title: Lutteurs
       pager:
         type: full
         options:

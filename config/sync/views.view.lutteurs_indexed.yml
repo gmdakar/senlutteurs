@@ -17,7 +17,7 @@ dependencies:
     - search_api
     - views_bootstrap
 id: lutteurs_indexed
-label: 'Lutteurs (indexed)'
+label: Lutteurs
 module: views
 description: ''
 tag: ''
@@ -184,6 +184,7 @@ display:
                   collapsible_disable_automatic_open: false
                   open_by_default: false
                   is_secondary: false
+                  no_reset: false
                   hide_label: false
                   field_classes: ''
               facets_field_ecurie:
@@ -198,6 +199,7 @@ display:
                   collapsible_disable_automatic_open: false
                   open_by_default: false
                   is_secondary: false
+                  no_reset: false
                   hide_label: false
                   field_classes: ''
       access:
@@ -485,8 +487,11 @@ display:
           plugin_id: text
           empty: false
           content:
-            value: "<p class=\"elo-disclaimer\">\r\n    <strong>NB :</strong> Cette évaluation (<a href=\"https://fr.wikipedia.org/wiki/Classement_Elo\" target=\"_blank\" rel=\"noopener\">ELO</a>) est interne et ne représente donc pas une source officielle. Elle repose sur un calcul automatique basé sur les données actuellement disponibles dans le système et pourrait donc évoluer dans le temps.\r\n  </p>"
-            format: basic_html
+            value: |-
+              <p class="elo-disclaimer">
+                  <strong>NB :</strong> Cette évaluation (<a href="https://fr.wikipedia.org/wiki/Classement_Elo" target="_blank" rel="noopener">ELO</a>) est interne et ne représente donc pas une source officielle.
+              </p>
+            format: full_html
           tokenize: false
       display_extenders: {  }
     cache_metadata:

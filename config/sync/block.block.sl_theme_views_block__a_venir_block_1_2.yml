@@ -12,7 +12,7 @@ dependencies:
 id: sl_theme_views_block__a_venir_block_1_2
 theme: sl_theme
 region: content
-weight: -7
+weight: -6
 provider: null
 plugin: 'views_block:a_venir-block_1'
 settings:

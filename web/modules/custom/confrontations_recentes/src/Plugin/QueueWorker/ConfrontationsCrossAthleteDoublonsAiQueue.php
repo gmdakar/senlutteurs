@@ -84,19 +84,32 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
         $engine = $data['engine'] ?? null;
         $forceEngine = !empty($data['force_engine']);
 
+        $pairLabel = $this->formatPairLabel($data['combats']);
+        $this->logger->info('Cross-athlete TRAITEMENT paire : @pair', ['@pair' => $pairLabel]);
+
         $response = $this->callLiveSearchWithRetry($prompt, $data, 'cross-athlete principal', $engine, $forceEngine);
         $verdict = $this->parseVerdict($response['content'] ?? '');
         if ($verdict === null) {
-            $this->logger->warning('Cross-athlete : JSON IA invalide — paire non traitée (@ids).', [
-                '@ids' => implode(' | ', array_column($data['combats'], 'field_id_text')),
+            $this->logger->warning('Cross-athlete : JSON IA invalide — AUCUNE ACTION. Paire : @pair | Réponse brute (200c) : @raw', [
+                '@pair' => $pairLabel,
+                '@raw' => mb_substr((string) ($response['content'] ?? ''), 0, 200),
             ]);
             return;
         }
 
+        $this->logger->info('Cross-athlete VERDICT IA : same_fight=@sf keep_combat=@keep keep_names=@names fusions=@fus | raison=@r | paire=@pair', [
+            '@sf' => (int) !empty($verdict['same_fight']),
+            '@keep' => (string) ($verdict['keep_combat_field_id'] ?? ''),
+            '@names' => json_encode($verdict['keep_names'] ?? [], JSON_UNESCAPED_UNICODE),
+            '@fus' => json_encode($verdict['fusions'] ?? [], JSON_UNESCAPED_UNICODE),
+            '@r' => (string) ($verdict['raison'] ?? ''),
+            '@pair' => $pairLabel,
+        ]);
+
         if (empty($verdict['same_fight'])) {
             SomeTools::markDoublonGroupVerifiedKept(array_column($data['combats'], 'field_id_text'));
-            $this->logger->info('Cross-athlete : IA same_fight=0 — paire conservée telle quelle (@ids). Raison : @r', [
-                '@ids' => implode(' | ', array_column($data['combats'], 'field_id_text')),
+            $this->logger->info('Cross-athlete ACTION=AUCUNE (same_fight=0) — les 2 combats restent published. Paire : @pair | Raison IA : @r', [
+                '@pair' => $pairLabel,
                 '@r' => $verdict['raison'] ?? '',
             ]);
             return;
@@ -109,21 +122,59 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
             $grokResponse = $this->callLiveSearchWithRetry($prompt, $data, 'cross-athlete Grok', 'grok', true);
             $grokVerdict = $this->parseVerdict($grokResponse['content'] ?? '');
             if ($grokVerdict === null || empty($grokVerdict['same_fight'])) {
-                $this->logger->warning('Cross-athlete : désaccord ou échec Grok (same_fight) — aucune action. Raison principal : @r', [
+                $this->logger->warning('Cross-athlete ACTION=AUCUNE (désaccord/échec Grok) — les 2 combats restent published. Paire : @pair | Raison principal : @r | Grok same_fight=@gsf raison=@gr', [
+                    '@pair' => $pairLabel,
                     '@r' => $verdict['raison'] ?? '',
+                    '@gsf' => $grokVerdict === null ? 'null' : (string) (int) !empty($grokVerdict['same_fight']),
+                    '@gr' => $grokVerdict['raison'] ?? '',
                 ]);
                 return;
             }
+            $this->logger->info('Cross-athlete double validation Grok OK (same_fight=1). Paire : @pair', [
+                '@pair' => $pairLabel,
+            ]);
         }
 
-        $this->applyVerdict($data, $verdict);
+        $this->applyVerdict($data, $verdict, $pairLabel);
+    }
+
+    /**
+     * Résumé lisible des 2 combats d'une paire pour les logs (inclut le title).
+     */
+    protected function formatPairLabel(array $combats): string
+    {
+        $storage = $this->entityTypeManager->getStorage('node');
+        $parts = [];
+        foreach ($combats as $c) {
+            $nid = (int) ($c['nid'] ?? 0);
+            $title = $c['title'] ?? '';
+            if ($title === '' && $nid > 0) {
+                $node = $storage->load($nid);
+                $title = $node ? $node->getTitle() : '';
+            }
+            $parts[] = sprintf(
+                'NID=%s title="%s" [%s] %s(nid=%s) vs %s(nid=%s) date=%s vainqueur=%s',
+                $c['nid'] ?? '?',
+                $title !== '' ? $title : '?',
+                $c['field_id_text'] ?? '?',
+                $c['lutteur1'] ?? '?',
+                $c['lutteur1_nid'] ?? '?',
+                $c['lutteur2'] ?? '?',
+                $c['lutteur2_nid'] ?? '?',
+                $c['date'] ?? '?',
+                $c['vainqueur'] ?? '?'
+            );
+        }
+        return implode(' || ', $parts);
     }
 
     /**
      * Applique : dépub combat doublon, fusions (direction = max combats),
      * dépub athlètes orphelins (0 combat published).
+     *
+     * @param string $pairLabel Résumé des 2 combats (pour logs).
      */
-    protected function applyVerdict(array $data, array $verdict): void
+    protected function applyVerdict(array $data, array $verdict, string $pairLabel = ''): void
     {
         $storage = $this->entityTypeManager->getStorage('node');
         $combats = $data['combats'];
@@ -133,12 +184,33 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
         }
 
         $keepId = (string) ($verdict['keep_combat_field_id'] ?? '');
+        $keepFallback = FALSE;
         if ($keepId === '' || !isset($byTech[$keepId])) {
             // Fallback : garder le combat au NID le plus bas.
             usort($combats, static fn($a, $b) => $a['nid'] <=> $b['nid']);
             $keepId = $combats[0]['field_id_text'];
+            $keepFallback = TRUE;
         }
 
+        $kept = $byTech[$keepId] ?? NULL;
+        $keptTitle = '?';
+        if (!empty($kept['nid'])) {
+            $keptNode = $storage->load($kept['nid']);
+            $keptTitle = $keptNode ? $keptNode->getTitle() : '?';
+        }
+        $this->logger->info('Cross-athlete ACTION=CONSERVER combat : NID=@nid title="@title" [@id] @l1 vs @l2 date=@date vainqueur=@v@fallback | paire=@pair', [
+            '@nid' => $kept['nid'] ?? '?',
+            '@title' => $keptTitle,
+            '@id' => $keepId,
+            '@l1' => $kept['lutteur1'] ?? '?',
+            '@l2' => $kept['lutteur2'] ?? '?',
+            '@date' => $kept['date'] ?? '?',
+            '@v' => $kept['vainqueur'] ?? '?',
+            '@fallback' => $keepFallback ? ' (fallback NID min, keep_combat_field_id IA invalide)' : '',
+            '@pair' => $pairLabel,
+        ]);
+
+        $actions = [];
         $athleteNidsInvolved = [];
         foreach ($combats as $c) {
             $athleteNidsInvolved[] = (int) ($c['lutteur1_nid'] ?? 0);
@@ -148,16 +220,30 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
             }
             $node = $storage->load($c['nid']);
             if ($node && $node->isPublished()) {
+                $combatTitle = $node->getTitle();
                 $node->setUnpublished();
                 $node->setNewRevision(FALSE);
                 $node->save();
                 $storage->resetCache([$c['nid']]);
-                $this->logger->info('Cross-athlete SUPPRESSION combat doublon : NID @nid [@id] (@l1 vs @l2). Raison IA : @r', [
+                $actions[] = sprintf(
+                    'DEPUB_COMBAT nid=%s title="%s" [%s] %s vs %s date=%s',
+                    $c['nid'],
+                    $combatTitle,
+                    $c['field_id_text'],
+                    $c['lutteur1'] ?? '?',
+                    $c['lutteur2'] ?? '?',
+                    $c['date'] ?? '?'
+                );
+                $this->logger->info('Cross-athlete ACTION=DEPUB_COMBAT doublon : NID=@nid title="@title" [@id] @l1 vs @l2 date=@date vainqueur=@v | Raison IA : @r | paire=@pair', [
                     '@nid' => $c['nid'],
+                    '@title' => $combatTitle,
                     '@id' => $c['field_id_text'],
                     '@l1' => $c['lutteur1'] ?? '?',
                     '@l2' => $c['lutteur2'] ?? '?',
+                    '@date' => $c['date'] ?? '?',
+                    '@v' => $c['vainqueur'] ?? '?',
                     '@r' => $verdict['raison'] ?? '',
+                    '@pair' => $pairLabel,
                 ]);
             }
         }
@@ -175,9 +261,10 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
                 $fromNid = $this->resolveAthleteNidByName($fromName, $athleteNidsInvolved);
                 $toNid = $this->resolveAthleteNidByName($toName, $athleteNidsInvolved);
                 if (!$fromNid || !$toNid || $fromNid === $toNid) {
-                    $this->logger->warning('Cross-athlete fusion ignorée (NID introuvable) : "@from" → "@to".', [
+                    $this->logger->warning('Cross-athlete ACTION=FUSION_IGNORE (NID introuvable) : "@from" → "@to" | paire=@pair', [
                         '@from' => $fromName,
                         '@to' => $toName,
+                        '@pair' => $pairLabel,
                     ]);
                     continue;
                 }
@@ -187,18 +274,47 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
                 $countTo = $this->countPublishedCombats($toNid);
                 $pivotNid = $toNid;
                 $twinNid = $fromNid;
+                $inverted = FALSE;
                 if ($countFrom > $countTo || ($countFrom === $countTo && $fromNid < $toNid)) {
                     $pivotNid = $fromNid;
                     $twinNid = $toNid;
-                    $this->logger->notice('Cross-athlete : direction IA inversée (plus de combats / ancienneté) : pivot=@pivot twin=@twin (counts @cf/@ct).', [
+                    $inverted = TRUE;
+                }
+
+                $pivotTitle = $storage->load($pivotNid)?->getTitle() ?? '?';
+                $twinTitle = $storage->load($twinNid)?->getTitle() ?? '?';
+                if ($inverted) {
+                    $this->logger->notice('Cross-athlete direction IA inversée : IA "@from"→"@to" devient twin=@twin("@tt") → pivot=@pivot("@pt") (combats published @cf/@ct). Paire : @pair', [
+                        '@from' => $fromName,
+                        '@to' => $toName,
                         '@pivot' => $pivotNid,
+                        '@pt' => $pivotTitle,
                         '@twin' => $twinNid,
+                        '@tt' => $twinTitle,
                         '@cf' => $countFrom,
                         '@ct' => $countTo,
+                        '@pair' => $pairLabel,
                     ]);
                 }
 
                 $this->mergeTwinIntoPivot($pivotNid, $twinNid);
+                $actions[] = sprintf(
+                    'FUSION twin=%s("%s") → pivot=%s("%s")%s',
+                    $twinNid,
+                    $twinTitle,
+                    $pivotNid,
+                    $pivotTitle,
+                    $inverted ? ' [direction inversée]' : ''
+                );
+                $this->logger->info('Cross-athlete ACTION=FUSION : twin NID=@twin "@tt" → pivot NID=@pivot "@pt" (counts published before: from=@cf to=@ct). Paire : @pair', [
+                    '@twin' => $twinNid,
+                    '@tt' => $twinTitle,
+                    '@pivot' => $pivotNid,
+                    '@pt' => $pivotTitle,
+                    '@cf' => $countFrom,
+                    '@ct' => $countTo,
+                    '@pair' => $pairLabel,
+                ]);
             }
         }
 
@@ -209,16 +325,25 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
             }
             $athlete = $storage->load($aid);
             if ($athlete && $athlete->isPublished()) {
+                $title = $athlete->getTitle();
                 $athlete->setUnpublished();
                 $athlete->setNewRevision(FALSE);
                 $athlete->save();
                 $storage->resetCache([$aid]);
-                $this->logger->info('Cross-athlete : athlète orphelin dépublié NID @nid "@title" (0 combat published).', [
+                $actions[] = sprintf('DEPUB_ORPHELIN nid=%s "%s"', $aid, $title);
+                $this->logger->info('Cross-athlete ACTION=DEPUB_ORPHELIN : NID=@nid "@title" (0 combat published après traitement). Paire : @pair', [
                     '@nid' => $aid,
-                    '@title' => $athlete->getTitle(),
+                    '@title' => $title,
+                    '@pair' => $pairLabel,
                 ]);
             }
         }
+
+        $this->logger->notice('Cross-athlete BILAN paire : @pair | Actions : @actions | Raison IA : @r', [
+            '@pair' => $pairLabel,
+            '@actions' => $actions ? implode(' ; ', $actions) : 'aucune (combat déjà dépublié ?)',
+            '@r' => $verdict['raison'] ?? '',
+        ]);
     }
 
     /**

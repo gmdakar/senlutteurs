@@ -9,7 +9,6 @@ dependencies:
     - comment
     - filter
     - media
-    - prometheus_exporter
     - pwa
     - search_api_autocomplete
     - system
@@ -22,7 +21,6 @@ is_admin: false
 permissions:
   - 'access comments'
   - 'access content'
-  - 'access prometheus metrics'
   - 'access pwa'
   - 'use search_api_autocomplete for lutteurs_indexed'
   - 'use text format restricted_html'

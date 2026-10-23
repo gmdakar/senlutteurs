@@ -176,6 +176,7 @@ remplacements:
   'Mbirmi bou yoff': Mbirmi
   "Mod'Lo": 'Modou Lô'
   "Mod'Lô": 'Modou Lô'
+  "Mod' Dia": 'Modou dia'
   "Mod'dia": 'Modou dia'
   'Mod dia': 'Modou dia'
   'Modou awa tine': 'Modou awa'
@@ -323,8 +324,10 @@ remplacementsYtb:
   'Badou Fall 2': 'Badou Fall'
   'Balla Bèye 2 (baboye)': 'balla beye 2,baboye'
   'Balla Gaye 1': 'Balla Gaye'
+  'Batista 2': Batista
   'Baye Mandione': 'Baye Madione'
   Bazooka: Bazooka
+  'Blindé Bou Ndaw': Blindé
   Blondin: 'Blondin camberene'
   Bollo: 'Bolo yeumbeul, bolo'
   Bombardier: b52
@@ -343,6 +346,7 @@ remplacementsYtb:
   'Bébé diene': 'Bb diene'
   'Bébé Reug Reug': 'Mor Reug Reug'
   'Cheikh niang (pikine)': 'Cheikh niang'
+  Confiance: 'Confiance Tp'
   'Dal sen kaw': 'Dal sen kao, Dal sene kaw, Dale seen kaw, Dale sen kaw'
   Darso: Darso
   'Demba déranger': 'Demba derangé,Demba dérangé'
@@ -359,6 +363,7 @@ remplacementsYtb:
   'Douze sept': '12-7,12 7'
   'Fils De Batling': 'Fils De Batlin, Fils De Batléne'
   'Fils de BM': 'Fils de Bmw'
+  'Fils De Falaye': 'Elou Fils De Falaye'
   'Fils de katy': 'Fils De Doudou Yaye Katy'
   'Franc Niodior': 'Fran Niodior'
   'Gackou 2': Gakou
@@ -416,6 +421,7 @@ remplacementsYtb:
   'Ndiol waly': 'Ndiol wally'
   'Ngala deranger': 'Ngala derangé'
   'Niakh Diarignou': 'Niakh Dieuriniou, Ndiakh Dieurignou, Niakh Diariniou'
+  Nigeria: 'Équipe Nationale Nigeria'
   'Noiraud Junior': Noireau
   'Néko Rël': 'Necko Rel,Neko Rel,Neko Reul,Neko Reule'
   'Néss Bou Niacoulrap': Ness
@@ -442,6 +448,7 @@ remplacementsYtb:
   'Sokh Sokh': 'Sosokh, Papo Ngane Sossokh'
   'Souley gaindé': 'Souleye gaïngé,souleye gaingé, souley gaïngé'
   Soura: 'Soura mbeur'
+  Sénégal: 'Équipe Nationale Sénégal'
   Takhé: Také
   'Tapha gueye 2': 'moustapha gueye 2, tapha 2'
   'Tapha Leer 2': 'Tapha Ler 2, tapha Lerr 2'

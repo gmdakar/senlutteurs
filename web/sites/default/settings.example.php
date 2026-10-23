@@ -165,3 +165,5 @@ $settings['state_cache'] = TRUE;
 $settings['migrate_node_migrate_type_classic'] = FALSE;
 
 $settings['update_free_access'] = FALSE;
+
+$config['cloudflare.settings']['api_token'] = getenv('CLOUDFLARE_API_TOKEN');

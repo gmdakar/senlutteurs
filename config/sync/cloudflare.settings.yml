@@ -1,0 +1,12 @@
+_core:
+  default_config_hash: vPU337raLxeqA4w2zCEOooC4N7zxnz5EQNNtm9FY15E
+client_ip_restore_enabled: false
+remote_addr_validate: true
+bypass_host: ''
+valid_credentials: true
+zones:
+  39cfbe66b7075067f778f1e1744ec5ea: senlutteurs.com
+auth_using: token
+api_token: toto
+apikey: ''
+email: ''

@@ -106,9 +106,12 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
             '@pair' => $pairLabel,
         ]);
 
+        $techIds = array_column($data['combats'], 'field_id_text');
+
         if (empty($verdict['same_fight'])) {
-            SomeTools::markDoublonGroupVerifiedKept(array_column($data['combats'], 'field_id_text'));
-            $this->logger->info('Cross-athlete ACTION=AUCUNE (same_fight=0) — les 2 combats restent published. Paire : @pair | Raison IA : @r', [
+            // Décision terminale : pas le même combat → ne plus jamais re-proposer.
+            SomeTools::markDoublonGroupVerifiedKept($techIds);
+            $this->logger->info('Cross-athlete ACTION=AUCUNE (same_fight=0) — les 2 combats restent published. Paire ignorée à l\'avenir. Paire : @pair | Raison IA : @r', [
                 '@pair' => $pairLabel,
                 '@r' => $verdict['raison'] ?? '',
             ]);
@@ -122,7 +125,10 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
             $grokResponse = $this->callLiveSearchWithRetry($prompt, $data, 'cross-athlete Grok', 'grok', true);
             $grokVerdict = $this->parseVerdict($grokResponse['content'] ?? '');
             if ($grokVerdict === null || empty($grokVerdict['same_fight'])) {
-                $this->logger->warning('Cross-athlete ACTION=AUCUNE (désaccord/échec Grok) — les 2 combats restent published. Paire : @pair | Raison principal : @r | Grok same_fight=@gsf raison=@gr', [
+                // Désaccord Grok = arbitrage terminé sans action → ignorer à l\'avenir
+                // (sinon la même paire est re-queue à chaque run).
+                SomeTools::markDoublonGroupVerifiedKept($techIds);
+                $this->logger->warning('Cross-athlete ACTION=AUCUNE (désaccord/échec Grok) — les 2 combats restent published. Paire ignorée à l\'avenir. Paire : @pair | Raison principal : @r | Grok same_fight=@gsf raison=@gr', [
                     '@pair' => $pairLabel,
                     '@r' => $verdict['raison'] ?? '',
                     '@gsf' => $grokVerdict === null ? 'null' : (string) (int) !empty($grokVerdict['same_fight']),
@@ -136,6 +142,9 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
         }
 
         $this->applyVerdict($data, $verdict, $pairLabel);
+        // Après application (dépub / fusions) : mémoriser pour ne plus re-proposer
+        // le même couple field_id_text (même si un combat reste published).
+        SomeTools::markDoublonGroupVerifiedKept($techIds);
     }
 
     /**

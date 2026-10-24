@@ -139,6 +139,22 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
             $this->logger->info('Cross-athlete double validation Grok OK (same_fight=1). Paire : @pair', [
                 '@pair' => $pairLabel,
             ]);
+            // Fusions : intersection Gemini ∩ Grok (seule l'IA décide, double accord requis).
+            $verdict['fusions'] = $this->intersectFusions(
+                $verdict['fusions'] ?? [],
+                $grokVerdict['fusions'] ?? [],
+                $pairLabel
+            );
+            // keep_combat : si Grok propose le même field_id, on le garde ; sinon on laisse le principal.
+            $grokKeep = (string) ($grokVerdict['keep_combat_field_id'] ?? '');
+            $primaryKeep = (string) ($verdict['keep_combat_field_id'] ?? '');
+            if ($grokKeep !== '' && $primaryKeep !== '' && $grokKeep !== $primaryKeep) {
+                $this->logger->notice('Cross-athlete keep_combat désaccord Gemini="@g" Grok="@k" — on conserve le choix principal. Paire : @pair', [
+                    '@g' => $primaryKeep,
+                    '@k' => $grokKeep,
+                    '@pair' => $pairLabel,
+                ]);
+            }
         }
 
         $this->applyVerdict($data, $verdict, $pairLabel);
@@ -443,6 +459,86 @@ class ConfrontationsCrossAthleteDoublonsAiQueue extends BaseCombatQueueWorker im
             ->accessCheck(FALSE)
             ->count()
             ->execute();
+    }
+
+
+    /**
+     * Intersection des fusions proposées par deux moteurs IA.
+     * Une fusion n'est retenue que si les deux listes contiennent la même
+     * paire (from/to), dans un sens ou l'autre, après normalisation.
+     *
+     * @param array $primary
+     * @param array $secondary
+     * @param string $pairLabel
+     *
+     * @return array
+     */
+    protected function intersectFusions(array $primary, array $secondary, string $pairLabel = ''): array
+    {
+        $norm = static function (string $s): string {
+            $s = mb_strtolower(trim($s));
+            $s = preg_replace('/\s+/u', ' ', $s) ?? $s;
+            return $s;
+        };
+        $keyOf = static function (string $a, string $b) use ($norm): string {
+            $x = $norm($a);
+            $y = $norm($b);
+            // Ordre canonique pour accepter A→B et B→A comme le même accord.
+            return ($x <= $y) ? ($x . '|' . $y) : ($y . '|' . $x);
+        };
+
+        $secKeys = [];
+        foreach ($secondary as $f) {
+            if (!is_array($f)) {
+                continue;
+            }
+            $from = trim((string) ($f['from'] ?? ''));
+            $to = trim((string) ($f['to'] ?? ''));
+            if ($from === '' || $to === '') {
+                continue;
+            }
+            $secKeys[$keyOf($from, $to)] = TRUE;
+        }
+
+        $kept = [];
+        $dropped = [];
+        foreach ($primary as $f) {
+            if (!is_array($f)) {
+                continue;
+            }
+            $from = trim((string) ($f['from'] ?? ''));
+            $to = trim((string) ($f['to'] ?? ''));
+            if ($from === '' || $to === '' || mb_strtolower($from) === mb_strtolower($to)) {
+                continue;
+            }
+            $k = $keyOf($from, $to);
+            if (!empty($secKeys[$k])) {
+                $kept[] = ['from' => $from, 'to' => $to];
+            }
+            else {
+                $dropped[] = $from . ' → ' . $to;
+            }
+        }
+
+        if ($dropped) {
+            $this->logger->notice('Cross-athlete fusions écartées (désaccord Grok) : @list | paire=@pair', [
+                '@list' => implode(' ; ', $dropped),
+                '@pair' => $pairLabel,
+            ]);
+        }
+        if ($kept) {
+            $this->logger->info('Cross-athlete fusions retenues (accord Gemini+Grok) : @list | paire=@pair', [
+                '@list' => implode(' ; ', array_map(static fn($f) => $f['from'] . ' → ' . $f['to'], $kept)),
+                '@pair' => $pairLabel,
+            ]);
+        }
+        else {
+            $this->logger->info('Cross-athlete aucune fusion retenue après double validation. Paire : @pair', [
+                '@pair' => $pairLabel,
+            ]);
+        }
+
+        return $kept;
     }
 
     protected function parseVerdict(string $content): ?array

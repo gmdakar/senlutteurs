@@ -50,7 +50,14 @@ class AthleteService extends BaseWrestlingService {
       catch (\Exception $e) {
           $this->logger->error($e->getMessage());
       }
-      
+
+      // liveSearch peut échouer (quota 429, clé leaked, timeout…) → content null.
+      // decodeJson exige une string : on sort proprement au lieu d'un TypeError.
+      if ($response_content === null || $response_content === '') {
+        $this->logger->warning('fetchAthletesEnVogue : réponse IA vide ou échec (success=false / content vide). Aucun athlète en vogue importé.');
+        return [];
+      }
+
       $data = $this->decodeJson($response_content, __METHOD__);
       
       if (!empty($data) && (stripos(preg_replace('/^\s+/u', '', $this->getPrompt()), '__debug__') !== false || stripos(preg_replace('/^\s+/u', '', $this->getPrompt()), '__ignore__') !== false && stripos(preg_replace('/^\s+/u', '', $this->getDefaultResponse()), '__debug__') !== false))  

@@ -259,8 +259,15 @@ abstract class BaseWrestlingService
      *
      * @return array|null     Tableau PHP décodé, ou null si JSON invalide.
      */
-    protected function decodeJson(string $raw, string $context = 'inconnu'): ?array
+    /**
+     * Accepte null/vide pour éviter un TypeError quand l'appel IA a échoué
+     * (quota, clé, timeout) et que le caller n'a pas encore filtré.
+     */
+    protected function decodeJson(?string $raw, string $context = 'inconnu'): ?array
     {
+        if ($raw === null || $raw === '') {
+            return null;
+        }
         return SomeTools::decodeJson($raw, $context);
     }
 }

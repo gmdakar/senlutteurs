@@ -35,10 +35,10 @@ class ConfrontationsDoublonsCommands extends CommandsBase
     #[Option(name: 'stepbystep', description: 'Mode interactif : confirmation manuelle pour chaque suspect.')]
     #[Option(name: 'no-ai-run', description: 'Avec le task "combats"/"ai_combats"/"ai_cross"/"all" : met les groupes en queue SANS les traiter immédiatement (laisse le cron s\'en charger).')]
     #[Option(name: 'enginef', description: 'Force le moteur IA (grok, gemini) pour le prompt principal des groupes ambigus traités par ce run. Par défaut : moteur configuré dans request_ai.settings.')]
-    #[Option(name: 'days', description: 'Fenêtre max en jours pour la détection cross-athlètes (task ai_cross / combats / all). Défaut : 7. Exemple : drush cdbl --task=ai_cross --days=7')]
+    #[Option(name: 'days', description: 'Fenêtre max en jours pour la détection cross-athlètes (task ai_cross / combats / all). Défaut : 7 (2 quand appelé via task=all). Exemple : drush cdbl --task=ai_cross --days=7')]
     #[Usage(name: 'drush cdbl --task=combats --enginef=grok', description: 'Force le moteur Grok pour le traitement immédiat des doublons ambigus')]
     #[Usage(name: 'drush cdbl --task=ai_cross --days=7', description: 'Doublons cross-athlètes sur une fenêtre de 7 jours')]
-    public function ConfrontationsDoublons(array $options = ['task' => 'all', 'stepbystep' => false, 'no-ai-run' => false, 'enginef' => null, 'days' => 7])
+    public function ConfrontationsDoublons(array $options = ['task' => 'all', 'stepbystep' => false, 'no-ai-run' => false, 'enginef' => null, 'days' => null])
     {
 
         //check granularity authorization cron execution
@@ -92,7 +92,10 @@ class ConfrontationsDoublonsCommands extends CommandsBase
         // noms proches des deux côtés (ex. Confiance/Confiance Tp + Fils De
         // Falaye/Elou Fils De Falaye) → IA same_fight + fusions éventuelles.
         if ($task === 'all' || $task === 'combats' || $task === 'ai_cross') {
-            $days = max(1, (int) ($options['days'] ?? 7));
+            // Défaut : 2j uniquement quand le cross est appelé depuis "all" ;
+            // 7j pour --task=ai_cross / combats. --days explicite prioritaire.
+            $defaultDays = ($task === 'all') ? 2 : 7;
+            $days = max(1, (int) (($options['days'] ?? null) !== null && $options['days'] !== '' ? $options['days'] : $defaultDays));
             $this->io()->section("Détection IA des doublons cross-athlètes (≤{$days}j, sans pivot NID commun).");
 
             $nbCross = SomeTools::queueCrossAthleteNearDateCombats($days);

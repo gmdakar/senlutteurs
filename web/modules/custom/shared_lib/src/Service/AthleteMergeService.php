@@ -132,7 +132,7 @@ class AthleteMergeService {
             // Reset du cache storage pour que Drupal voie les MAJ en base
             $storage->resetCache([$twinId]);
 
-            // ── 3d. Suppression du jumeau ─────────────────────────────────────────
+            // ── 3d. Dépublication du jumeau (plus de delete hard des fiches lutteurs) ─
             try {
                 // Recharger depuis la base pour avoir l'état post-nettoyage
                 $twinFresh = $storage->load($twinId);
@@ -141,13 +141,17 @@ class AthleteMergeService {
                     continue;
                 }
 
-                $twinFresh->delete();
+                if ($twinFresh->isPublished()) {
+                    $twinFresh->setUnpublished();
+                    $twinFresh->setNewRevision(FALSE);
+                    $twinFresh->save();
+                }
                 $storage->resetCache([$twinId]);
                 $totalDeleted++;
-                $deletedTwins[] = ['nid' => $twinId, 'title' => $twinTitle]; // ← ajouter
+                $deletedTwins[] = ['nid' => $twinId, 'title' => $twinTitle];
 
                 $logger->notice(
-                    'fusion-athlete : Jumeau [@tid] "@ttitle" supprimé (@combats combats, @avenir a_venir transférés, @redirects redirections 301, @refs back-refs purgées → pivot [@pid] "@ptitle")',
+                    'fusion-athlete : Jumeau [@tid] "@ttitle" dépublié (@combats combats, @avenir a_venir transférés, @redirects redirections 301, @refs back-refs purgées → pivot [@pid] "@ptitle")',
                     [
                         '@tid'       => $twinId,
                         '@ttitle'    => $twinTitle,
@@ -161,17 +165,17 @@ class AthleteMergeService {
                 );
 
                 $io && $io->writeln(sprintf(
-                    '     <comment>✓ Supprimé. (%d combats, %d a_venir transférés, %d back-refs purgées)</comment>',
+                    '     <comment>✓ Dépublié. (%d combats, %d a_venir transférés, %d back-refs purgées)</comment>',
                     $combatsMoved,
                     $avenirMoved,
                     $backRefsCleaned
                 ));
             } catch (\Exception $e) {
                 $logger->error(
-                    'fusion-athlete : Échec suppression jumeau [@tid] "@ttitle" : @msg',
+                    'fusion-athlete : Échec dépublication jumeau [@tid] "@ttitle" : @msg',
                     ['@tid' => $twinId, '@ttitle' => $twinTitle, '@msg' => $e->getMessage()]
                 );
-                $io && $io->error(sprintf('Échec suppression [%d] %s : %s', $twinId, $twinTitle, $e->getMessage()));
+                $io && $io->error(sprintf('Échec dépublication [%d] %s : %s', $twinId, $twinTitle, $e->getMessage()));
 
                 // Diagnostic : lister les entités qui bloquent encore
                 $this->logRemainingReferences($twinId, $storage, $logger);
@@ -202,7 +206,7 @@ class AthleteMergeService {
             ));
 
             $logger->notice(
-                'fusion-athlete SYNTHÈSE — Pivot [@pid] "@ptitle" | Jumeaux supprimés (@nb) : @twins | @combats combats + @avenir a_venir transférés, @redirects redirections 301 créées.',
+                'fusion-athlete SYNTHÈSE — Pivot [@pid] "@ptitle" | Jumeaux dépubliés (@nb) : @twins | @combats combats + @avenir a_venir transférés, @redirects redirections 301 créées.',
                 [
                     '@pid'       => $pivotNid,
                     '@ptitle'    => $pivot->getTitle(),
@@ -379,10 +383,14 @@ class AthleteMergeService {
                 $delNid = $combat->id();
                 $delTitle = $combat->getTitle();
                 try {
-                    $combat->delete();
+                    if ($combat->isPublished()) {
+                        $combat->setUnpublished();
+                        $combat->setNewRevision(FALSE);
+                        $combat->save();
+                    }
                     $storage->resetCache([$delNid]);
                     $logger->warning(
-                        'fusion-athlete transferConfrontations : combat [@nid] "@title" SUPPRIMÉ — le jumeau [@tid] avait combattu contre le pivot [@pid] lui-même (transfert aurait créé pivot vs pivot).',
+                        'fusion-athlete transferConfrontations : combat [@nid] "@title" DÉPUBLIÉ — le jumeau [@tid] avait combattu contre le pivot [@pid] lui-même (transfert aurait créé pivot vs pivot).',
                         ['@nid' => $delNid, '@title' => $delTitle, '@tid' => $twinId, '@pid' => $pivotId]
                     );
                 } catch (\Exception $e) {
@@ -416,10 +424,15 @@ class AthleteMergeService {
                     $delNid = $combat->id();
                     $delTitle = $combat->getTitle();
                     try {
-                        $combat->delete();
+                        // Dépub au lieu de delete hard : récupérable si faux positif.
+                        if ($combat->isPublished()) {
+                            $combat->setUnpublished();
+                            $combat->setNewRevision(FALSE);
+                            $combat->save();
+                        }
                         $storage->resetCache([$delNid]);
                         $logger->notice(
-                            'fusion-athlete transferConfrontations : combat [@nid] "@title" (jumeau [@tid] vs adversaire [@opp], @date) SUPPRIMÉ — doublon post-fusion détecté avec un combat existant du pivot [@pid] (déjà mis à jour si nécessaire par checkNearDuplicateConfrontation).',
+                            'fusion-athlete transferConfrontations : combat [@nid] "@title" (jumeau [@tid] vs adversaire [@opp], @date) DÉPUBLIÉ — doublon post-fusion détecté avec un combat existant du pivot [@pid] (déjà mis à jour si nécessaire par checkNearDuplicateConfrontation).',
                             [
                                 '@nid'   => $delNid,
                                 '@title' => $delTitle,
